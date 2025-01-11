@@ -1,0 +1,45 @@
+<div class="card-content">
+  <div class="card-header pb-0">
+    <h5 class="card-title text-primary">{{isNew ? 'เพิ่มอีเมล':'แก้ไขอีเมล'}}</h5>
+  </div>
+  <form
+    #form="ngForm"
+    (ngSubmit)="onSubmit(form)"
+    [class.submitted]="form.submitted"
+  >
+
+    <div class="card-body py-0">
+      <div class="col-12 _g-text-title px-0">
+        <div class="form-group">
+          <label class="col-form-label">อีเมล</label>
+          <div class="form-input">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="โปรดระบุ"
+              id="email"
+              name="email"
+              [(ngModel)]="email"
+              required
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+</div>
+
+<div class="_modal-footer">
+  <button
+    type="button"
+    class="btn btn-clear  mr-2 mb-1"
+    (click)="onCancel()"
+  ><span>ยกเลิก</span>
+  </button>
+  <button
+    type="submit"
+    class="btn btn-primary mb-1"
+  ><span>บันทึก</span>
+  </button>
+</div>

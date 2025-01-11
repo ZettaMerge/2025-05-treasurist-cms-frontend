@@ -1,0 +1,93 @@
+<div >
+  <div
+    class="col-12"
+    *ngIf="rows && rows?.length === 0"
+  >
+    <pn-data-not-found>
+    </pn-data-not-found>
+  </div>
+  <div [hidden]="rows && rows?.length === 0">
+    <div class="_g-table-container">
+      <pn-lib-grid
+        #grid
+        [bodyHeight]="'auto'"
+        [sort]="{prop: 'customerName', asc: false}"
+        [dataSub]="dataSub"
+        [rows]="rows"
+        [columns]="columns"
+        [rowHeight]="65"
+        [externalPaging]="true"
+        [(page)]="page"
+        (pageChange)="pageChange()"
+        (sortChange)="onSortChange($event)"
+        (edit)="edit($event)"
+      ></pn-lib-grid>
+    </div>
+  </div>
+</div>
+<!--TEMPLATE-->
+<ng-template
+  #nameTpl
+  let-value="value"
+  let-row="row"
+>
+  <shared-datatable-with-name
+    [id]="row?.customerName"
+  >
+  </shared-datatable-with-name>
+</ng-template>
+
+<ng-template
+  #fundTpl
+  let-value="value"
+  let-row="row"
+>
+  <shared-datatable-with-name-fund
+    [fundCode]="row.fundCode"
+    [riskLevel]="convertString(row.riskLevel)"
+    [fundName]="row.amcCode"
+
+  >
+  </shared-datatable-with-name-fund>
+</ng-template>
+
+<ng-template
+  #portTpl
+  let-value="value"
+  let-row="row"
+>
+  <span>{{row.cost | aDecimal}}</span>
+</ng-template>
+
+<ng-template
+  #portCostTpl
+  let-value="value"
+  let-row="row"
+>
+  <shared-datatable-port
+    [portValue]="row.portCost"
+    [upDateAt]="row.date"
+  >
+  </shared-datatable-port>
+</ng-template>
+
+
+<ng-template
+  #profit
+  let-value="value"
+  let-row="row"
+>
+  <!--  <div class="width-120 align-items-center">-->
+  <span
+    [ngClass]="{'text-success': row.profit >= 0, 'text-danger': row.profit < 0, 'text-black': !row.profit}">{{row.profit | aDecimal}}</span>
+  <p
+    *ngIf="row.profitPercent !== 'NaN'"
+    class="m-0"
+    [ngClass]="{'text-success': row.profitPercent >= 0, 'text-danger': row.profitPercent < 0, 'text-black' : !row.profitPercent}"
+  >
+    <span>({{row.profitPercent | aDecimal}}{{row.profitPercent ? '%' : ''}})</span>
+  </p>
+  <!--  </div>-->
+
+</ng-template>
+

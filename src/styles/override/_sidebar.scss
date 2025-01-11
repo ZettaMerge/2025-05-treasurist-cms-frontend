@@ -1,0 +1,119 @@
+body.nav-collapsed:not(.sidebar-sm):not(.sidebar-lg) {
+  .app-sidebar {
+    &:hover {
+      width: $menu-expanded-width;
+    }
+  }
+}
+
+body[data-menu="vertical-menu"],
+body.vertical-menu,
+body.vertical-layout {
+  .app-sidebar {
+    background-image: $menu-gradient;
+    background-color: $menu-background;
+    .sidebar-header {
+      a.nav-toggle {
+        color: $menu-text;
+        // font-size: 2rem;
+        // line-height: 30px;
+        // width: 30px;
+        // height: 30px;
+        // right: $gutter;
+        // top: $gutter;
+        // &.nav-toggle-icon-rotate {
+        //   @extend %transition-sidebar;
+        //   transform: rotate(90deg);
+        //   display: block !important;
+        // }
+      }
+    }
+  }
+}
+
+body[data-menu="vertical-menu"].menu-expanded .app-sidebar,
+body.vertical-menu.menu-expanded .app-sidebar,
+body.vertical-layout.menu-expanded .app-sidebar,
+body[data-menu="vertical-menu"] .app-sidebar.expanded,
+body.vertical-menu .app-sidebar.expanded,
+body.vertical-layout .app-sidebar.expanded,
+.app-sidebar.expanded {
+  width: $menu-expanded-width;
+  // position: absolute;
+  margin-top: 60px;
+  .nav-container {
+    // position: absolute;
+  }
+  .navigation {
+    margin-top: 0.5rem;
+    li {
+      & > a {
+        i {
+          color: $menu-text-active;
+        }
+        .menu-title {
+          opacity: 1;
+          color: $menu-text;
+          font-weight: $weight-medium;
+        }
+        &:after {
+          color: $menu-text-active;
+        }
+      }
+      &.active {
+        & a {
+          background: none;
+          &:before {
+            display: none;
+          }
+          &:hover {
+            background-color: rgba(224, 224, 224, 0.2);
+          }
+          .menu-title {
+            color: $menu-text-active;
+          }
+        }
+      }
+      ul.menu-content {
+        li {
+          & > a {
+            .menu-title {
+              font-weight: $weight-normal;
+            }
+            .submenu-icon {
+              color: $menu-background;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.vertical-layout:not(.nav-collapsed) {
+  .main-panel {
+    margin-left: $menu-expanded-width;
+    width: calc(100% - #{$menu-expanded-width});
+    .main-content {
+      margin-left: 0;
+    }
+  }
+}
+
+@media (max-width: 1199px) {
+  .vertical-layout:not(.nav-collapsed) {
+    &.navbar-sticky {
+      nav.header-navbar {
+        margin-left: 0;
+        width: 100%;
+      }
+    }
+    .main-panel {
+      margin-left: 0;
+      width: 100%;
+      .main-content {
+        margin-left: 0;
+      }
+    }
+  }
+}

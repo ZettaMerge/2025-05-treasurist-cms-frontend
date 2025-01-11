@@ -1,0 +1,70 @@
+<div class="card-body pl-0 pt-0">
+  <div class="row">
+    <div class="col-12 d-flex px-0 py-1">
+      <div class="col-5">
+        <div class="row">
+          <div class="col-6 _g-text-title">
+            <span>เบอร์โทรศัพท์</span>
+            <p>{{data?.mobileNumber || '-'}}</p>
+          </div>
+          <div class="col-6 _g-text-title">
+            <span>Email</span>
+            <p>{{data?.email || '-'}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section id="address-cid">
+      <div class="_g-card-sub-header pl-2">
+        <span class="_g-text-header-sub-title">ที่อยู่ตามบัตรประชาชน</span>
+      </div>
+    </section>
+    <div class="col-12 px-0">
+      <shared-address [data]="data?.idDocumentAddress">
+
+      </shared-address>
+    </div>
+
+
+    <!--    <div id="address" *ngIf="data?.">-->
+    <div id="address">
+      <div class="_g-card-sub-header pl-2">
+        <span class="_g-text-header-sub-title">ที่อยู่ปัจจุบัน</span>
+      </div>
+      <div class="col-12 d-flex px-0 py-1">
+        <div class="col-12">
+          <li class="d-inline-block mr-2 mb-2" *ngIf="data?.currentAddressFlag === 'IdDocument'">
+            <div class="checkbox _g-checkbox-display-none">
+              <input
+                type="checkbox"
+                id="checkbox1"
+                name="checkbox1"
+                checked
+              >
+              <label for="checkbox1"><span>ตามบัตรประชาชน</span></label>
+            </div>
+          </li>
+          <li class="d-inline-block mr-2 mb-2" *ngIf="data?.currentAddressFlag === null">
+            <div class="checkbox _g-checkbox-display-none">
+              <input
+                type="checkbox"
+                id="checkbox2"
+                name="checkbox2"
+                checked
+              >
+              <label for="checkbox2"><span>อื่นๆ</span></label>
+            </div>
+          </li>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 px-0" *ngIf="data?.currentAddressFlag === null">
+      <shared-address [data]="data?.currentAddress">
+
+      </shared-address>
+    </div>
+
+  </div>
+</div>

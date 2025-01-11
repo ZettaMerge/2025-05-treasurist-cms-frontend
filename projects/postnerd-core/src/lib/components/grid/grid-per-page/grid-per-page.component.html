@@ -1,0 +1,12 @@
+<div class="datatable-per-page">
+  <span class="font-size-normal _g-text-muted">แสดง</span>
+  <pn-per-page-dropdown
+    class="text-muted"
+    *ngIf="page"
+    [list]="perPageOptions"
+    [(ngModel)]="page.perPage"
+    (ngModelChange)="onSetPerPage($event)"
+  >
+  </pn-per-page-dropdown>
+  <span class="font-size-normal _g-text-muted">รายการ</span>
+</div>

@@ -1,0 +1,25 @@
+@import "variables-custom";
+
+._display-btn {
+  display: flex;
+}
+
+._customer-filter {
+  ._filter-section2 {
+    //._form {
+    //  margin-right: $grid-gutter-width;
+    //  margin-bottom: 0px;
+    //}
+  }
+
+  ._form {
+    margin-right: $grid-gutter-width;
+    margin-bottom: 0px;
+  }
+
+}
+
+._btn-clear {
+  margin-left: $grid-gutter-width;
+  //margin-left: 3rem;
+}

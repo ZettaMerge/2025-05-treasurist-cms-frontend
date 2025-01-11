@@ -1,0 +1,376 @@
+<section id="form-info-general">
+  <div class="card-header pl-0">
+    <span class="_g-text-header-title">ข้อมูลส่วนตัว</span>
+  </div>
+  <div class="card-body px-0 pt-0">
+    <div class="row">
+      <div class="col-12 _g-card-form px-0">
+        <div class="col-xl-5 col-lg-6 col-md-6 col-sm-12">
+          <div class="row">
+            <div class="col-xl-6 col-sm-12 _g-text-title">
+              <div class="form-group">
+                <label class="col-form-label">คำนำหน้าชื่อ</label>
+                <div class="form-input">
+                  <pn-dynamic-dropdown
+                    id="prefixName"
+                    name="prefixName"
+                    [(ngModel)]="title"
+                    (ngModelChange)="titleChange($event)"
+                    required
+                    [list]="listsPrefix"
+                    placeholder="เลือก"
+                  >
+                  </pn-dynamic-dropdown>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-xl-6 col-sm-12 _g-text-title" *ngIf="isTitleOther">
+              <div class="form-group">
+                <label class="col-form-label">คำนำหน้าชื่ออื่นๆ</label>
+                <div class="form-input">
+                  <input
+                    id="titleOther"
+                    name="titleOther"
+                    [(ngModel)]="data.titleOther"
+                    type="text"
+                    class="form-control"
+                    placeholder="โปรดระบุ"
+                    required
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-6 col-sm-12 _g-text-title">
+              <div class="form-group">
+                <label class="col-form-label ">ชื่อ (ไทย)</label>
+                <div class="form-input">
+                  <input
+                    id="firstNameTh"
+                    name="firstNameTh"
+                    [(ngModel)]="data.thFirstname"
+                    type="text"
+                    class="form-control"
+                    placeholder="โปรดระบุ"
+                    required
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-7 col-lg-6 col-md-6 col-sm-12">
+          <div class="row">
+            <div class="col-xl-4 col-sm-12 _g-text-title">
+              <div class="form-group">
+                <label class="col-form-label ">นามสกุลจริง (ไทย)</label>
+                <div class="form-input">
+                  <input
+                    id="lastNameTh"
+                    name="lastNameTh"
+                    [(ngModel)]="data.thLastname"
+                    type="text"
+                    class="form-control"
+                    placeholder="โปรดระบุ"
+                    required
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-sm-12 _g-text-title">
+              <div class="form-group">
+                <label class="col-form-label">ชื่อ (อังกฤษ)</label>
+                <div class="form-input">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="โปรดระบุ"
+                    id="firstNameEn"
+                    name="firstNameEn"
+                    [(ngModel)]="data.enFirstname"
+                    required
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-sm-12 _g-text-title">
+              <div class="form-group">
+                <label class="col-form-label">นามสกุลจริง (อังกฤษ)</label>
+                <div class="form-input">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="โปรดระบุ"
+                    id="lastNameEn"
+                    name="lastNameEn"
+                    [(ngModel)]="data.enLastname"
+                    required
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 _g-card-form px-0">
+        <div class="col-xl-5 col-lg-6 col-md-6 col-sm-12">
+          <div class="row">
+            <div class="col-xl-6 col-sm-12 _g-text-title">
+              <div class="form-group">
+                <label class="col-form-label">วัน/เดือน/ปีเกิด</label>
+                <div class="form-input">
+                  <pn-date-picker
+                    placeholder="dd/mm/yyyy"
+                    id="brithday"
+                    name="brithday"
+                    [(ngModel)]="data.birthdate"
+                    (ngModelChange)="onChangDate($event)"
+                    required
+                  >
+                  </pn-date-picker>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-xl-6 col-sm-12 _g-text-title">
+              <div class="form-group">
+                <label class="col-form-label">สัญชาติ</label>
+                <div class="form-input">
+                  <shared-nationality-dropdown
+                    placeholder="เลือก"
+                    id="nationality"
+                    name="nationality"
+                    [(ngModel)]="nationality"
+                    [disabled]="true"
+                    (ngModelChange)="onChangeNationality($event)"
+                    required
+                  >
+                  </shared-nationality-dropdown>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-7 col-lg-6 col-md-6 col-sm-12">
+          <div class="row">
+            <div class="col-xl-4 col-sm-12 _g-text-title">
+              <div class="form-group">
+                <label class="col-form-label">ID Type</label>
+                <div class="form-input">
+                  <pn-dynamic-dropdown
+                    [list]="listsIdType"
+                    placeholder="เลือก"
+                    id="idType"
+                    name="idType"
+                    [(ngModel)]="idType"
+                    (ngModelChange)="onChangeIdType($event)"
+                    required
+                  >
+                  </pn-dynamic-dropdown>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-sm-12 _g-text-title">
+              <div class="form-group">
+                <label class="col-form-label">เลขบัตรประชาชน / Passport</label>
+                <div class="form-input">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="โปรดระบุ"
+                    id="identificationNumber"
+                    name="identificationNumber"
+                    [(ngModel)]="data.cardNumber"
+                    required
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-sm-12 _g-text-title">
+              <div class="form-group">
+                <label class="col-form-label">วันหมดอายุบัตร (ค.ศ.)</label>
+                <div class="form-input">
+                  <pn-date-picker
+                    placeholder="dd/mm/yyyy"
+                    id="dateOfExpiry"
+                    name="dateOfExpiry"
+                    [(ngModel)]="data.cardExpiredDate"
+                    (ngModelChange)="onChangDate($event)"
+                    required
+                  >
+                  </pn-date-picker>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 _g-card-form  px-0">
+        <div class="col-xl-5 col-lg-6 col-md-6 col-sm-12">
+          <div class="row">
+            <div class="col-xl-6  col-sm-12  _g-text-title">
+              <div class="form-group">
+                <label class="col-form-label">IC License</label>
+                <div class="form-input">
+                  <shared-ic-license-with-team-dropdown
+                    placeholder="ทั้งหมด"
+                    [(ngModel)]="icLicense"
+                    (ngModelChange)="onLicenseChange($event)"
+                    [ngModelOptions]="{standalone: true}"
+                    required
+                  >
+                  </shared-ic-license-with-team-dropdown>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-6  col-sm-12  _g-text-title">
+              <div class="form-group">
+                <label class="col-form-label">Team</label>
+                <div class="form-input">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="โปรดระบุ"
+                    id="icTeam"
+                    name="icTeam"
+                    [(ngModel)]="teamName"
+                   disabled
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-7 col-lg-6 col-md-6 col-sm-12">
+          <div class="row">
+            <div class="col-xl-4  col-sm-12  _g-text-title">
+              <div class="form-group">
+                <label class="col-form-label">วิธีการเปิดบัญชี</label>
+                <div class="form-input">
+                  <pn-dynamic-dropdown
+                    [list]="openAccountLists"
+                    placeholder="เลือก"
+                    id="accountOpen"
+                    name="accountOpen"
+                    [(ngModel)]="openAccountType"
+                    (ngModelChange)="openAccountTypeChange($event)"
+                    required
+                  >
+                  </pn-dynamic-dropdown>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4  col-sm-12  _g-text-title">
+              <div class="form-group">
+                <label class="col-form-label">วิธีการยืนยันตัวตน</label>
+                <div class="form-input">
+                  <pn-dynamic-dropdown
+                    [list]="verifyIdentityLists"
+                    placeholder="เลือก"
+                    id="identiryVerification"
+                    name="identiryVerification"
+                    [(ngModel)]="accountVerifyType"
+                    (ngModelChange)="accountVerifyTypeChange($event)"
+                    required
+                  >
+                  </pn-dynamic-dropdown>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-sm-12 _g-text-title">
+              <div class="form-group">
+                <label class="col-form-label">สถานภาพ</label>
+                <div class="form-input">
+                  <pn-dynamic-dropdown
+                    [list]="listsStatus"
+                    placeholder="เลือก"
+                    id="status"
+                    name="status"
+                    [(ngModel)]="maritalStatus"
+                    (ngModelChange)="maritalStatusChange($event)"
+                    required
+                  >
+                  </pn-dynamic-dropdown>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 _g-card-form  px-0" *ngIf="isMarried">
+        <div class="col-xl-5 col-lg-6 col-md-6 col-sm-12">
+          <div class="row">
+            <div class="col-xl-6  col-sm-12  _g-text-title">
+              <div class="form-group">
+                <label class="col-form-label">คู่สมรส ชื่อ (ภาษาไทย)</label>
+                <div class="form-input">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="โปรดระบุ"
+                    id="spouseThFirstname"
+                    name="spouseThFirstname"
+                    [(ngModel)]="data.spouseThFirstname"
+                    required
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-6  col-sm-12  _g-text-title">
+              <div class="form-group">
+                <label class="col-form-label">คู่สมรส นามสกุล (ภาษาไทย)</label>
+                <div class="form-input">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="โปรดระบุ"
+                    id="spouseThLastname"
+                    name="spouseThLastname"
+                    [(ngModel)]="data.spouseThLastname"
+                    required
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-7 col-lg-6 col-md-6 col-sm-12">
+          <div class="row">
+            <div class="col-xl-4 col-sm-12  _g-text-title">
+              <div class="form-group">
+                <label class="col-form-label">คู่สมรส ชื่อ(ภาษาอังกฤษ)</label>
+                <div class="form-input">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="โปรดระบุ"
+                    id="spouseEnFirstname"
+                    name="spouseEnFirstname"
+                    [(ngModel)]="data.spouseEnFirstname"
+                    required
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-5 col-sm-12  _g-text-title">
+              <div class="form-group">
+                <label class="col-form-label">คู่สมรส นามสกุล(ภาษาอังกฤษ)</label>
+                <div class="form-input">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="โปรดระบุ"
+                    id="spouseEnLastName"
+                    name="spouseEnLastName"
+                    [(ngModel)]="data.spouseEnLastName"
+                    required
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

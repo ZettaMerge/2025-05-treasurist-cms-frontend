@@ -1,0 +1,70 @@
+.accordion.phonebook {
+  .card {
+    &:last-of-type {
+      .card-header {
+        border-bottom: 1px solid $border;
+      }
+    }
+    .card-header {
+      height: calc(40px + 1rem);
+      button.btn {
+        height: 100%;
+        padding: 0;
+        padding-left: 2.5rem;
+        padding-right: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        &.collapsed {
+          .ic,
+          .fa {
+            transform: rotate(-90deg);
+            transition: transform 0.1s;
+          }
+        }
+        .ic,
+        .fa {
+          transition: transform 0.1s;
+          color: $text-muted;
+        }
+      }
+    }
+    .card-body {
+      border-bottom: 1px solid $border;
+      box-shadow: none;
+      padding: 0.5rem 2.5rem;
+    }
+  }
+}
+
+@media (max-width: $bp-sm) {
+  .accordion.phonebook {
+    .card {
+      .card-header {
+        button.btn {
+          padding-left: 0.75rem;
+          padding-right: 0;
+        }
+      }
+      .card-body {
+        padding: 0.5rem 1rem;
+      }
+    }
+  }
+}
+
+@media (min-width: $bp-sm) and (max-width: $bp-md) {
+  .accordion.phonebook {
+    .card {
+      .card-header {
+        button.btn {
+          padding-left: 1.25rem;
+          padding-right: 0;
+        }
+      }
+      .card-body {
+        padding: 0.5rem 1.5rem;
+      }
+    }
+  }
+}

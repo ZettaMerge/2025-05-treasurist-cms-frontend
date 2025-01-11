@@ -1,0 +1,52 @@
+<ng-template
+  #template
+  let-column="column"
+  let-sort="sortFn"
+  let-sortDir="sortDir"
+>
+  <div class="datatable-header-cell-template-wrap-custom">
+    <div
+      *ngIf="column.groupHeader"
+      class="group-header-cell-template datatable-header-cell-template-wrap-custom-head"
+      [style.margin-right.px]="column.groupHeader.isLast ? 0 : -1"
+    >
+      <span class="datatable-header-cell-wrapper">
+        <span
+          class="datatable-header-cell-label"
+          [style.text-align]="column.groupHeader.align"
+        >{{ column.groupHeader.name }}</span>
+      </span>
+    </div>
+    <div
+      class="datatable-header-cell-template-wrap-custom-head {{column.headerClass}}"
+      (click)="sort()"
+    >
+      <span class="datatable-header-cell-wrapper">
+        <span class="datatable-header-cell-label">{{ column.name }}</span>
+      </span>
+      <span
+        class="sort-btn"
+        [ngClass]="{
+          'datatable-icon-down': sortDir == 'desc',
+          'datatable-icon-up': sortDir == 'asc'
+        }"
+      >
+<!--        <span-->
+<!--          class="sort-btn"-->
+<!--          [ngClass]="{-->
+<!--          'ft-arrow-down': sortDir == 'desc',-->
+<!--          'ft-arrow-up': sortDir == 'asc'-->
+<!--        }"-->
+<!--        >-->
+<!--        'ic-angle-small-down': sortDir == 'desc',-->
+<!--          'ic-angle-small-up': sortDir == 'asc'-->
+      </span>
+    </div>
+    <ng-container
+      [ngTemplateOutlet]="contentTemplate"
+      [ngTemplateOutletContext]="{ $implicit: column }"
+    >
+    </ng-container>
+    <ng-content></ng-content>
+  </div>
+</ng-template>

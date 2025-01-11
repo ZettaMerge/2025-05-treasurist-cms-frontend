@@ -1,0 +1,171 @@
+<div id="form-announcement">
+  <form
+    #form="ngForm"
+    [class.submitted]="form.submitted"
+    (ngSubmit)="onSave(form)"
+  >
+
+    <div class="_g-header">
+      <h1 class="_g-title-header">{{ isEdit ? 'แก้ไข':'สร้าง'}} Announcement</h1>
+      <div class="_g-header justify-content-end">
+        <button *ngIf="canCreate"
+          type="submit"
+          class="btn btn-primary  mb-1 _g-space-btn"
+        ><span>บันทึก</span>
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary  mr-1 mb-1"
+          (click)="goBack()"
+        ><span>กลับ</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <div class="_g-header-card">
+          <span class="_g-text-header-title">รายละเอียด</span>
+        </div>
+
+        <div class="col-12 px-0">
+          <!-- <div class="col-12"> -->
+          <div class="form-group">
+            <label class="col-form-label">ชื่อหัวข้อ</label>
+            <div class="form-input">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="โปรดระบุ"
+                id="tittle"
+                name="tittle"
+                [(ngModel)]="announcementData.tittle"
+                required
+                [disabled]="canView && !canCreate"
+              >
+            </div>
+          </div>
+          <!-- </div> -->
+        </div>
+        <div class="col-12 px-0">
+          <div class="row">
+            <div class="col-4">
+              <div class="form-group">
+                <label class="col-form-label">วันที่เริ่มต้น</label>
+                <div class="form-input">
+                  <pn-date-picker
+                    id="startDate"
+                    name="startDate"
+                    placeholder="dd/mm/yyyy"
+                    [(ngModel)]="announcementData.startDate"
+                    required
+                    [disabled]="canView && !canCreate"
+                  ></pn-date-picker>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-2">
+              <div class="form-group">
+                <label class="col-form-label">เวลาเริ่มต้น</label>
+                <div class="form-input">
+                  <pn-time-picker
+                    id="start_time"
+                    name="start_time"
+                    [(ngModel)]="startTime"
+                    required
+                    [ngModelOptions]="{standalone: true}"
+                    [disabled]="canView && !canCreate"
+                  ></pn-time-picker>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="form-group">
+                <label class="col-form-label">วันเวลาสิ้นสุด</label>
+                <div class="form-input">
+                  <pn-date-picker
+                    placeholder="dd/mm/yyyy"
+                    id="endDate"
+                    name="endDate"
+                    [(ngModel)]="announcementData.endDate"
+                    required
+                    [disabled]="canView && !canCreate"
+                  ></pn-date-picker>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-2">
+              <div class="form-group">
+                <label class="col-form-label">เวลาสิ้นสุด</label>
+                <div class="form-input">
+                  <pn-time-picker
+                    id="end_time"
+                    name="end_time"
+                    [(ngModel)]="endTime"
+                    required
+                    [ngModelOptions]="{standalone: true}"
+                    [disabled]="canView && !canCreate"
+                  ></pn-time-picker>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-12 px-0">
+          <div class="form-group">
+            <label class="col-form-label">รายละเอียด</label>
+            <div class="form-input">
+              <shared-editor
+                id="description"
+                name="description"
+                placeholder="โปรดระบุ"
+                [(ngModel)]="announcementData.detail"
+                [ngModelOptions]="{standalone: true}"
+                required
+                [class._g-disable]="canView && !canCreate"
+              ></shared-editor>
+            </div>
+          </div>
+        </div>
+
+
+
+        <pn-toggle
+          class="mb-2"
+          id="status"
+          name="status"
+          [(ngModel)]="announcementData.status"
+          (ngModelChange)="onChangCheckBoxStatus($event)"
+          [disabled]="canView && !canCreate"
+        >
+          <pn-toggle-right>
+            <div class="ml-2">
+              <label class="mb-0 font-size-normal">ปิดการทำรายการ</label>
+            </div>
+          </pn-toggle-right>
+        </pn-toggle>
+      </div>
+    </div>
+
+
+    <div class="_g-header justify-content-end">
+      <button *ngIf="canCreate"
+        type="submit"
+        class="btn btn-primary  _g-space-btn mb-1"
+      ><span>บันทึก</span>
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary  mr-1 mb-1"
+        (click)="goBack()"
+      ><span>กลับ</span>
+      </button>
+    </div>
+
+  </form>
+</div>

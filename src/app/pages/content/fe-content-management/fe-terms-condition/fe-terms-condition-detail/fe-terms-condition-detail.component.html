@@ -1,0 +1,247 @@
+<form
+  #form="ngForm"
+  [class.submitted]="form.submitted"
+  (ngSubmit)="onSave(form)"
+>
+
+  <div id="terms-condition-detail">
+    <div class="_g-header">
+      <h1 class="_g-title-header">{{!isEdit ? 'รายละเอียด' : 'แก้ไข'}} ข้อกำหนดการใช้งาน</h1>
+      <div
+        *ngIf="!isEdit"
+        class="d-flex justify-content-end"
+      >
+        <button
+          type="button"
+          class="btn btn-clear  mr-1 mb-1"
+          (click)="onDelete(termsCondition)"
+        ><span>ลบ</span>
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary  mr-1 mb-1"
+          (click)="edit()"
+        ><span>แก้ไข</span>
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary  mr-1 mb-1"
+          (click)="goBack()"
+        ><span>กลับ</span>
+        </button>
+      </div>
+      <div
+        *ngIf="isEdit"
+        class="_g-header justify-content-end"
+      >
+        <button
+          type="button"
+          class="btn btn-clear  mr-1 mb-1"
+          (click)="goBackDetail()"
+        ><span>ยกเลิก</span>
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary  mr-1 mb-1"
+        ><span>บันทึก</span>
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary  mr-1 mb-1"
+          (click)="goBackDetail()"
+        ><span>กลับ</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="card _g-card-content-tab">
+      <div class="card-body">
+        <pn-tabs
+          [tabs]="tabs"
+          [(activeTabId)]="activeTabId"
+        >
+        </pn-tabs>
+        <ng-container *ngIf="activeTabId === Tab.detail">
+          <div
+            *ngIf="!isEdit"
+            id="detail"
+          >
+            <div class="card-header px-0">
+              <span class="_g-text-header-title">ข้อมูลส่วนตัว</span>
+            </div>
+            <div class="d-flex justify-content-between pt-2">
+              <div class="col-9 _g-text-title pl-0">
+                <span>ชื่อหัวข้อ</span>
+                <p>{{termsCondition.title}}</p>
+              </div>
+              <div class="col-3 pl-0 d-flex justify-content-end">
+                <div class="_g-text-title">
+                  <span>เวอร์ชัน</span>
+                  <p>Version {{termsCondition.version}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between pt-2">
+              <div class="col-12 _g-text-title pl-0">
+                <span>รายละเอียด</span>
+                <shared-inner-html [html]="termsCondition.detail"></shared-inner-html>
+                <!-- <a class="text-link">ดูเพิ่มเติม</a> -->
+              </div>
+            </div>
+            <div class="d-flex justify-content-between pt-2">
+              <div class="col-12 px-0">
+                <div class="col-12 pt-2 pb-2 pl-0">
+                  <span>สถานะการใช้งาน</span>
+                </div>
+                <div class="col-12 d-flex px-0 py-1 pl-0">
+                  <div class="col-12 pl-0">
+                    <li class="d-inline-block mr-2 mb-2">
+                      <div class="checkbox _g-checkbox-display-none">
+                        <input
+                          type="checkbox"
+                          id="status"
+                          name="status"
+                          [(ngModel)]="termsCondition.isActive"
+                        >
+                        <label for="status"><span>{{termsCondition.isActive? 'Active': 'Inactive'}}</span></label>
+                      </div>
+                    </li>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            *ngIf="isEdit"
+            id="edit-detail"
+          >
+            <div class="card-header px-0">
+              <span class="_g-text-header-title">รายละเอียด</span>
+            </div>
+
+            <div class="row">
+              <div class="col-10">
+                <div class="form-group">
+                  <label class="col-form-label">ชื่อหัวข้อ</label>
+                  <div class="form-input">
+                    <input
+                      type="text"
+                      name="title"
+                      class="form-control"
+                      placeholder="โปรดระบุ"
+                      [(ngModel)]="termsCondition.title"
+                      required
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="col-2">
+                <div class="form-group">
+                  <label class="col-form-label">เวอร์ชัน</label>
+                  <div class="form-input">
+                    <input
+                      name="version"
+                      type="text"
+                      class="form-control"
+                      placeholder="โปรดระบุ"
+                      disabled
+                      [(ngModel)]="termsCondition.version"
+                      required
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group">
+                  <label class="col-form-label">รายละเอียด</label>
+                  <div class="form-input">
+                    <shared-editor
+                      placeholder="รายละเอียด"
+                      id="description"
+                      name="description"
+                      [(ngModel)]="termsCondition.detail"
+                      required
+                    ></shared-editor>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="col-12 pt-2 pb-2 pl-0">
+                  <span>สถานะการใช้งาน</span>
+                </div>
+                <div class="col-12 d-flex px-0 py-1 pl-0">
+                  <div class="col-12 pl-0">
+                    <li class="d-inline-block mr-2 mb-2">
+                      <div class="checkbox">
+                        <input
+                          type="checkbox"
+                          name="isActive"
+                          id="isActive"
+                          [(ngModel)]="termsCondition.isActive"
+                          (ngModelChange)="onClickCheck($event, termsCondition)"
+                        >
+                        <label for="isActive"><span>{{termsCondition.isActive?'Active':'Inactive'}}</span></label>
+                      </div>
+                    </li>
+                    <label class="text-primary">{{confirmCheckStatusText}}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="activeTabId === Tab.customerList">
+          <fe-customer-list></fe-customer-list>
+        </ng-container>
+      </div>
+    </div>
+
+
+    <div
+      *ngIf="!isEdit"
+      class="d-flex justify-content-end"
+    >
+      <button
+        type="button"
+        class="btn btn-clear  mr-1 mb-1"
+        (click)="onDelete(termsCondition)"
+      ><span>ลบ</span>
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary  mr-1 mb-1"
+        (click)="edit()"
+      ><span>แก้ไข</span>
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary  mr-1 mb-1"
+        (click)="goBack()"
+      ><span>กลับ</span>
+      </button>
+    </div>
+    <div
+      *ngIf="isEdit"
+      class="_g-header justify-content-end"
+    >
+      <button
+        type="button"
+        class="btn btn-clear  mr-1 mb-1"
+        (click)="goBackDetail()"
+      ><span>ยกเลิก</span>
+      </button>
+      <button
+        type="submit"
+        class="btn btn-primary  mr-1 mb-1"
+      ><span>บันทึก</span>
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary  mr-1 mb-1"
+        (click)="goBackDetail()"
+      ><span>กลับ</span>
+      </button>
+    </div>
+  </div>
+</form>

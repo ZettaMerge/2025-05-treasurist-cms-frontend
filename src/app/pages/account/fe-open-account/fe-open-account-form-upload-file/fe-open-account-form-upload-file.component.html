@@ -1,0 +1,128 @@
+<div class="card-content">
+  <div class="card-header pb-0">
+    <h5 class="card-title text-primary">{{mode}}</h5>
+  </div>
+
+  <div
+    id="listFile"
+    *ngIf="isShowHistory"
+  >
+    <div class="card-body px-0 py-0">
+      <div class="col-12 _g-list-file-data border-bottom">
+        <div class="col-1">
+          <span>No.</span>
+        </div>
+        <div class="col-4">
+          <span>Upload Date</span>
+        </div>
+        <div class="col-4">
+          <span>Upload by</span>
+        </div>
+        <div class="col-2">
+          <span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body px-0 pt-0">
+      <div
+        class="col-12 _g-list-file-data border-bottom"
+        *ngFor="let file of accountFileData; let index = index"
+      >
+        <div class="col-1">
+          <span>{{index + 1}}</span>
+        </div>
+        <div class="col-4">
+          <span>{{file.createdDate | aDateTime}}</span>
+        </div>
+        <div class="col-4">
+          <span>{{file.updatedBy}}</span>
+        </div>
+        <div class="col-2">
+          <a
+            class="text-primary pr-1"
+            (click)="onDownloadFile(file)"
+          ><i class="ic ic-download text-primary"></i> &nbsp; <span class="text-primary">ไฟล์แนบ</span></a>
+
+          <a
+            class="text-primary pr-1"
+            (click)="onDeleteFile(file)"
+          ><i class="ic ic-delete text-primary"></i></a>
+        </div>
+      </div>
+      <div class="_new-upload ">
+        <a
+          class="pr-1"
+          (click)="onClickNewUpload()"
+        ><i class="ic ic-plus-circle text-primary"></i> &nbsp; <span class="">อัปโหลดไฟล์ใหม่</span></a>
+      </div>
+    </div>
+  </div>
+
+  <form
+    #form="ngForm"
+    [class.submitted]="form.submitted"
+    (ngSubmit)="onSubmit(form)"
+  >
+    <div
+      class="card-body py-0"
+      *ngIf="isShow"
+    >
+      <div class="col-12 px-0">
+        <div class="form-group">
+          <div class="form-input">
+            <pn-file-input
+              *ngIf="!fileCoverPreview"
+              [(ngModel)]="fileCover"
+              (onImageSelect)="onSelectFileCover($event)"
+              [ngModelOptions]="{ standalone: true }"
+              required
+            ></pn-file-input>
+          </div>
+          <div *ngIf="fileCoverPreview">
+            <div class="_file-wrapper">
+              <div class="d-flex align-items-center flex-grow-1 justify-content-between">
+                <p class="mx-2">{{ fileCoverFile.name }}</p>
+                <a (click)="removeImageCover()">
+                  <i class="ic ic-close text-accent"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="_modal-footer">
+        <button
+          type="button"
+          class="btn btn-clear  mr-1 mb-1"
+          (click)="onCancelUpload()"
+        ><span>ยกเลิก</span>
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary  mr-1 mb-1"
+        ><span>บันทึก</span>
+        </button>
+      </div>
+    </div>
+
+
+  </form>
+
+  <div
+    *ngIf="isShowHistory"
+    class="_modal-footer">
+    <button
+      type="button"
+      class="btn btn-clear  mr-1 mb-1"
+      (click)="onCancel()"
+    ><span>ปิด</span>
+    </button>
+<!--    <button-->
+<!--      type="button"-->
+<!--      class="btn btn-primary  mr-1 mb-1"-->
+<!--      (click)="onSave($event)"-->
+<!--    ><span>บันทึก</span>-->
+<!--    </button>-->
+  </div>
+</div>

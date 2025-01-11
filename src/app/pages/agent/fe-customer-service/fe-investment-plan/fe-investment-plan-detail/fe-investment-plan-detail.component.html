@@ -1,0 +1,223 @@
+<div class="_g-header">
+  <h1 class="_g-title-header">รายละเอียด แผนลงทุน</h1>
+  <div class="_g-header justify-content-end">
+    <button
+      type="button"
+      class="btn btn-secondary  mr-1 mb-1"
+      (click)="goBack()"
+    ><span>กลับ</span>
+    </button>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body _g-detail-wrapper">
+    <div class="d-flex justify-content-between">
+      <span class="_g-text-header-title">ข้อมูลทั่วไป</span>
+      <span
+        class="badge"
+        [class.badge-primary]="investPlanData?.status === 'PENDING'"
+        [class.badge-danger]="investPlanData?.status === 'DECLINED'"
+        [class.badge-info]="investPlanData?.status === 'ACCEPTED'"
+        [class.badge-purple]="investPlanData?.status === 'ORDER_EXP'"
+      >
+        {{investPlanData?.status === 'ORDER_EXP' ? 'ORDER EXP.' : investPlanData?.status}}
+      </span>
+    </div>
+
+    <!--    INFO-->
+    <div class="row">
+      <div class="col-12 d-flex px-0 py-1">
+        <div class="col-7">
+          <div class="row">
+            <div class="col-4 _g-text-title">
+              <span>วันที่ทำรายการ</span>
+              <p>{{!investPlanData?.confirmationDate ? '-' : investPlanData?.confirmationDate | aDate}}</p>
+            </div>
+            <div class="col-4 _g-text-title">
+              <span>IC License</span>
+              <p>{{investPlanData?.agent?.icLicense}}  {{investPlanData?.agent?.user?.firstName}} {{investPlanData?.agent?.user?.lastName}}</p>
+            </div>
+            <div class="col-4 _g-text-title">
+              <span>ชื่อ-นามสกุล</span>
+              <p>{{investPlanData?.user?.account?.thFirstname}} {{investPlanData?.user?.account?.thLastname}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr/>
+    <!--    BUY-->
+    <div class="d-flex justify-content-between align-items-center pt-2">
+      <span class="_g-text-header-title">ข้อมูลแผนลงทุน</span>
+    </div>
+    <div class="row">
+      <div class="col-12 d-flex px-0 py-1">
+        <div class="col-7">
+          <div class="row">
+            <div class="col-4 _g-text-title">
+              <span>ประเภทแผน</span>
+              <p>{{investPlanData?.draftType === 'AGENT_PLAN' ? 'Agent Plan' : investPlanData?.draftType === 'CUSTOMIZED_PLAN' ? 'Investor Plan' : investPlanData?.draftType === 'RISK_BASED_PLAN' ? 'Treasurist Plan' : '-'}}</p>
+            </div>
+            <div class="col-4 _g-text-title">
+              <span>ชื่อแผน</span>
+              <p>{{investPlanData?.name}}</p>
+            </div>
+            <div class="col-4 _g-text-title">
+              <span>เงินลงทุนเริ่มต้น (บาท)</span>
+              <p>{{!investPlanData?.startingCost ? '-' : investPlanData?.startingCost | aDecimal}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-5">
+          <div class="row">
+            <div class="col-6 _g-text-title">
+              <span>เงินลงทุนต่อเดือน (บาท)</span>
+              <p>{{!investPlanData?.recurringCost ? '-' : investPlanData?.recurringCost | aDecimal}}</p>
+            </div>
+            <div class="col-6 _g-text-title">
+              <span>เงินลงทุนทั้งหมด (บาท)</span>
+              <p>{{!investPlanData?.totalCost ? '-' : investPlanData?.totalCost | aDecimal}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 d-flex px-0 py-1">
+        <div class="col-7">
+          <div class="row">
+            <div class="col-4 _g-text-title">
+              <span>ระยะเวลาลงทุน (ปี)</span>
+              <p>{{investPlanData?.subscriptionPeriod}}</p>
+            </div>
+            <div class="col-4 _g-text-title">
+              <span>ผลตอบแทนที่คาดหวัง (บาท)</span>
+              <p>{{!investPlanData?.expectedReturn?.futureValue ? '-' : investPlanData?.expectedReturn?.futureValue | aDecimal}}</p>
+            </div>
+            <div class="col-4 _g-text-title">
+              <span>อัตราผลตอบแทนที่คาดหวัง (ต่อปี)</span>
+              <p>{{investPlanData?.expectedReturn?.averageProfitPercentage | aDecimal}}%</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr/>
+
+    <div class="d-flex justify-content-between align-items-center pt-2">
+      <span class="_g-text-header-title">สัดส่วนกองทุน</span>
+    </div>
+    <div class="row">
+      <div class="col-3 _g-text-title" *ngIf="investPlanData?.fundTypesRatio?.moneyMarket">
+        <span>กองทุนตลาดเงิน</span>
+        <p>{{investPlanData?.fundTypesRatio?.moneyMarket | aDecimal}}%</p>
+      </div>
+      <div class="col-3 _g-text-title" *ngIf="investPlanData?.fundTypesRatio?.fixed">
+        <span>กองทุนตราสารหนี้</span>
+        <p>{{investPlanData?.fundTypesRatio?.fixed | aDecimal}}%</p>
+      </div>
+      <div class="col-3 _g-text-title" *ngIf="investPlanData?.fundTypesRatio?.mixed">
+        <span>กองทุนทุนผสม</span>
+        <p>{{investPlanData?.fundTypesRatio?.mixed | aDecimal}}%</p>
+      </div>
+      <div class="col-3 _g-text-title" *ngIf="investPlanData?.fundTypesRatio?.equity">
+        <span>กองทุนตราสารทุน</span>
+        <p>{{investPlanData?.fundTypesRatio?.equity | aDecimal}}%</p>
+      </div>
+      <div class="col-3 _g-text-title" *ngIf="investPlanData?.fundTypesRatio?.property">
+        <span>กองทุนอสังหาริมทรัพย์และโครงสร้างพื้นฐาน</span>
+        <p>{{investPlanData?.fundTypesRatio?.property | aDecimal}}%</p>
+      </div>
+      <div class="col-3 _g-text-title" *ngIf="investPlanData?.fundTypesRatio?.commodities">
+        <span>กองทุนสินค้าโภคภัณฑ์</span>
+        <p>{{investPlanData?.fundTypesRatio?.commodities | aDecimal}}%</p>
+      </div>
+      <div class="col-3 _g-text-title"
+           *ngIf="investPlanData?.fundTypesRatio?.others || investPlanData?.fundTypesRatio?.miscellaneous">
+        <span>กองทุนอื่นๆ</span>
+        <p>{{investPlanData?.fundTypesRatio?.others + investPlanData?.fundTypesRatio?.miscellaneous | aDecimal}}%</p>
+      </div>
+    </div>
+    <hr/>
+
+    <!--    Fund-->
+    <div class="d-flex justify-content-between align-items-center pt-2">
+      <span class="_g-text-header-title mb-0">รายการกองทุน</span>
+    </div>
+    <div class="row">
+      <div class="_fund-list col-12 d-flex px-0 py-1">
+        <div class="col-6 d-flex">
+          <div class="col-4 _g-text-title d-flex align-items-center">
+            <p class="mb-0">กองทุน</p>
+          </div>
+          <div class="col-4 _g-text-title d-flex align-items-center">
+            <p class="mb-0">บลจ.</p>
+          </div>
+          <div class="col-4 _g-text-title d-flex align-items-center">
+            <p class="mb-0">สัดส่วนลงทุนเริ่มต้น</p>
+          </div>
+        </div>
+        <div class="col-6 d-flex">
+          <div class="col-4 _g-text-title d-flex align-items-center">
+            <p class="mb-0">ลงทุนเริ่มต้น (บาท)</p>
+          </div>
+          <div class="col-4 _g-text-title d-flex align-items-center">
+            <p class="mb-0">สัดส่วนลงทุนต่อเดือน
+            </p>
+          </div>
+          <div class="col-4 _g-text-title d-flex align-items-center">
+            <p class="mb-0">ลงทุนต่อเดือน (บาท)
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr/>
+
+    <div *ngFor="let fund of investPlanData?.fundPlanDraftFundSummaries">
+      <div class="row">
+        <div class="d-flex col-12 px-0 pb-2 pt-2">
+          <div class="col-6 d-flex">
+            <div class="col-4 d-flex flex-column justify-content-center">
+              {{fund.fundCode}}
+              <div class="d-flex px-0 align-items-center"  *ngIf="investPlanData?.status === 'ACCEPTED' && fund.isCompleteTransaction === false" >
+                <img class="_g-remark-img"
+                     src="assets/img/triangle-warning.png">
+                <span class="text-danger">ทำรายการไม่สำเร็จ</span>
+              </div>
+              <div class="d-flex px-0 align-items-center"  *ngIf="investPlanData?.status === 'ACCEPTED' && fund.isCompleteDcaTransaction === false" >
+                <img class="_g-remark-img"
+                     src="assets/img/triangle-warning.png">
+                <span class="text-danger">ทำรายการไม่สำเร็จ</span>
+              </div>
+            </div>
+            <div class="col-4 d-flex align-items-center">{{fund.amcCode}}</div>
+            <div class="col-4 d-flex align-items-center">{{fund.startingCostPercentage | aDecimal}}%</div>
+          </div>
+          <div class="col-6 d-flex">
+            <div class="col-4 d-flex align-items-center">
+              {{fund.startingCost | aDecimal}}
+            </div>
+            <div class="col-4 d-flex align-items-center">{{fund.recurringCostPercentage | aDecimal}}%</div>
+            <div class="col-4 d-flex align-items-center">
+              {{fund.recurringCost | aDecimal}}
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+    </div>
+  </div>
+</div>
+
+
+<div class="_g-header justify-content-end">
+  <button
+    type="button"
+    class="btn btn-secondary  mr-1 mb-1"
+    (click)="goBack()"
+  ><span>กลับ</span>
+  </button>
+</div>

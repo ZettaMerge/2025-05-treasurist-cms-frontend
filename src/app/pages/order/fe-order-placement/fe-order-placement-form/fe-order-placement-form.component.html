@@ -1,0 +1,251 @@
+<form
+  #form="ngForm"
+  [class.submitted]="submitted"
+  (ngSubmit)="onSave(form)"
+>
+  <div class="card-body _g-card-content-tab">
+    <div class="d-flex justify-content-between">
+      <span class="text-primary font-size-medium">สร้างรายการใหม่</span>
+    </div>
+    <div class="d-flex pt-4">
+      <ul class="list-unstyled mb-0">
+        <li
+          class="d-inline-block mr-2"
+          *ngFor="let checkListType of checkListTypes; let i = index;"
+        >
+          <div class="radio">
+            <input
+              type="radio"
+              name="basic-radio-1"
+              id="type-{{i}}"
+              [checked]="i === 0"
+              (click)="onClickType($event, checkListType)"
+            >
+            <label for="type-{{i}}">{{checkListType.name}}</label>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="d-flex pt-2">
+      <div class="col-6 pl-0">
+        <div class="form-group">
+          <label class="col-form-label is-required">ชื่อ-นามสกุล</label>
+          <div class="form-input">
+            <pn-dynamic-dropdown
+              placeholder="ค้นหา"
+              id="firstName"
+              name="firstName"
+              [list]="listsCustomerDropdown"
+              [(ngModel)]="customerData"
+              (ngModelChange)="onChangeNameCustomer($event, customerData)"
+              required
+            >
+
+            </pn-dynamic-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 pr-0">
+        <div class="form-group">
+          <label class="col-form-label is-required">แผนลงทุน</label>
+          <div class="form-input">
+            <pn-dynamic-dropdown
+              id="fundPlan"
+              name="fundPlan"
+              placeholder="เลือก"
+              [list]="listsFundPlanDropdown"
+              [(ngModel)]="fundPlan"
+              [disabled]="!customerData"
+              (ngModelChange)="onChangeFundPlan($event)"
+              required
+            >
+            </pn-dynamic-dropdown>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--BUY SELL-->
+    <fe-order-placement-form-buy
+      *ngIf="isShowBuy"
+      [fcnAccountId]="fcnAccountId"
+      [type]="type"
+      [customerId]="customerId"
+      [acceptVulnerableFlag]="acceptVulnerableFlag"
+      (byFundData)="onChangByFundData($event)"
+      [fundPlansId]="fundPlansId"
+    ></fe-order-placement-form-buy>
+    <!--BUY SELL-->
+
+    <!--SELL-->
+    <fe-order-placement-form-sell
+      *ngIf="isShowSell"
+      [fcnAccountId]="fcnAccountId"
+      [fundPlansId]="fundPlansId"
+      (sellFundData)="onChangSellFundData($event)"
+      [type]="type"
+      [customerId]="customerId"
+      [acceptVulnerableFlag]="acceptVulnerableFlag"
+    ></fe-order-placement-form-sell>
+    <!--SELL-->
+
+
+    <!--SWITCH-->
+    <fe-order-placement-form-switch
+      *ngIf="isShowSwitch"
+      [fundSwitchArray]="fundSwitchArray"
+      [fcnAccountId]="fcnAccountId"
+      [fundPlansId]="fundPlansId"
+      [type]="type"
+      [customerId]="customerId"
+      [form]="form"
+      (SwitchFundData)="onChangSwitchFundData($event)"
+      [acceptVulnerableFlag]="acceptVulnerableFlag"
+    >
+
+    </fe-order-placement-form-switch>
+
+    <!--DCA-->
+    <div *ngIf="isShowDca">
+
+      <div>
+        <fe-order-placement-form-dca
+          [fcnAccountId]="fcnAccountId"
+          [type]="type"
+          [customerId]="customerId"
+          (dcaFundData)="onChangDcaFundData($event)"
+          [fundPlansId]="fundPlansId"
+        ></fe-order-placement-form-dca>
+      </div>
+    </div>
+
+    <div
+      class="d-flex pt-2"
+      *ngIf="isShowBuy"
+    >
+      <div class="col-6 pl-0">
+        <div class="form-group">
+          <label class="col-form-label is-required">วิธีชำระเงิน</label>
+          <div class="form-input">
+            <pn-dynamic-dropdown
+              id="code"
+              name="code"
+              placeholder="เลือก"
+              [list]="listsPaymentMethod"
+              [(ngModel)]="paymentMethod"
+              (ngModelChange)="onChangePaymentMethod($event)"
+              required
+            >
+            </pn-dynamic-dropdown>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-6 pr-0"
+        *ngIf="isShowBank"
+      >
+        <div class="form-group">
+          <label class="col-form-label">ธนาคาร</label>
+          <div class="form-input">
+            <input
+              type="text"
+              class="form-control"
+              id="bank"
+              name="bank"
+              [(ngModel)]="bank"
+              [disabled]="true"
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="d-flex"
+      *ngIf="isShowUploadFile"
+    >
+      <div class="col-6 pl-0">
+        <div class="form-group mb-0">
+          <label class="col-form-label">ยอดโอนรวม (บาท)</label>
+        </div>
+        <div class="align-items-center d-flex justify-content-center _card-total ">
+          <label class="pt-1">{{TotalAmount | number:'.2'}}</label>
+        </div>
+      </div>
+      <div class="col-6 d-flex">
+        <div class="col-6 pl-0">
+          <div class="form-group mb-0">
+            <label class="col-form-label">สลิปโอนเงิน</label>
+          </div>
+          <div class="align-items-center d-flex justify-content-center _upload-file _image-wrapper ">
+            <label
+              for="file-upload"
+              class="pt-1"
+            ><i class="ft ft-upload"></i>อัปโหลดไฟล์</label>
+            <input
+              #fileInput
+              id="file-upload"
+              type="file"
+              class="file-input"
+              (change)="onChangeFile($event)"
+            />
+          </div>
+        </div>
+        <div class="col-6 pt-4">
+          <div
+            *ngIf="fileCoverPreview"
+            class="_g-image-preview"
+          >
+            <img [src]="fileCoverPreview" />
+          </div>
+          <div
+            *ngIf="fileCoverPreviewName"
+            class=" _file-name-preview  pt-1"
+          >
+            <span>{{fileCoverPreviewName}}</span>
+          </div>
+          <div
+            *ngIf="!fileCoverPreview && !fileCoverPreviewName && !isErrorUploadFile"
+            class="pt-1"
+          >
+            <span class="text-muted">ยังไม่ได้เลือกไฟล์</span>
+          </div>
+          <div
+            *ngIf="isErrorUploadFile"
+            class="pt-1"
+          >
+            <span class="text-accent">*** กรุณาเลือกไฟล์</span>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+    <error-message-control
+      *ngIf="isErrorMinimumHolding"
+      [text]="textErrorMinimumHolding"
+    >
+    </error-message-control>
+    <div class="d-flex justify-content-end pt-3">
+      <div class="col-6 d-flex pr-0">
+        <div class="col-6 pl-0 _display-btn">
+          <button
+            type="button"
+            class="btn btn-clear flex-1"
+            (click)="onCancel()"
+          >
+            <span><i class="ic-cross"></i>ยกเลิก</span>
+          </button>
+        </div>
+        <div class="col-6 pr-0 _display-btn">
+          <button
+            type="submit"
+            class="btn btn-primary flex-1"
+          >
+            <span><i class="ic-cross"></i>สร้าง</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

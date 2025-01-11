@@ -1,0 +1,148 @@
+<div>
+  <div class="d-flex pb-2">
+    <div class="col-11 plx-0  d-flex">
+      <div class="col-3 pl-0"><span>บลจ.</span></div>
+      <div class=" col-3 pl-0"><span>เลือกกองทุน</span></div>
+
+      <div class="col-3 pl-0"><span>จำนวนที่ต้องการซื้อ</span></div>
+      <div class="col-3 pl-0"><span>วันที่ส่งคำสั่ง</span></div>
+    </div>
+    <div class="col-1 pl-0 d-flex"></div>
+  </div>
+  <hr>
+  <div *ngFor="let byFundData of byFundArray; let i = index; let firstIndex = first;  let lastIndex = last;">
+    <div class="d-flex pb-2 pt-3">
+      <div class="col-11 px-0 d-flex">
+        <div class="col-3 pl-0">
+          <div class="form-group">
+            <div class="form-input">
+              <shared-asset-dropdown
+                id="fund-{{i}}"
+                name="fund-{{i}}"
+                placeholder="ค้นหา บลจ."
+                [(ngModel)]="byFundData.amcCode"
+                (ngModelChange)="onAssetChange($event , i)"
+                required
+              >
+              </shared-asset-dropdown>
+            </div>
+          </div>
+        </div>
+        <div class="col-3 pl-0">
+          <div class="form-group">
+            <div class="form-input">
+              <shared-fund-dropdown
+                placeholder="ค้นหากองทุน"
+                id="fundName-{{i}}"
+                name="fundName-{{i}}"
+                [amc]="byFundData.amcCode || undefined"
+                [isActive]="true"
+                [(ngModel)]="byFundData.fund"
+                [autoReset]="!byFundData.amcCode"
+                (ngModelChange)="onFundChange($event, i)"
+                required
+              >
+              </shared-fund-dropdown>
+            </div>
+            <div
+              id="minimum-{{i}}"
+              name="minimum-{{i}}"
+              *ngIf="byFundData.fund"
+              class="pt-1"
+            >
+              <p class="mb-0 text-muted font-size-small">ขั้นต่ำในการซื้อ {{ byFundData.minimum | number: '1.2-2'}} บาท</p>
+            </div>
+            <error-message-control
+              id="isFundDouble-{{i}}"
+              name="isFundDouble-{{i}}"
+              *ngIf="byFundData.isFundDouble"
+              [text]="'กองทุนนี้ถูกเลือกไปแล้ว กรุณาเลือกใหม่'"
+            >
+            </error-message-control>
+          </div>
+        </div>
+        <div class="col-3 pl-0">
+          <div class="form-group position-relative has-icon-right">
+            <div class="form-input">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="0.00"
+                id="fundAmount-{{i}}"
+                name="fundAmount-{{i}}"
+                mask="separator.2"
+                thousandSeparator=","
+                onlyPositive
+                [(ngModel)]="byFundData.amount"
+                (ngModelChange)="fundAmountChange($event, byFundData.amount , byFundData.minimum, i)"
+                (focus)="onFocusAmount(i)"
+                (blur)="onBlurEvent($event , i, byFundData.amount)"
+                required
+              >
+              <div class="form-control-position">
+                <span>บาท</span>
+              </div>
+            </div>
+            <error-message-control
+              id="isErrorMinimum-{{i}}"
+              name="isErrorMinimum-{{i}}"
+              *ngIf="byFundData.isErrorMinimum"
+              [text]="'จำนวนเงินลงทุนน้อยกว่าเงินลงทุนขั้นต่ำที่กำหนด'"
+            >
+            </error-message-control>
+            <error-message-control
+              id="isErrorNumber-{{i}}"
+              name="isErrorNumber-{{i}}"
+              *ngIf="byFundData.isErrorNumber"
+              [text]="'กรุณาระบุเป็นตัวเลขเท่านั้น'"
+            >
+            </error-message-control>
+          </div>
+        </div>
+        <div class="col-3 pl-0">
+          <div class="form-group mb-0">
+            <div class="form-input">
+              <pn-date-picker
+                placeholder="dd/mm/yyyy"
+                id="date-{{i}}"
+                name="date-{{i}}"
+                [(ngModel)]="byFundData.effectiveDate"
+                [disabledDates]="byFundData.disabledDates"
+                [min]="byFundData.minDate"
+                [max]="maxDate"
+                [daysDisabled]="[0,6]"
+                [datesEnabled]="byFundData.datesEnabled"
+                (ngModelChange)="onChangeDate(i, byFundData)"
+                required
+              >
+              </pn-date-picker>
+              <div
+                id="cutOff-{{i}}"
+                name="cutOff-{{i}}"
+                *ngIf="byFundData.cutOff"
+                class="pt-1"
+              >
+                <span class="text-muted font-size-small">(ปิดรับคำสั่ง {{byFundData.cutOff | aTime}} น. ของวัน)</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col-1 text-center pt-2">
+        <a
+          (click)="deleteFund(i)"
+          class="text-primary font-size-large"
+        ><i class="ic ic-delete"></i>
+        </a>
+      </div>
+
+    </div>
+    <hr>
+  </div>
+  <div class="d-flex align-items-center justify-content-end pt-2">
+    <a (click)="addFund($event)"><i class="ic ic-plus-circle text-primary pr-1"></i>เพิ่มกองทุน</a>
+  </div>
+</div>

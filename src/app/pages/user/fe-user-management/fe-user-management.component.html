@@ -1,0 +1,95 @@
+<div id="user-mangement">
+  <div class="_g-header justify-content-between">
+    <h1 class="_g-title-header">User Management</h1>
+  </div>
+
+  <!--  FILTER-->
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label class="col-form-label">Role</label>
+            <div class="d-flex">
+              <div class="flex-1">
+                <div class="form-input">
+                  <input
+                    type="text"
+                    id="email"
+                    name="email"
+                    class="form-control"
+                    placeholder="ค้นหาด้วยชื่อ Role"
+                    [(ngModel)]="filterRole"
+                    (ngModelChange)="searchDebounce()"
+                  >
+                </div>
+              </div>
+              <div class="_btn-clear">
+                <button
+                  type="button"
+                  class="btn btn-clear btn-lg mr-1 mb-1"
+                  (click)="clearFilter()"
+                >ล้าง
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--  FILTER-->
+
+  <div class="card">
+    <div class="card-body">
+
+
+
+      <div>
+        <div class="d-flex justify-content-between">
+          <div class="col-6 px-0">
+            <pn-grid-per-page
+              [page]="page"
+              (setPerPage)="grid.setPerPage($event)"
+            ></pn-grid-per-page>
+          </div>
+          <div class="mr-2" *ngIf="canCreate">
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="add()"
+            >สร้างรายการใหม่
+            </button>
+          </div>
+        </div>
+        <div
+          class="col-12"
+          *ngIf="rows && rows?.length === 0"
+        >
+          <pn-data-not-found>
+          </pn-data-not-found>
+        </div>
+        <div
+          class="_g-table-container"
+          [hidden]="rows && rows?.length === 0"
+        >
+          <pn-lib-grid
+            #grid
+            [bodyHeight]="'auto'"
+            [dataSub]="dataSub"
+            [rows]="rows"
+            [columns]="columns"
+            [rowHeight]="65"
+            [externalPaging]="true"
+            [(page)]="page"
+            (pageChange)="pageChange()"
+            (sortChange)="sortChange()"
+            (edit)="edit($event)"
+            (detailInfo)="goTodetail($event)"
+          ></pn-lib-grid>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

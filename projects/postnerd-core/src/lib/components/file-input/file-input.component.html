@@ -1,0 +1,34 @@
+<div
+  class="is-flex"
+  [style.width]="width"
+  [style.height]="height"
+>
+  <ngx-file-drop
+    dropZoneClassName="_file-dropzone {{classInput}}"
+    contentClassName="_file-dropzone-content"
+    [accept]="accept"
+    [disabled]="disabled"
+    [multiple]="multiple"
+    (onFileDrop)="dropped($event)"
+    style="width: 100%; height: 100%;"
+  >
+    <ng-template
+      ngx-file-drop-content-tmp
+      let-openFileSelector="openFileSelector"
+    >
+      <div class="d-flex flex-column align-items-center">
+        <i
+          class="mb-2 _icon-image"
+          ngClass="ic ic-image"
+        ></i>
+        <div class="d-flex">
+          <span class="font-size-medium _text-file">วางไฟล์ที่นี่ หรือ&nbsp;</span>
+          <a
+            (click)="openFileSelector()"
+            class="text-link text-info"
+          ><span class="font-size-medium text-info">เลือกไฟล์</span></a>
+        </div>
+      </div>
+    </ng-template>
+  </ngx-file-drop>
+</div>

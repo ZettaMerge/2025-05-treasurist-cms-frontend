@@ -1,0 +1,216 @@
+<div id="Index-type">
+  <div class="_g-header justify-content-between">
+    <h1 class="_g-title-header">Fund Index Type</h1>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12 px-0 d-flex">
+        <div class="col-4">
+          <div class="form-group">
+            <label class="col-form-label">กองทุน (Free Text)</label>
+            <div class="form-input">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="กองทุน"
+                [(ngModel)]="filter.searchFund"
+                (ngModelChange)="searchTextChange()"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-8 px-0 d-flex">
+          <div class="col-6">
+            <div class="form-group">
+              <label class="col-form-label">บลจ.</label>
+              <div class="form-input">
+                <shared-asset-without-fund-mapping-dropdown
+                  placeholder="บลจ."
+                  [(ngModel)]="filter.amc"
+                  (ngModelChange)="filterAmcChange($event)"
+                  [autoReset]="true"
+                >
+                </shared-asset-without-fund-mapping-dropdown>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label class="col-form-label">กองทุน</label>
+              <div class="form-input">
+                <shared-fund-without-fund-mapping-dropdown
+                  placeholder="กองทุน"
+                  name="fund"
+                  [autoReset]="true"
+                  [amc]="filter.amc || undefined"
+                  [(ngModel)]="filter.fund"
+                  (ngModelChange)="filterChange()"
+                >
+                </shared-fund-without-fund-mapping-dropdown>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 px-0 d-flex">
+        <div class="col-4">
+          <div class="form-group">
+            <label class="col-form-label">Index Type</label>
+            <div class="form-group _form">
+              <pn-dynamic-dropdown
+                placeholder="Index Type"
+                [list]="indexTypeList"
+                [(ngModel)]="filter.indexType"
+                (ngModelChange)="filterChange()"
+              >
+              </pn-dynamic-dropdown>
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="form-group">
+            <label class="col-form-label">สถานะ</label>
+            <div class="d-flex">
+              <div class="flex-1">
+                <div class="form-input">
+                  <pn-segmented-control
+                    id="status1"
+                    name="status1"
+                    [list]="statusList"
+                    [(ngModel)]="filter.status"
+                    (ngModelChange)="filterChange()"
+                  >
+                  </pn-segmented-control>
+                </div>
+              </div>
+              <div class="_btn-clear">
+                <button
+                  type="button"
+                  class="btn btn-clear btn-lg mr-1 mb-1"
+                  (click)="clearFilter()"
+                >
+                  ล้าง
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <div class="d-flex justify-content-between">
+      <div class="col-6 px-0">
+        <pn-grid-per-page
+          [page]="page"
+          (setPerPage)="grid.setPerPage($event)"
+        ></pn-grid-per-page>
+      </div>
+      <div class="mr-2" *ngIf="canCreate">
+        <button type="button" class="btn btn-primary" (click)="add()">
+          สร้างรายการใหม่
+        </button>
+      </div>
+    </div>
+    <div class="col-12" *ngIf="rows && rows?.length === 0">
+      <pn-data-not-found (add)="add()" (clearFilter)="onClearFilter()">
+      </pn-data-not-found>
+    </div>
+    <div [hidden]="rows && rows?.length === 0" class="_g-table-container">
+      <pn-lib-grid
+        #grid
+        [sort]="{ prop: 'fundCode', asc: false }"
+        [bodyHeight]="'auto'"
+        [dataSub]="dataSub"
+        [rows]="rows"
+        [columns]="columns"
+        [rowHeight]="65"
+        [externalPaging]="true"
+        [(page)]="page"
+        (pageChange)="pageChange()"
+        (sortChange)="onSortChange($event)"
+        (edit)="edit($event)"
+        (delete)="onDelete($event)"
+      ></pn-lib-grid>
+    </div>
+  </div>
+</div>
+
+<ng-template #fundTpl let-value="value" let-row="row">
+  <shared-datatable-with-name-fund
+    [fundCode]="row.fundCode"
+    [riskLevel]="row.fundRiskLevel"
+  >
+  </shared-datatable-with-name-fund>
+</ng-template>
+
+<ng-template #navTpl let-value="value" let-row="row">
+  <span>{{ row.nav || "-" }}</span>
+  <p *ngIf="row.navDate" class="text-muted mb-0">({{ row.navDate | aDate }})</p>
+</ng-template>
+
+<ng-template #actionTpl let-value="value" let-row="row">
+  <div class="buttons d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center">
+      <pn-toggle
+        [(ngModel)]="row.isActive"
+        (ngModelChange)="onStatusChange(row)"
+        [ngModelOptions]="{ standalone: true }"
+      >
+        <pn-toggle-right>
+          <!-- <div class="align-items-center">
+                        <label class="mb-0 font-size-normal">{{row.status ? 'Active' : 'Inactive'}}</label>
+                    </div> -->
+        </pn-toggle-right>
+      </pn-toggle>
+    </div>
+
+    <a
+      ngbTooltip="ลบ"
+      container="body"
+      class="_action-btn _delete-btn"
+      (click)="onDelete(row)"
+    >
+      <i class="ic ic-delete"></i>
+    </a>
+    <a
+      class="_action-btn _edit-btn"
+      ngbTooltip="แก้ไข"
+      container="body"
+      (click)="onEdit(row)"
+    >
+      <i class="ic ic-note-edit"></i>
+    </a>
+  </div>
+</ng-template>
+
+<ng-template #statusTpl let-value="value" let-row="row">
+  <span
+    class="badge"
+    [class.badge-success]="value"
+    [class.badge-secondary]="!value"
+    >{{ value ? "Active" : "Inactive" }}</span
+  >
+</ng-template>
+
+<ng-template #indexTypeIdTpl let-value="value" let-row="row">
+  <span>{{ row.indexTypeName }}</span>
+</ng-template>
+
+<!--Modal-->
+<lib-modal #modal modalSize="md" [showHeader]="false">
+  <fe-fund-index-type-form
+    *ngIf="modal.isOpen"
+    (cancel)="onCancel()"
+    (save)="onSave()"
+    [isNew]="isNew"
+    [item]="fundIndexData"
+  >
+  </fe-fund-index-type-form>
+</lib-modal>

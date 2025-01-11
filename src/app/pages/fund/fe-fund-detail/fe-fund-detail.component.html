@@ -1,0 +1,361 @@
+<form
+  #form="ngForm"
+  [class.submitted]="form.submitted"
+  (ngSubmit)="onSave(form)"
+>
+  <div class="_g-header">
+    <h1 class="_g-title-header">Fund Profile</h1>
+    <div class="_g-header justify-content-end">
+      <button *ngIf="canCreate"
+        type="submit"
+        class="btn btn-primary  mb-1"
+      ><span>บันทึก</span>
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary  _g-btn-clear mb-1"
+        (click)="goBack()"
+      ><span>กลับ</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- CONTENT-->
+  <div class="card">
+    <div class="card-body pt-0 pb-0">
+      <div class="card-header pl-0">
+        <span class="_g-text-header-title">ข้อมูลกองทุน</span>
+      </div>
+      <div class="row">
+        <div class="col-12 d-flex px-0 py-1">
+          <div class="col-5">
+            <div class="row">
+              <div class="col-6 _g-text-title">
+                <span>บลจ.</span>
+                <p>{{fundData.amcCode || '-'}}</p>
+              </div>
+              <div class="col-6 _g-text-title">
+                <span>ชื่อย่อกองทุน</span>
+                <p>{{fundData.fundCode || '-'}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-7">
+            <div class="row">
+              <div class="col-6 _g-text-title">
+                <span>ชื่อกองทุน (ไทย)</span>
+                <p>{{fundData.thFundName || '-'}}</p>
+              </div>
+              <div class="col-6 _g-text-title">
+                <span>ชื่อกองทุน (อังกฤษ)</span>
+                <p>{{fundData.enFundName || '-'}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 d-flex px-0 py-1">
+          <div class="col-5">
+            <div class="row">
+              <div class="col-6 _g-text-title">
+                <span>ระดับความเสี่ยง</span>
+                <p>{{fundData.riskLevel || '-'}}</p>
+              </div>
+              <div class="col-6 _g-text-title">
+                <span>กองทุนรวมประหยัดภาษี</span>
+                <p>{{fundData.taxType || '-'}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-7">
+            <div class="row">
+              <div class="col-6 _g-text-title">
+                <span>ลงทุนในต่างประเทศ (FIF)</span>
+                <p>{{fundData.fifFlag === true ? 'เป็น' : 'ไม่เป็น'}}</p>
+              </div>
+              <div class="col-6 _g-text-title">
+                <span>นโยบายการจ่ายปันผล</span>
+                <p>{{fundData.dividend === 'Y' ? 'จ่าย' : 'ไม่จ่าย'}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 d-flex px-0 py-1">
+          <div class="col-5">
+            <div class="row">
+              <div class="col-6 _g-text-title">
+                <span>วันที่จดทะเบียน</span>
+                <p *ngIf="fundData.registrationDate">{{fundData.registrationDate | aDate}}</p>
+                <p *ngIf="!fundData.registrationDate">-</p>
+              </div>
+              <div class="col-6 _g-text-title">
+                <span>ความเสี่ยงอัตราแลกเปลี่ยน</span>
+                <p>{{fundData.fxRiskFlag === true ? 'มี' : 'ไม่มี'}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-7">
+            <div class="row">
+              <div class="col-6 _g-text-title">
+                <span>กอง Plain หรือ Complex</span>
+                <p>{{fundData.plain === 'P' ? 'Plain' : 'Complex'}}</p>
+              </div>
+              <div class="col-6 _g-text-title">
+                <span>Fund Class</span>
+                <p>{{fundData.assetClass}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--    <div id="address" *ngIf="data?.">-->
+
+      </div>
+    </div>
+    <hr class="mb-0"/>
+    <div class="card-body pt-0 pb-0">
+      <div class="card-header pl-0">
+        <span class="_g-text-header-title">เงื่อนไขกองทุน</span>
+      </div>
+      <div class="row">
+        <div class="col-12 d-flex px-0 py-1">
+          <div class="col-5">
+            <div class="row">
+              <div class="col-6 _g-text-title">
+                <span>กำหนดเวลาซื้อ</span>
+                <p>{{fundData.buyCutOffTime}} น.</p>
+              </div>
+              <div class="col-6 _g-text-title">
+                <span>มูลค่าขั้นตํ่าของการซื้อครั้งแรก</span>
+                <div class="d-flex">
+                  <p *ngIf="fundData.fstLowBuy">{{fundData.fstLowBuy | aDecimal}}</p>
+                  <p *ngIf="!fundData.fstLowBuy">-</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-7">
+            <div class="row">
+              <div class="col-6 _g-text-title">
+                <span>มูลค่าขั้นตํ่าของการซื้อครั้งถัดไป</span>
+                <div class="d-flex">
+                  <p *ngIf="fundData.nxtLowBuy">{{fundData.nxtLowBuy | aDecimal}}</p>
+                  <p *ngIf="!fundData.nxtLowBuy">-</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 d-flex px-0 py-1">
+          <div class="col-5">
+            <div class="row">
+              <div class="col-6 _g-text-title">
+                <span>กำหนดเวลาขาย</span>
+                <p>{{fundData.sellCutOffTime}} น.</p>
+              </div>
+              <div class="col-6 _g-text-title">
+                <span>มูลค่าขั้นตํ่าของการขาย</span>
+                <div class="d-flex">
+                  <p *ngIf="fundData.lowSellValue">{{fundData.lowSellValue | aDecimal}}</p>
+                  <p *ngIf="!fundData.lowSellValue">-</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-7">
+            <div class="row">
+              <div class="col-6 _g-text-title">
+                <span>จำนวนหน่วยขั้นตํ่าของการขาย</span>
+                <div class="d-flex">
+                  <p *ngIf="fundData.lowSellUnit">{{fundData.lowSellUnit | number}}</p>
+                  <p *ngIf="fundData.lowSellUnit">.0000</p>
+                  <p *ngIf="!fundData.lowSellUnit">-</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 d-flex px-0 py-1">
+          <div class="col-5">
+            <div class="row">
+              <div class="col-6 _g-text-title">
+                <span>มูลค่าคงเหลือขั้นตํ่า</span>
+                <div class="d-flex">
+                  <p  *ngIf="fundData.lowBalVal">{{fundData.lowBalVal | aDecimal}}</p>
+                  <p *ngIf="!fundData.lowBalVal">-</p>
+                </div>
+              </div>
+              <div class="col-6 _g-text-title">
+                <span>จำนวนหน่วยคงเหลือขั้นตํ่า</span>
+                <div class="d-flex">
+                  <p *ngIf="fundData.lowBalUnit">{{fundData.lowBalUnit | number}}</p>
+                  <p *ngIf="fundData.lowBalUnit">.0000</p>
+                  <p *ngIf="!fundData.lowBalUnit">-</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-7">
+            <div class="row">
+              <div class="col-6 _g-text-title">
+                <span>ระยะเวลาการรับเงินค่าขายคืน</span>
+                <p>{{fundData.sellSettlementDay ? fundData.sellSettlementDay : '-'}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 d-flex px-0 py-1">
+          <div class="col-5">
+            <div class="row">
+              <div class="col-6 _g-text-title">
+                <span>รองรับรายการ Switch Out</span>
+                <p>{{fundData.switchOutFlag === 'Y' ? 'รองรับ' : 'ไม่รองรับ'}}</p>
+              </div>
+              <div class="col-6 _g-text-title">
+                <span>รองรับรายการ Switch In</span>
+                <p>{{fundData.switchInFlag === 'Y' ? 'รองรับ' : 'ไม่รองรับ'}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 d-flex px-0 py-1">
+          <div class="col-5">
+            <div class="row">
+              <div class="col-6 _g-text-title">
+                <span>วันที่ซื้อกองทุน</span>
+                <p>{{fundData.buyPeriodFlag === 'N' ? 'Normal' : 'Only Trade Calendar'}}</p>
+              </div>
+              <div class="col-6 _g-text-title">
+                <span>วันที่ขายกองทุน</span>
+                <p>{{fundData.sellPeriodFlag === 'N' ? 'Normal' : 'Only Trade Calendar'}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-7">
+            <div class="row">
+              <div class="col-6 _g-text-title">
+                <span>วันที่สับเปลี่ยนเข้ากองทุน</span>
+                <p>{{fundData.switchInPeriodFlag === 'N' ? 'Normal' : 'Only Trade Calendar'}}</p>
+              </div>
+              <div class="col-6 _g-text-title">
+                <span>วันที่สับเปลี่ยนออกกองทุน</span>
+                <p>{{fundData.switchOutPeriodFlag === 'N' ? 'Normal' : 'Only Trade Calendar'}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--    <div id="address" *ngIf="data?.">-->
+
+      </div>
+    </div>
+    <hr class="mb-0"/>
+    <div class="card-body pt-0 pb-0">
+      <div class="card-header pl-0">
+        <span class="_g-text-header-title">ข้อมูลอื่นๆ</span>
+      </div>
+      <div class="row">
+        <div class="col-12 d-flex px-0">
+          <div class="col-5">
+            <div class="form-group">
+              <label class="col-form-label is-required">AIMC Category</label>
+              <div class="form-input">
+                <shared-aimc-dropdown
+                  placeholder="โปรดระบุ"
+                  id="aimc"
+                  name="aimc"
+                  [(ngModel)]="fundData.aimcCatName"
+                  (ngModelChange)="aimcOnchange($event)"
+                  required
+                  [disabled]="canView && !canCreate"
+                >
+                </shared-aimc-dropdown>
+              </div>
+            </div>
+          </div>
+          <div class="col-7 d-flex">
+            <div class="col-6">
+              <div class="form-group">
+                <label class="col-form-label is-required">Fund Type</label>
+                <div class="form-input">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="โปรดระบุ"
+                    id="lane"
+                    name="lane"
+                    [(ngModel)]="fundData.fundType"
+                    [disabled]="true"
+                    required
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label class="col-form-label is-required">CalFlag</label>
+                <div class="form-input">
+                  <pn-segmented-control
+                    name="cal-flag"
+                    [list]="calFlagList"
+                    [(ngModel)]="calFlag"
+                    (ngModelChange)="onChangeCalFlag($event)"
+                    [class._g-disable]="canView && !canCreate"
+                  >
+                  </pn-segmented-control>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label class="col-form-label" for="remark">Remark</label>
+            <div class="form-input">
+            <textarea
+              rows="4"
+              class="form-control"
+              id="remark"
+              name="remark"
+              [(ngModel)]="fundData.remark"
+              [disabled]="canView && !canCreate"
+            >
+            </textarea>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <pn-toggle
+            class="mb-2"
+            [disabled]="canView && !canCreate"
+            [(ngModel)]="status"
+            (ngModelChange)="onStatusChange($event)"
+            [ngModelOptions]="{standalone: true}"
+          >
+            <pn-toggle-right>
+              <div class="align-items-center">
+                <label class="mb-0 font-size-normal">{{status ? 'Active' : 'Inactive'}}</label>
+                <!--                <span class="m-0">{{status ? 'Active' : 'Inactive'}}</span>-->
+              </div>
+            </pn-toggle-right>
+          </pn-toggle>
+        </div>
+      </div>
+    </div>
+    <hr class="mb-0"/>
+  </div>
+
+
+  <div class="_g-header justify-content-end">
+    <button *ngIf="canCreate"
+      type="submit"
+      class="btn btn-primary  mr-1 mb-1"
+    ><span>บันทึก</span>
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary  _g-btn-clear mb-1"
+      (click)="goBack()"
+    ><span>กลับ</span>
+    </button>
+  </div>
+</form>

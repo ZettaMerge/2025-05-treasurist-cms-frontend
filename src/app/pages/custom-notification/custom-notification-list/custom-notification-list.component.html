@@ -1,0 +1,155 @@
+<div id="custom-notification">
+  <div class="_g-header justify-content-between">
+    <h1 class="_g-title-header">Custom Notification</h1>
+  </div>
+
+  <!--  FILTER-->
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-7 d-flex">
+          <div class="col-7">
+            <div class="form-group">
+              <label class="col-form-label">หัวข้อ</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="โปรดระบุ"
+                [(ngModel)]="filter.title"
+                (ngModelChange)="searchTextChange($event)"
+              >
+            </div>
+          </div>
+          <div class="col-5">
+            <div class="form-group">
+              <label class="col-form-label">ประกาศ</label>
+              <div class="d-flex">
+                <div class="flex-1">
+                  <div class="form-input">
+                    <pn-dynamic-dropdown
+                      placeholder="เลือกประกาศ"
+                      [list]="typeList"
+                      [showAll]="true"
+                      [(ngModel)]="filter.type"
+                      (ngModelChange)="filterChange()"
+                    >
+                    </pn-dynamic-dropdown>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-5">
+          <div class="form-group">
+            <label class="col-form-label">ช่วงวันที่ทำรายการ</label>
+            <div class="d-flex">
+              <div class="flex-1">
+                <div class="form-input">
+                  <pn-date-range-picker
+                    placeholder="dd/mm/yyyy - dd/mm/yyyy"
+                    [(ngModel)]="filter.dateRange"
+                    (ngModelChange)="filterChange()"
+                  >
+                  </pn-date-range-picker>
+                </div>
+              </div>
+              <div class="_btn-clear">
+                <button
+                  type="button"
+                  class="btn btn-clear btn-lg mr-1 mb-1"
+                  (click)="clearFilter()"
+                >ล้าง
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--  FILTER-->
+
+  <div class="card">
+    <div class="card-body">
+      <div>
+        <div class="d-flex justify-content-between">
+          <div class="col-6 px-0">
+            <pn-grid-per-page
+              [page]="page"
+              (setPerPage)="grid.setPerPage($event)"
+            ></pn-grid-per-page>
+          </div>
+          <div class="mr-2">
+            <button *ngIf="canCreate"
+              type="button"
+              class="btn btn-primary"
+              (click)="add()"
+            >สร้างรายการใหม่
+            </button>
+          </div>
+        </div>
+        <div
+          class="col-12"
+          *ngIf="rows && rows?.length === 0"
+        >
+          <pn-data-not-found>
+          </pn-data-not-found>
+        </div>
+        <div
+          [hidden]="rows && rows?.length === 0"
+          class="_g-table-container"
+        >
+          <pn-lib-grid
+            #grid
+            [bodyHeight]="'auto'"
+            [sort]="{prop: 'publishedDate', asc: false}"
+            [dataSub]="dataSub"
+            [rows]="rows"
+            [columns]="columns"
+            [rowHeight]="85"
+            [externalPaging]="true"
+            [(page)]="page"
+            (pageChange)="pageChange()"
+            (sortChange)="onSortChange($event)"
+            (detailInfo)="detailInfo($event)"
+          ></pn-lib-grid>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<!--TPL-->
+<ng-template
+  #titleTpl
+  let-value="value"
+  let-row="row"
+>
+  <span class="text-wrap">{{value || '-'}}</span>
+</ng-template>
+<ng-template
+  #typeTpl
+  let-value="value"
+  let-row="row"
+>
+  <span
+    *ngIf="value"
+    class="badge"
+    [class.badge-success]="value === 'SEC'"
+    [class.badge-info]="value === 'AMC'"
+    [class.badge-primary]="value === 'TSR'"
+  >{{value === 'SEC' ? 'ประกาศจาก ก.ล.ต.': value === 'AMC' ? 'ประกาศจาก บลจ.' : 'ประกาศจาก เทรเชอริสต์'}}</span>
+  <span *ngIf="!value">-</span>
+</ng-template>
+
+<ng-template
+  #statusTpl
+  let-value="value"
+  let-row="row"
+>
+  <span class="badge badge-success" *ngIf="value === 'Publish'">PUBLISHED</span>
+  <span class="badge badge-dark" *ngIf="value === 'Draft'">DRAFT</span>
+</ng-template>

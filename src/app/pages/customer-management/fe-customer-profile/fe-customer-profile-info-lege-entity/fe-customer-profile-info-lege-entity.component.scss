@@ -1,0 +1,13 @@
+@import "variables-custom";
+
+._display-risk {
+  display: flex;
+  > span:not(:last-child) {
+    margin-right: 0.5rem;
+  }
+}
+
+._p-color {
+  background: #f0f0f0;
+  border-radius: 4px;
+}

@@ -1,0 +1,34 @@
+<div id="terms-condition">
+  <div class="_g-header">
+    <h1 class="_g-title-header">ข้อกำหนดการใช้งาน</h1>
+    <div class="_g-header justify-content-end">
+      <button
+        type="button"
+        class="btn btn-secondary  mr-1 mb-1"
+        (click)="goBack()"
+      ><span>กลับ</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="card  _g-card-content-tab">
+    <div class="card-body">
+      <pn-tabs
+        [tabs]="tabs"
+        [(activeTabId)]="activeTabId"
+      >
+      </pn-tabs>
+
+      <ng-container *ngIf="activeTabId === Tab.listVersion">
+        <fe-terms-condition-list>
+
+        </fe-terms-condition-list>
+      </ng-container>
+      <ng-container *ngIf="activeTabId === Tab.lisCustomer">
+        <fe-terms-condition-list-customer></fe-terms-condition-list-customer>
+      </ng-container>
+
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,328 @@
+button.btn,
+a.btn {
+  height: 34px;
+  min-width: 100px;
+  line-height: 1;
+
+  // padding-left: 1rem;
+  // padding-right: 1rem;
+  // font-size: $size-normal;
+  // min-width: 65px;
+  i {
+    margin-right: 1rem;
+  }
+
+  &:disabled,
+  .disabled {
+    background-color: $disabled-btn;
+    border-color: $disabled-btn;
+    color: $disabled;
+
+    &:hover {
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+  }
+
+  &.is-small {
+    @extend .btn-sm;
+    height: 25px;
+    padding: 0.25rem 1rem;
+    font-size: $size-normal;
+  }
+
+  &.btn-sm {
+    @extend .btn-sm;
+    height: 25px;
+  }
+
+  &.btn-lg {
+    @extend .btn-lg;
+    height: 48px;
+  }
+
+  &.btn-primary {
+    background-color: $primary;
+    border-color: $primary;
+
+    &:not(:disabled):not(.disabled) {
+      &:hover {
+        background-color: map-get($primary-color, lighten-2);
+        border-color: map-get($primary-color, lighten-2);
+      }
+
+      &:active {
+        background-color: map-get($primary-color, darken-2);
+        border-color: map-get($primary-color, darken-2);
+        color: white;
+      }
+    }
+  }
+
+  &.btn-secondary {
+    background-color: #e3e3e3;
+    border-color: #e3e3e3;
+    color: $text-primary;
+
+    &:not(:disabled):not(.disabled) {
+      &:hover {
+        background-color: map-get($secondary-color, base);
+        border-color: map-get($secondary-color, base);
+        color: $body-color;
+      }
+
+      &:active {
+        background-color: map-get($secondary-color, base);
+        border-color: map-get($secondary-color, base);
+        color: $body-color;
+      }
+    }
+  }
+
+  &.btn-outline-primary {
+    border-color: map-get($primary-color, base);
+    color: map-get($primary-color, base);
+
+    &:not(:disabled):not(.disabled) {
+      &:hover {
+        background-color: map-get($primary-color, base) !important;
+        border-color: map-get($primary-color, base) !important;
+      }
+
+      &:active {
+        background-color: map-get($primary-color, darken-2) !important;
+        border-color: map-get($primary-color, darken-2) !important;
+        color: white !important;
+      }
+    }
+
+    &:disabled {
+
+      &:hover {
+        background-color: map-get($primary-color, base) !important;
+        border-color: map-get($primary-color, base) !important;
+      }
+
+      &:active {
+        background-color: map-get($primary-color, darken-2) !important;
+        border-color: map-get($primary-color, darken-2) !important;
+        color: white !important;
+      }
+    }
+  }
+
+  &.btn-outline-secondary {
+    border-color: map-get($secondary-color, base);
+    color: map-get($secondary-color, base) !important;
+
+    &:not(:disabled):not(.disabled) {
+      &:hover {
+        background-color: map-get($secondary-color, base) !important;
+        border-color: map-get($secondary-color, base) !important;
+        color: $body-color !important;
+      }
+
+      &:active {
+        background-color: map-get($secondary-color, darken-2) !important;
+        border-color: map-get($secondary-color, darken-2) !important;
+        color: $body-color !important;
+      }
+    }
+  }
+
+  &.bg-light-primary {
+    color: map-get($primary-color, base) !important;
+    background-color: $primary-lightest !important;
+    border-color: $primary-lightest !important;
+
+    &:not(:disabled):not(.disabled) {
+      &:hover {
+        background-color: map-get($primary-color, base) !important;
+        border-color: map-get($primary-color, base) !important;
+        color: white !important;
+      }
+
+      &:active {
+        background-color: map-get($primary-color, darken-2) !important;
+        border-color: map-get($primary-color, darken-2) !important;
+        color: white !important;
+      }
+    }
+  }
+
+  &.bg-light-secondary {
+    color: map-get($secondary-color, base) !important;
+
+    &:not(:disabled):not(.disabled) {
+      &:hover {
+        background-color: map-get($secondary-color, base) !important;
+        border-color: map-get($secondary-color, base) !important;
+        color: $body-color !important;
+      }
+
+      &:active {
+        background-color: map-get($secondary-color, darken-2) !important;
+        border-color: map-get($secondary-color, darken-2) !important;
+        color: $body-color !important;
+      }
+    }
+  }
+
+  &.btn-clear {
+    background-color: #fff;
+    border-color: #959595;
+    color: $text-primary;
+
+    &:not(:disabled):not(.disabled) {
+      &:hover {
+        background-color: map-get($secondary-color, base);
+        border-color: #959595;
+        color: $text-primary;
+      }
+
+      &:active {
+        background-color: map-get($secondary-color, base);
+        border-color: #959595;
+        color: $text-primary;
+      }
+    }
+  }
+
+  &.btn-export {
+    background-color: #fff;
+    border-color: map-get($primary-color, base);
+    color: map-get($primary-color, base);
+
+    &:not(:disabled):not(.disabled) {
+      &:hover {
+        background-color: map-get($primary-color, base);
+        border: 1px soli $border-color;
+        color: #fff;
+      }
+
+      &:active {
+        background-color: map-get($primary-color, base);
+        border: 1px soli $border-color;
+        color: #fff;
+      }
+    }
+  }
+
+  span.icon i,
+  i {
+    margin-right: 0.75rem;
+
+    &.ic-cross {
+      font-size: $size-small;
+    }
+  }
+
+  &.btn-icon {
+    padding-left: 0px;
+    padding-right: 0px;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+      margin-right: 0;
+    }
+  }
+}
+
+button.btn:not(.round),
+a.btn:not(.round) {
+  border-radius: $border-radius-sm;
+}
+
+a.text-link {
+  color: $primary;
+  display: flex;
+  align-items: center;
+  text-decoration: underline;
+
+  i {
+    margin-right: 0.3rem;
+  }
+
+  &.link-primary {
+    color: $primary;
+  }
+}
+
+a.link-data {
+  color: $primary;
+  align-items: center;
+  display: flex;
+}
+
+.buttons {
+  .btn {
+    &:not(:last-child) {
+      margin-right: 0.5rem;
+    }
+  }
+}
+
+.btn-group {
+  .btn {
+    margin-bottom: 0;
+    min-width: 90px;
+
+    &:not(.round) {
+      border-radius: $border-radius;
+    }
+
+    // &:not(:first-child),
+    // .btn-group:not(:first-child) > .btn {
+    //   border-top-left-radius: 0;
+    //   border-bottom-left-radius: 0;
+    // }
+    // &:not(.active) {
+    //   background-color: map-get($light, "base");
+    //   border-color: map-get($light, "base");
+    //   &.btn-primary {
+    //     background-color: $white;
+    //     border-color: $primary;
+    //     color: $primary;
+    //   }
+    // }
+    // &.active {
+    //   &.btn-primary {
+    //     background-color: $primary;
+    //     border-color: $primary;
+    //     color: $white;
+    //     &:hover {
+    //       background-color: map-get($primary-color, lighten-2);
+    //       border-color: map-get($primary-color, lighten-2);
+    //     }
+    //   }
+    // }
+  }
+
+  // .btn-primary {
+  //   &:not(:disabled):not(.disabled) {
+  //     background-color: map-get($grey-color, lighten-2);
+  //     // border-color: map-get($grey-color, lighten-2);
+  //     border-color: transparent;
+  //     height: 34px;
+  //     align-items: center;
+  //     i.ic {
+  //       color: map-get($grey-color, darken-1);
+  //     }
+  //     &:hover {
+  //       background-color: map-get($primary-color, lighten-2);
+  //       // border-color: map-get($primary-color, lighten-2);
+  //     }
+  //     &.active {
+  //       background-color: $primary;
+  //       i.ic {
+  //         color: white;
+  //       }
+  //     }
+  //   }
+  // }
+}

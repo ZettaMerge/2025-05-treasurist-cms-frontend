@@ -1,0 +1,32 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/app",
+    "baseUrl": "./src",
+    "types": [],
+    "resolveJsonModule": true,
+    "paths": {
+      "@api": [
+        "src/app/api/service/index.ts"
+      ],
+      "@model": [
+        "src/app/api/model/index.ts"
+      ],
+      "@app/core/*": [
+        "src/app/core/*"
+      ],
+      "@layouts/*": [
+        "src/app/layouts/*"
+      ],
+      "@shared/*": [
+        "src/app/shared/*"
+      ],
+      "@postnerd-core": [
+        "projects/postnerd-core/src/public-api.ts"
+      ]
+    }
+  },
+  "angularCompilerOptions": {
+    "preserveWhitespaces": false
+  }
+}

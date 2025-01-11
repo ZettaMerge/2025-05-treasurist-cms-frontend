@@ -1,0 +1,170 @@
+<div class="_g-header">
+  <h1 class="_g-title-header">รอบการจ่าย Commission</h1>
+</div>
+
+<!--SECTION FILTER-->
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-4">
+        <div class="form-group">
+          <label class="col-form-label">Payment Date</label>
+          <div class="form-input">
+            <pn-date-picker
+              placeholder="dd/mm/yyyy"
+              id="date"
+              name="date"
+              [(ngModel)]="filter.paymentDate"
+              (ngModelChange)="filterChange($event)"
+            >
+            </pn-date-picker>
+          </div>
+        </div>
+      </div>
+      <div class="col-5">
+        <div class="form-group">
+          <label class="col-form-label">สถานะ</label>
+          <div class="d-flex">
+            <div class="flex-1">
+              <pn-dynamic-dropdown
+                [list]="lists"
+                id="status"
+                name="status"
+                placeholder="ทั้งหมด"
+                [(ngModel)]="filter.status"
+                (ngModelChange)="filterChange($event)"
+              >
+              </pn-dynamic-dropdown>
+            </div>
+            <div class="_btn-clear">
+              <button
+                type="button"
+                class="btn btn-clear btn-lg"
+                (click)="clearFilter()"
+              >ล้าง
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--SECTION LIST-->
+<div class="card">
+  <div class="card-body">
+
+    <div>
+      <div class="d-flex justify-content-between">
+        <div class="col-6 px-0">
+          <pn-grid-per-page
+            [page]="page"
+            (setPerPage)="grid.setPerPage($event)"
+          ></pn-grid-per-page>
+        </div>
+        <div *ngIf="canCreate">
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="add()"
+          >สร้างรายการใหม่
+          </button>
+        </div>
+
+      </div>
+      <div
+        class="col-12"
+        *ngIf="rows && rows?.length === 0"
+      >
+        <pn-data-not-found>
+        </pn-data-not-found>
+      </div>
+      <div
+        class="_g-table-container"
+        [hidden]="rows && rows?.length === 0"
+      >
+        <pn-lib-grid
+          #grid
+          [sort]="{ prop: 'paymentDate', asc: false }"
+          [bodyHeight]="'auto'"
+          [dataSub]="dataSub"
+          [rows]="rows"
+          [columns]="columns"
+          [rowHeight]="85"
+          [externalPaging]="true"
+          [(page)]="page"
+          (pageChange)="pageChange()"
+          (sortChange)="onSortChange($event)"
+        ></pn-lib-grid>
+      </div>
+    </div>
+  </div>
+</div>
+<!--SECTION LIST-->
+
+<ng-template
+  #statusTpl
+  let-value="value"
+  let-row="row"
+>
+  <span
+    *ngIf="value && value !== 'undefined'"
+    class="badge"
+    [class.badge-success]="value === 'published'"
+    [class.badge-dark]="value === 'draft'"
+  >{{value === 'published' ? 'PUBLISHED' : 'DRAFT'}}</span>
+  <span *ngIf="value === 'undefined'">-</span>
+</ng-template>
+
+
+<ng-template
+  #totalTpl
+  let-value="value"
+  let-row="row"
+>
+  {{value | aDecimal}}
+</ng-template>
+
+<ng-template
+  #tarFeeTpl
+  let-value="value"
+  let-row="row"
+>
+  {{value | aDecimal}}
+</ng-template>
+
+<ng-template
+  #agentFeeTpl
+  let-value="value"
+  let-row="row"
+>
+  {{value | aDecimal}}
+</ng-template>
+
+<ng-template
+  #actionTpl
+  let-row="row"
+>
+  <div class="buttons d-flex justify-content-between align-items-center">
+    <a
+      *ngIf="canExport || canCreate || canView"
+      ngbTooltip="รายละเอียด"
+      container="body"
+      class="_action-btn _detail-btn mr-2"
+      (click)="detailInfo(row)"
+    >
+      <i class="ic ic-eye-circle"></i>
+    </a>
+
+    <a
+      *ngIf="canExport"
+      ngbTooltip="Export"
+      container="body"
+      class="action-btn _detail-btn"
+      (click)="onExport(row)"
+    >
+      <span class="text-primary"><i class="ft ft-upload mr-2 font-size-medium"></i>Export</span>
+    </a>
+  </div>
+</ng-template>

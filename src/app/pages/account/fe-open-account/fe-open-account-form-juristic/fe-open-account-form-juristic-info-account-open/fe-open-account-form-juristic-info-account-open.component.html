@@ -1,0 +1,169 @@
+<div id="infoAccountOpen">
+  <div class="card-header pl-0">
+    <span class="_g-text-header-title">การเปิดบัญชีกองทุน</span>
+  </div>
+  <div class="row">
+    <div class="_g-card-sub-header pl-2 pt-0">
+      <span class="_g-text-header-sub-title">วัตถุประสงค์ในการลงทุน</span>
+    </div>
+    <div class="col-12 d-flex">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-12 pl-0">
+            <li
+              class="d-inline-block mr-2 mb-2"
+              *ngFor="let invest of investList; let index = index"
+            >
+              <div class="checkbox">
+                <input
+                  type="checkbox"
+                  id="invest-{{index}}"
+                  name="invest-{{index}}"
+                  [(ngModel)]="invest.checked"
+                  (ngModelChange)="onChangCheckBoxInvest($event, invest, index)"
+                >
+                <label for="invest-{{index}}"><span>{{invest.name}}</span></label>
+              </div>
+            </li>
+            <!-- <li class="d-inline-block mr-2 mb-2">
+              <div class="checkbox">
+                <input
+                  type="checkbox"
+                  id="invest-2"
+                >
+                <label for="invest-2"><span>การลงทุน</span></label>
+              </div>
+            </li> -->
+            <!-- <li class="d-inline-block mr-2 mb-2">
+              <div class="checkbox">
+                <input
+                  type="checkbox"
+                  id="invest-3"
+                >
+                <label for="invest-3"><span>บริหารเงินรอลงทุน</span></label>
+              </div>
+            </li> -->
+            <!-- <li class="d-inline-block mr-2 mb-2">
+              <div class="checkbox">
+                <input
+                  type="checkbox"
+                  id="invest-4"
+                >
+                <label for="invest-4"><span>อื่น ๆ</span></label>
+              </div>
+            </li> -->
+
+            <li class="d-inline-block col-4">
+              <div class="form-group m-0">
+                <div class="form-input">
+                  <input
+                    type="text"
+                    class="form-control is-small "
+                    placeholder="โปรดระบุ"
+                    [disabled]="isInvestOther"
+                    id="investOther"
+                    name="investOther"
+                    [(ngModel)]="investOther"
+                  >
+                </div>
+              </div>
+            </li>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="_g-card-sub-header pl-2">
+      <span class="_g-text-header-sub-title">ที่อยู่ในการจัดส่งเอกสาร</span>
+    </div>
+    <div class="col-12 d-flex">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-12 pl-0">
+            <li
+              class="d-inline-block mr-2 mb-2"
+              *ngFor="let address of addressDeliveryDocuments; let index = index"
+            >
+              <div class="checkbox">
+                <input
+                  type="checkbox"
+                  id="deliveryDocuments-{{index}}"
+                  name="deliveryDocuments-{{index}}"
+                  [(ngModel)]="address.checked"
+                  (ngModelChange)="onChangCheckBoxAddress($event, address, index)"
+                >
+                <label for="deliveryDocuments-{{index}}"><span>{{address.name}}</span></label>
+              </div>
+            </li>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngFor="let address of addressDeliveryDocuments; let index = index">
+      <fe-open-account-form-juristic-address *ngIf="address.name === 'อื่น ๆ' && address.checked === true  "></fe-open-account-form-juristic-address>
+    </div>
+
+    <div class="_g-card-sub-header pl-2">
+      <span class="_g-text-header-sub-title">วิธีการรับเอกสาร</span>
+    </div>
+    <div class="col-12 d-flex">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-12 pl-0">
+            <li
+              class="d-inline-block mr-2 mb-2"
+              *ngFor="let receiveDocument of receiveDocumentsList; let index = index"
+            >
+              <div class="checkbox">
+                <input
+                  type="checkbox"
+                  id="receiveDocument-{{index}}"
+                  name="receiveDocument-{{index}}"
+                   [(ngModel)]="receiveDocument.checked"
+                  (ngModelChange)="onChangCheckBoxReceiveDocument($event, receiveDocument, index)"
+                >
+                <label for="receiveDocument-{{index}}"><span>{{receiveDocument.name}}</span></label>
+              </div>
+            </li>
+            <!-- <li class="d-inline-block mr-2 mb-2">
+              <div class="checkbox">
+                <input
+                  type="checkbox"
+                  id="invest-2"
+                >
+                <label for="invest-2"><span>ไปรษณีย์</span></label>
+              </div>
+            </li>
+            <li class="d-inline-block mr-2 mb-2">
+              <div class="checkbox">
+                <input
+                  type="checkbox"
+                  id="invest-4"
+                >
+                <label for="invest-4"><span>โทรสาร</span></label>
+              </div>
+            </li> -->
+
+            <li class="d-inline-block col-4">
+              <div class="form-group m-0">
+                <div class="form-input">
+                  <input
+                    type="text"
+                    class="form-control is-small "
+                    placeholder="โปรดระบุ"
+                    [disabled]="isFax"
+                    id="receiveDocuments"
+                    name="receiveDocuments"
+                  >
+                </div>
+              </div>
+            </li>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>

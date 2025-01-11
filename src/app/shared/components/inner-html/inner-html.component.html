@@ -1,0 +1,7 @@
+<div
+  [innerHTML]="html  | safe: 'html'"
+  [ngClass]="{'limitTextHeight': isReadMore}"
+></div>
+<a class="pt-2 text-link"
+   (click)="showText()"
+>{{isReadMore ? 'เพิ่มเติม' : 'น้อยลง'}}</a>

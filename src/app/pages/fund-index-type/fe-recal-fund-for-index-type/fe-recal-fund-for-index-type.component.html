@@ -1,0 +1,116 @@
+<div class="card-body">
+    <div class="row" *ngIf="isShowRecalForm">
+      <div class="col-12">
+        <div class="form-group">
+          <label class="col-form-label">Re-calculate Start Date</label>
+          <div class="form-input">
+            <pn-date-picker
+              placeholder="dd/mm/yyyy"
+              id="recalDate"
+              name="recalDate"
+              [(ngModel)]="recalDate"
+            >
+            </pn-date-picker>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 d-flex justify-content-center">
+        <button
+          type="button"
+          class="btn btn-clear mb-1 _custom-btn-size-failed"
+          (click)="onCancel()"
+        >
+          <span>ยกเลิก</span>
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary _g-btn-clear mb-1 _custom-btn-size-failed"
+          (click)="onStartSync()"
+        >
+          <span> Start Recal</span>
+        </button>
+      </div>
+    </div>
+  
+    <div id="sync" *ngIf="isShowSync">
+      <div class="d-flex align-items-center justify-content-center">
+        <h4>ระบบกำลังอยู่ระหว่างดำเนินการ</h4>
+      </div>
+      <div class="d-flex align-items-center justify-content-center">
+        <p>
+          เนื่องจากการ Re-calculate จะใช้ระยะเวลาในการดำเนินการค่อนข้างนาน
+          ผู้ใช้งานสามารถปิด pop up และกลับมาตรวจสอบผลการดำเนินการภายหลังได้
+        </p>
+      </div>
+      <div class="col-12 d-flex justify-content-center mt-2">
+        <button
+          type="button"
+          class="btn btn-clear mb-1 _custom-btn-size-failed"
+          (click)="onCloseSync()"
+        >
+          <span>ปิด</span>
+        </button>
+      </div>
+  
+      <!-- <div class="d-flex align-items-center justify-content-center pt-2">
+        <span class="text-primary">กรุณาอย่าปิดหน้าต่างนี้</span>
+      </div> -->
+    </div>
+  
+    <div id="sync-success" *ngIf="isShowSuccess">
+      <div class="d-flex align-items-center justify-content-center">
+        <h4>Sync สำเร็จแล้ว</h4>
+      </div>
+      <div class="d-flex align-items-center justify-content-center">
+        <!-- <p>{{ lastManualSyncDate | aDateTime }} น.</p> -->
+        <p>Last Re-cal start at 13/02/2024 16:15 น. finish 13/02/2024 18:50 น.</p>
+      </div>
+      <div class="d-flex align-items-center justify-content-center">
+        <img
+          class="_loading"
+          src="assets/img/check-underline-circle-outline.svg"
+        />
+      </div>
+      <div class="d-flex align-items-center justify-content-center pt-3">
+        <button
+          type="button"
+          class="btn btn-primary mb-1 _custom-btn-size"
+          (click)="onSaveSyncData()"
+        >
+          <span>ตกลง</span>
+        </button>
+      </div>
+    </div>
+  
+    <div id="sync-failed" *ngIf="isShowFailed">
+      <div class="d-flex align-items-center justify-content-center">
+        <h4>Sync {{ typeFund }} ไม่สำเร็จ</h4>
+      </div>
+      <!--    <div class="d-flex align-items-center justify-content-center">-->
+      <!--      <p>{{lastManualSyncDate | aDateTime}} น.</p>-->
+      <!--    </div>-->
+      <div class="d-flex align-items-center justify-content-center">
+        <img
+          class="_loading"
+          src="assets/img/check-underline-circle-outline-failed.svg"
+        />
+      </div>
+      <div class="d-flex align-items-center justify-content-center pt-3">
+        <button
+          type="button"
+          class="btn btn-clear mb-1 _custom-btn-size-failed"
+          (click)="onCancel()"
+        >
+          <span>ยกเลิก</span>
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary _g-btn-clear mb-1 _custom-btn-size-failed"
+          (click)="onSyncAgain()"
+        >
+          <span>ลองใหม่อีกครั้ง</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  

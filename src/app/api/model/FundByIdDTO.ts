@@ -1,0 +1,75 @@
+import { TradeCalendarDTO } from '@model';
+
+export interface FundByIdDTO {
+  id: number;
+  fundCode: string;
+  nav: number;
+  navDate: string;
+  pReturn?: any;
+  profit?: any;
+  thFundName: string;
+  enFundName: string;
+  amcCode: string;
+  riskLevel: string;
+  policy: string;
+  dividend: string;
+  fstLowBuy: number;
+  nxtLowBuy: number;
+  lowBalVal: number;
+  lowBalUnit: number;
+  registrationDate: Date;
+  aum?: any;
+  taxType: string;
+  fxRiskFlag: boolean;
+  fifFlag: boolean;
+  buyCutOffTime: string;
+  sellCutOffTime: string;
+  fundClass: string;
+  plain: string;
+  switchInFlag: string;
+  switchOutFlag: string;
+  lowSellValue: number;
+  lowSellUnit: number;
+  calFlag: string;
+  aimcCatName?: any;
+  aimcCatCode?: any;
+  fundType?: any;
+  assetClass: string;
+  sellSettlementDay: number;
+  switchInPeriodFlag: string;
+  switchOutPeriodFlag: string;
+  buyPeriodFlag: string;
+  sellPeriodFlag: string;
+  managementFee?: any;
+  managementFeeUnit?: any;
+  managementFeeActual?: any;
+  managementFeeActualUnit?: any;
+  buyFee?: any;
+  buyFeeUnit?: any;
+  buyFeeActual?: any;
+  buyFeeActualUnit?: any;
+  sellFee?: any;
+  sellFeeUnit?: any;
+  sellFeeActual?: any;
+  sellFeeActualUnit?: any;
+  remark?: any;
+  isActive?: any;
+  fundPerformance?: any;
+  unitholderId?: any;
+  amount?: any;
+  unit?: any;
+  acceptFxRiskFlag: boolean;
+  acceptRiskProfileFlag: boolean;
+  recLowBuyVal?: any;
+  fundHolidays: string[];
+  tradeCalendars: TradeCalendarDTO;
+  thaiHolidays: string[];
+  follow: boolean;
+  convertLowBalUnit: number;
+  convertLowBalVal: number;
+  convertLowSellUnit: number;
+  convertLowSellVal: number;
+}
+
+
+

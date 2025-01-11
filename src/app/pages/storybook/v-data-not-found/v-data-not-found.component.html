@@ -1,0 +1,14 @@
+<pn-data-not-found *ngIf="!isCustom"></pn-data-not-found>
+<pn-data-not-found
+  *ngIf="isCustom"
+  [title]="'custom title'"
+  [message]="'custom message'"
+  [addButton]="'กำหนดปุ่มเพิ่ม'"
+  [addButtonIcon]="'ic-logout'"
+  [clearFilterButton]="'กำหนดปุ่มรีเซ็ท'"
+  [clearFilterButtonIcon]="'ic-check'"
+>
+  <div>
+    <p>Custom Action</p>
+  </div>
+</pn-data-not-found>

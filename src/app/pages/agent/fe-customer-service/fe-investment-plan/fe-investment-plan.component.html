@@ -1,0 +1,169 @@
+<!--SECTION FILTER-->
+<div class="_g-card-content-tab pt-2">
+  <div class="row">
+    <div class="col-3">
+      <div class="form-group">
+        <label class="col-form-label">ค้นหา</label>
+        <div class="form-input">
+          <input
+            type="text"
+            id="search"
+            name="search"
+            class="form-control"
+            placeholder="ชื่อลูกค้า หรือ เลขบัญชีลูกค้า"
+            [(ngModel)]="filter.search"
+            (ngModelChange)="searchTextChange($event)"
+          >
+        </div>
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="form-group">
+        <label class="col-form-label">IC License</label>
+        <shared-ic-license-dropdown
+          placeholder="ทั้งหมด"
+          [(ngModel)]="filter.icLicense"
+          (ngModelChange)="filterChange()"
+        >
+        </shared-ic-license-dropdown>
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="form-group">
+        <label class="col-form-label">ช่วงวันที่ทำรายการ</label>
+        <pn-date-range-picker
+          placeholder="dd/mm/yyyy - dd/mm/yyyy"
+          [(ngModel)]="filter.dateRange"
+          (ngModelChange)="filterChange()"
+        >
+        </pn-date-range-picker>
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="form-group">
+        <label class="col-form-label">สถานะ</label>
+        <pn-dynamic-dropdown
+          id="status"
+          name="status"
+          placeholder="ทั้งหมด"
+          [list]="statusList"
+          [(ngModel)]="filter.status"
+          (ngModelChange)="filterChange()"
+        >
+        </pn-dynamic-dropdown>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="form-group">
+        <label class="col-form-label">Remark <img class="_g-remark-img" src="assets/img/triangle-warning.png"></label>
+        <div class="d-flex">
+          <div class="flex-1">
+            <pn-dynamic-dropdown
+              id="remark"
+              name="remark"
+              placeholder="ทั้งหมด"
+              [list]="remarkList"
+              [(ngModel)]="filter.remark"
+              (ngModelChange)="filterChange()"
+            >
+            </pn-dynamic-dropdown>
+          </div>
+          <div class="_g-btn-clear">
+            <button
+              type="button"
+              class="btn btn-clear btn-lg mr-1 mb-1"
+              (click)="clearFilter()"
+            >ล้าง
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
+
+<!--SECTION FILTER-->
+
+<!--SECTION LIST-->
+<div
+  class="col-12"
+  *ngIf="rows && rows?.length === 0"
+>
+  <pn-data-not-found
+  >
+  </pn-data-not-found>
+</div>
+<div [hidden]="rows && rows?.length === 0">
+  <div class="_g-pager-with-tab d-flex justify-content-between">
+    <div class="col-6 px-0">
+      <pn-grid-per-page
+        [page]="page"
+        (setPerPage)="grid.setPerPage($event)"
+      ></pn-grid-per-page>
+    </div>
+  </div>
+  <div class="_g-table-container">
+    <pn-lib-grid
+      #grid
+      [bodyHeight]="'auto'"
+      [sort]="{prop: 'confirmationSentDate', asc: false}"
+      [dataSub]="dataSub"
+      [rows]="rows"
+      [columns]="columns"
+      [rowHeight]="65"
+      [externalPaging]="true"
+      [(page)]="page"
+      (pageChange)="pageChange()"
+      (sortChange)="onSortChange($event)"
+      (detailInfo)="detailInfo($event)"
+    ></pn-lib-grid>
+  </div>
+</div>
+<!--SECTION LIST-->
+
+<ng-template
+  #icLicenseTpl
+  let-value="value"
+  let-row="row"
+>
+  <span>{{row?.agent?.icLicense}}</span>
+  <p class="mb-0 text-muted"
+     *ngIf="row?.agent?.user?.firstName && row?.agent?.user?.lastName">{{row?.agent?.user?.firstName}}  {{row?.agent?.user?.lastName}}</p>
+  <!--  <span *ngIf="!row.firstName && !row.lastName">-</span>-->
+</ng-template>
+
+<ng-template
+  #accountTpl
+  let-value="value"
+  let-row="row"
+>
+  <span
+    *ngIf="row.user?.account?.thFirstname && row.user?.account?.thLastname">{{row.user?.account?.thFirstname}}  {{row.user?.account?.thLastname}}</span>
+  <!--  <span *ngIf="!row.firstName && !row.lastName">-</span>-->
+</ng-template>
+
+<ng-template
+  #statusTpl
+  let-value="value"
+  let-row="row"
+>
+ <span class="badge"
+       [class.badge-primary]="value === 'PENDING'"
+       [class.badge-danger]="value === 'DECLINED'"
+       [class.badge-info]="value === 'ACCEPTED'"
+       [class.badge-purple]="value === 'ORDER_EXP'"
+ >{{value === 'ORDER_EXP' ? 'ORDER EXP.' : value}}</span>&nbsp;
+  <img *ngIf="row.status === 'ACCEPTED' && row.isCompleteTransaction === false" class="_g-remark-img" src="assets/img/triangle-warning.png">
+
+</ng-template>
+
+<ng-template
+  #draftTypeTpl
+  let-value="value"
+  let-row="row"
+>
+  {{value === 'AGENT_PLAN' ? 'Agent Plan' : value === 'CUSTOMIZED_PLAN' ? 'Investor Plan' : value === 'RISK_BASED_PLAN' ? 'Treasurist Plan' : '-'}}
+</ng-template>
+
+

@@ -1,0 +1,15 @@
+
+._group-rows-default-template {
+  padding: 0.5rem 0;
+  margin-left: 1rem;
+}
+
+._color-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  ._color {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+}

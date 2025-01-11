@@ -1,0 +1,275 @@
+<div class="_g-header justify-content-between">
+  <h1 class="_g-title-header">Fund Data Management</h1>
+  <div class="d-flex align-items-center">
+    <span class="text-muted"
+      >Last Manual Sync {{ lastManualSyncDate | aDateTime }} น.</span
+    >
+    <button
+      *ngIf="canExport"
+      type="button"
+      class="btn btn-outline-primary ml-2 mb-1"
+      (click)="onSync()"
+    >
+      <span class="icon"><i class="ft ft-refresh-ccw"></i></span>
+      <span>Manual Sync</span>
+    </button>
+    <button
+      *ngIf="canExport"
+      type="button"
+      class="btn btn-outline-primary ml-2 mb-1"
+      (click)="onSyncFundNav()"
+    >
+      <span class="icon"><i class="ft ft-refresh-ccw"></i></span>
+      <span>Update Fund NAV</span>
+    </button>
+    <button
+      *ngIf="canExport"
+      type="button"
+      class="btn btn-outline-primary ml-2 mb-1"
+      (click)="onUpdateFundName()"
+    >
+      <span class="icon"><i class="ft ft-refresh-ccw"></i></span>
+      <span>Update Fund Name</span>
+    </button>
+  </div>
+</div>
+
+<!--  FILTER-->
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12 px-0 d-flex">
+        <div class="col-4">
+          <div class="form-group">
+            <label class="col-form-label">กองทุน (Free Text)</label>
+            <div class="form-input">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="กองทุน"
+                [(ngModel)]="filter.searchFund"
+                (ngModelChange)="searchTextChange($event)"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-8 px-0 d-flex">
+          <div class="col-6">
+            <div class="form-group">
+              <label class="col-form-label">บลจ.</label>
+              <div class="form-input">
+                <shared-asset-form-fund-mapping-dropdown
+                  placeholder="บลจ."
+                  [(ngModel)]="filter.amc"
+                  (ngModelChange)="filterAmcChange($event)"
+                  [autoReset]="true"
+                >
+                </shared-asset-form-fund-mapping-dropdown>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label class="col-form-label">กองทุน</label>
+              <div class="form-input">
+                <shared-fund-dropdown
+                  placeholder="กองทุน"
+                  name="fund"
+                  [autoReset]="true"
+                  [amc]="filter.amc || undefined"
+                  [(ngModel)]="filter.fund"
+                  (ngModelChange)="filterChange()"
+                >
+                </shared-fund-dropdown>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 px-0 d-flex">
+        <div class="col-4">
+          <div class="form-group">
+            <label class="col-form-label">AIMC Category</label>
+            <div class="d-flex">
+              <div class="flex-1">
+                <div class="form-input">
+                  <shared-aimc-dropdown
+                    name="aimc"
+                    placeholder="AIMC Category"
+                    [(ngModel)]="filter.aimc"
+                    (ngModelChange)="filterChange()"
+                  >
+                  </shared-aimc-dropdown>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-8 px-0 d-flex">
+          <div class="col-6">
+            <div class="form-group">
+              <label class="col-form-label">Fund Type</label>
+              <div class="d-flex">
+                <div class="flex-1">
+                  <div class="form-input">
+                    <pn-dynamic-dropdown
+                      placeholder="โปรดระบุ"
+                      name="fund-type"
+                      placeholder="Fund Type"
+                      [list]="fundTypeList"
+                      [(ngModel)]="filter.fundType"
+                      (ngModelChange)="filterChange()"
+                    >
+                    </pn-dynamic-dropdown>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 d-flex">
+            <div class="form-group mb-0">
+              <label class="col-form-label">นโยบายการจ่ายปันผล</label>
+              <div class="form-group _form">
+                <pn-segmented-control
+                  name="dividend"
+                  [list]="typeList"
+                  [(ngModel)]="filter.dividend"
+                  (ngModelChange)="filterChange()"
+                >
+                </pn-segmented-control>
+              </div>
+            </div>
+            <div class="form-group _g-btn-clear mb-0">
+              <label class="col-form-label">ความเสี่ยงอัตราแลกเปลี่ยน</label>
+              <div class="form-group _form">
+                <pn-segmented-control
+                  name="fx-risk"
+                  [list]="typeList"
+                  [(ngModel)]="filter.fxRisk"
+                  (ngModelChange)="filterChange()"
+                >
+                </pn-segmented-control>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 d-flex">
+        <div class="form-group mb-0">
+          <label class="col-form-label">กองภาษี</label>
+          <div class="d-flex">
+            <div class="flex-1">
+              <pn-segmented-control
+                name="tax"
+                [list]="typeList"
+                [(ngModel)]="filter.tax"
+                (ngModelChange)="filterChange()"
+              >
+              </pn-segmented-control>
+            </div>
+            <div class="_g-btn-clear">
+              <button
+                type="button"
+                class="btn btn-clear btn-lg mr-1"
+                (click)="clearFilter()"
+              >
+                ล้าง
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--  FILTER-->
+
+<!--List-->
+<div class="card">
+  <div class="card-body">
+    <div class="col-12" *ngIf="rows && rows?.length === 0">
+      <pn-data-not-found> </pn-data-not-found>
+    </div>
+
+    <div [hidden]="rows && rows?.length === 0">
+      <div class="d-flex justify-content-between">
+        <div class="col-6 px-0">
+          <pn-grid-per-page
+            [page]="page"
+            (setPerPage)="grid.setPerPage($event)"
+          ></pn-grid-per-page>
+        </div>
+      </div>
+      <div class="_g-table-container">
+        <pn-lib-grid
+          #grid
+          [bodyHeight]="'auto'"
+          [sort]="{ prop: 'aimcCategoryName', asc: false }"
+          [dataSub]="dataSub"
+          [rows]="rows"
+          [columns]="columns"
+          [rowHeight]="65"
+          [externalPaging]="true"
+          [(page)]="page"
+          (pageChange)="pageChange()"
+          (sortChange)="onSortChange($event)"
+          (detailInfo)="detailInfo($event)"
+        ></pn-lib-grid>
+      </div>
+    </div>
+  </div>
+</div>
+<!--List-->
+
+<ng-template #fundTpl let-value="value" let-row="row">
+  <shared-datatable-with-name-fund
+    [fundCode]="row.fundCode"
+    [riskLevel]="row.fundRiskLevel"
+  >
+  </shared-datatable-with-name-fund>
+</ng-template>
+
+<ng-template #navTpl let-value="value" let-row="row">
+  <span>{{ row.nav || "-" }}</span>
+  <p *ngIf="row.navDate" class="text-muted mb-0">({{ row.navDate | aDate }})</p>
+</ng-template>
+
+<ng-template #statusTpl let-value="value" let-row="row">
+  <span
+    *ngIf="value === true || value === false"
+    class="badge"
+    [class.badge-success]="value === true"
+    [class.badge-light]="value === false"
+  >
+    {{ value === true ? "ACTIVE" : "INACTIVE" }}
+  </span>
+  <span *ngIf="value !== true && value !== false">-</span>
+</ng-template>
+
+<!--MODAL-->
+<lib-modal #modal modalSize="md" [showHeader]="false">
+  <fe-fund-sync
+    *ngIf="modal.isOpen"
+    (cancel)="modal.close()"
+    (getData)="onGetDataSync($event)"
+  >
+  </fe-fund-sync>
+</lib-modal>
+
+<lib-modal #fundNavModal modalSize="lg" [showHeader]="false">
+  <fe-fund-nav-sync
+    *ngIf="fundNavModal.isOpen"
+    (cancel)="fundNavModal.close()"
+    (save)="saveFundNav()"
+  >
+  </fe-fund-nav-sync>
+</lib-modal>
+
+<lib-modal #fundNameModal modalSize="md" [showHeader]="false">
+  <fe-update-fund-name
+    *ngIf="fundNameModal.isOpen"
+    (cancel)="fundNameModal.close()"
+    (save)="saveFundName()"
+  >
+  </fe-update-fund-name>
+</lib-modal>

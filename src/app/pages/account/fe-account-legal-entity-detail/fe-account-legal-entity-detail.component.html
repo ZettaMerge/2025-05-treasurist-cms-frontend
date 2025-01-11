@@ -1,0 +1,433 @@
+<div id="account-detail">
+  <div class="_g-header">
+    <h1 class="_g-title-header">Account Detail</h1>
+    <div class="_g-header justify-content-end">
+      <div class="d-flex">
+        <button
+          *ngIf="customerData.vulnerableFlag !== true"
+          type="button"
+          class="btn btn-clear  mr-1 mb-1"
+          (click)="goToNoteForm($event)"
+        ><span>Reject</span>
+        </button>
+        <!--    <button-->
+        <!--      type="button"-->
+        <!--      class="btn btn-primary  mr-1 mb-1"-->
+        <!--    ><span>Approve</span>-->
+        <!--    </button>-->
+        <button
+          type="button"
+          class="btn btn-secondary  mr-1 mb-1"
+          (click)="goBack()"
+        ><span>กลับ</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!--  DETAIL-->
+  <div class="card">
+    <div class="card-body _g-card-content-tab pt-0">
+
+      <!--INFO START-->
+      <div class="card-header pl-0">
+        <span class="_g-text-header-title">ข้อมูลประกอบการเปิดบัญชีนิติบุคคล</span>
+        <div class="d-flex">
+          <span class="badge badge-white mr-2">Risk Level &nbsp;
+            <span
+              *ngIf="customerData?.riskLevel"
+              class="m-0 badge-small-in-badge text-center"
+              [class.badge-light-green]="customerData?.riskLevel === 1"
+              [class.badge-yellow]="customerData?.riskLevel === 2"
+              [class.badge-light-orange]="customerData?.riskLevel === 3"
+              [class.badge-dark-orange]="customerData?.riskLevel === 4"
+              [class.badge-danger]="customerData?.riskLevel === 5"
+            >{{customerData?.riskLevel}}</span>
+          </span>
+          <span class="badge badge-white mr-2">Fx &nbsp;
+            <span
+              class="m-0 badge-small-in-overlap-badge text-center"
+              [class.badge-dark-blue]="fx === true"
+              [class.badge-dark-grey]="fx === false"
+            >{{fx === true ? 'YES' : 'NO'}}
+              <span
+                class="m-0 badge-small-in-badge text-center"
+                [class.badge-dark-blue]="fx === false"
+                [class.badge-dark-grey]="fx === true"
+              >{{fx === false ? 'YES' : 'NO'}}
+              </span>
+            </span>
+          </span>
+          <span class="badge badge-white mr-2">Commo &nbsp;
+            <span
+              class="m-0 badge-small-in-overlap-badge text-center"
+              [class.badge-dark-blue]="comMo === true"
+              [class.badge-dark-grey]="comMo === false"
+            >{{comMo === true ? 'YES' : 'NO'}}
+              <span
+                class="m-0 badge-small-in-badge text-center"
+                [class.badge-dark-blue]="comMo === false"
+                [class.badge-dark-grey]="comMo === true"
+              >{{comMo === false ? 'YES' : 'NO'}}
+              </span>
+            </span>
+          </span>
+          <span class="badge badge-info">Juristic</span>
+          <!--          <span class="badge"-->
+          <!--                [class.badge-light]="customerData?.vulnerableFlag !== true"-->
+          <!--                [class.badge-danger]="customerData?.vulnerableFlag === true"-->
+          <!--          >{{customerData?.vulnerableFlag === true ? 'Vulnerable' : 'General'}}</span>-->
+          <div class="_line-left border-left ml-2"></div>
+          <span
+            class="badge"
+            [class.badge-warning]="customerData?.vulnerableFlag !== true"
+            [class.badge-info]="customerData?.vulnerableFlag === true"
+          >{{customerData?.vulnerableFlag === true ? 'APPROVED' : 'PENDING'}}</span>
+        </div>
+      </div>
+
+      <div class="col-12 d-flex py-1">
+        <div class="row">
+          <div class="_g-text-title">
+            <span>อีเมลสำหรับเข้าสู่ระบบ</span>
+            <div class="d-flex">
+              <p>{{customerData.email}}</p>
+              <div class="d-flex" *ngIf="customerData.vulnerableFlag === true">
+                <span class="ml-2 text-italic">รอยืนยันการสมัครสมาชิก</span>
+                <a class="text-link ml-2 mb-3">ส่งอีเมลแจ้งเตือนอีกครั้ง</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr/>
+      <div class="card-header pl-0">
+        <span class="_g-text-header-title">ข้อมูลนิติบุคคล</span>
+      </div>
+
+      <shared-view-legal-entity-account-info [data]="customerData">
+      </shared-view-legal-entity-account-info>
+
+      <!--รายชื่อกรรมการของนิติบุคคล START-->
+      <div class="card-header pl-0">
+        <span class="_g-text-header-title">รายชื่อกรรมการของนิติบุคคล</span>
+      </div>
+      <shared-view-legal-entity-account-list-juristic-person [data]="customerData">
+      </shared-view-legal-entity-account-list-juristic-person>
+      <!--รายชื่อกรรมการของนิติบุคคล END-->
+      <hr/>
+
+      <!--INFO END-->
+
+      <!--รายชื่อผู้ถือหุ้นตั้งแต่ 25% ขึ้นไป START-->
+      <div class="card-header pl-0">
+        <span class="_g-text-header-title">รายชื่อผู้ถือหุ้นที่ถือตั้งแต่ 25% ขึ้นไป</span>
+      </div>
+      <div class="_g-text-title">
+        <p class="mb-0 py-1 pl-3 _p-color">บุคคลธรรมดาที่เป็นผู้ถือหุ้นของนิติบุคคลเจ้าของบัญชี</p>
+      </div>
+      <div class="col-12 d-flex px-0 py-1 pl-2 pt-4">
+        <div class="col-4">
+          <div class="row">
+            <div class="col-12 _g-text-title">
+              <p>ชื่อ-นามสกุล ของผู้ถือหุ้น</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-8">
+          <div class="row">
+            <div class="col-4 text-center _g-text-title">
+              <p>สัญชาติ</p>
+            </div>
+            <div class="col-4 _g-text-title">
+              <p>เลขบัตรประชาชน/เลขที่พาสปอร์ต</p>
+            </div>
+            <div class="col-4 text-center _g-text-title">
+              <p>วันหมดอายุ</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-12 d-flex px-0 py-1 pl-2 border-top align-items-center justify-content-center"
+        *ngFor="let staff of staffData; let i = index;"
+      >
+        <div class="col-4">
+          <div class="row">
+            <div class="col-12">
+              <span>{{staff.name}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-8">
+          <div class="row pt-2 pb-2">
+            <div class="col-4 text-center">
+              <span>{{staff.national}}</span>
+            </div>
+            <div class="col-4">
+              <span>{{staff.idNo}}</span>
+            </div>
+            <div class="col-4 text-center">
+              <span>{{staff.idNo}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-2 _g-text-title">
+        <p class="mb-0 py-1 pl-3 _p-color">นิติบุคคลที่เป็นผู้ถือหุ้นของนิติบุคคลเจ้าของบัญชี</p>
+      </div>
+      <div class="col-12 d-flex px-0 py-1 pl-2 pt-4">
+        <div class="col-4">
+          <div class="row">
+            <div class="col-12 _g-text-title">
+              <p>ชื่อ-นามสกุล หรือ ชื่อนิติบุคคล ที่เป็นผู้ถือหุ้น</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-8">
+          <div class="row">
+            <div class="col-4 text-center _g-text-title">
+              <p>สัญชาติ</p>
+            </div>
+            <div class="col-4 _g-text-title">
+              <p>เลขบัตรประชาชน/เลขที่พาสปอร์ต/เลขประจำตัวผู้เสียภาษีอากร/เลขทะเบียนนิติบุคคล</p>
+            </div>
+            <div class="col-4 text-center _g-text-title">
+              <p>วันหมดอายุ</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-12 d-flex px-0 py-1 pl-2 border-top align-items-center justify-content-center"
+        *ngFor="let staff of staffData; let i = index;"
+      >
+        <div class="col-4">
+          <div class="row">
+            <div class="col-12">
+              <span>{{staff.name}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-8">
+          <div class="row pt-2 pb-2">
+            <div class="col-4 text-center">
+              <span>{{staff.national}}</span>
+            </div>
+            <div class="col-4">
+              <span>{{staff.idNo}}</span>
+            </div>
+            <div class="col-4 text-center">
+              <span>{{staff.idNo}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+      <!--รายชื่อผู้ถือหุ้นตั้งแต่ 25% ขึ้นไป END-->
+
+
+      <!--ข้อมูลผู้รับผลประโยชน์ START-->
+      <div class="card-header pl-0">
+        <span class="_g-text-header-title">ข้อมูลผู้รับผลประโยชน์ที่แท้จริง</span>
+      </div>
+      <shared-view-legal-entity-account-benefit-info [data]="customerData">
+
+      </shared-view-legal-entity-account-benefit-info>
+      <hr>
+      <!--ข้อมูลผู้รับผลประโยชน์ END-->
+
+      <!--Section ข้อมูลสำหรับทำธุรกรรมกองทุนรวม Start-->
+      <div class="card-header pl-0">
+        <span class="_g-text-header-title">ข้อมูลสำหรับทำธุรกรรมกองทุนรวม</span>
+      </div>
+      <shared-view-legal-entity-account-terms-sign-transaction [data]="customerData">
+
+      </shared-view-legal-entity-account-terms-sign-transaction>
+      <hr/>
+      <!--Section ข้อมูลสำหรับทำธุรกรรมกองทุนรวม End-->
+
+
+      <!--Section การเปิดบัญชีกองทุนรวม Start-->
+      <div class="card-header pl-0">
+        <span class="_g-text-header-title">การเปิดบัญชีกองทุนรวม</span>
+      </div>
+      <div class="col-12 d-flex px-0 py-1">
+        <div class="col-xl-9 col-lg-9 col-md-7 px-0">
+          <div class="pb-2">
+            <span>วัตถุประสงค์การลงทุน</span>
+          </div>
+          <div class="col-12 d-flex px-0 py-1">
+            <div class="d-flex">
+              <li class="d-inline-block mr-2 mb-2">
+                <div class="checkbox _g-checkbox-display-none">
+                  <input
+                    type="checkbox"
+                    id="point-investment"
+                    checked
+                  >
+                  <label for="point-investment"><span>การลงทุน</span></label>
+                </div>
+              </li>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 d-flex px-0 py-1">
+        <div class="col-xl-9 col-lg-9 col-md-7 px-0">
+          <div class="pt-2 pb-2">
+            <span>ที่อยู่ในการจัดส่งเอกสาร</span>
+          </div>
+          <div class="col-12 d-flex px-0 py-1">
+            <div class="d-flex">
+              <li class="d-inline-block mr-2 mb-2">
+                <div class="checkbox _g-checkbox-display-none">
+                  <input
+                    type="checkbox"
+                    id="address-source"
+                    checked
+                  >
+                  <label for="address-source"><span>ตามหนังสือจดทะเบียนนิติบุคคล/หนังสือจัดตั้ง</span></label>
+                </div>
+              </li>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 d-flex px-0 py-1">
+        <div class="col-xl-9 col-lg-9 col-md-7 px-0">
+          <div class="pt-2 pb-2">
+            <span>วิธีการรับเอกสาร</span>
+          </div>
+          <div class="col-12 d-flex px-0 py-1">
+            <div class="d-flex">
+              <li class="d-inline-block mr-2 mb-2">
+                <div class="checkbox _g-checkbox-display-none">
+                  <input
+                    type="checkbox"
+                    id="doc-source"
+                    checked
+                  >
+                  <label for="doc-source"><span>ตามอีเมล</span></label>
+                </div>
+              </li>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <!--Section การเปิดบัญชีกองทุนรวม End-->
+      <div class="card-header pl-0">
+        <span class="_g-text-header-title">Suitability & CDD</span>
+      </div>
+      <div class="col-12 d-flex px-0">
+        <div>
+          <div class="row">
+            <div class="col-12 _g-text-title">
+              <span>Risk Level</span>
+              <div class="d-flex">
+                <p class="mb-0">
+                  {{customerData?.riskLevel ? customerData?.riskLevel : '-'}} |
+                  {{customerData?.riskLevel === 1 ? 'ความเสี่ยงระดับต่ำ' : customerData?.riskLevel === 2 ? 'ความเสี่ยงระดับปานกลางค่อนข้างต่ำ'
+                  : customerData?.riskLevel === 3 ? 'ความเสี่ยงระดับปานกลาง' : customerData?.riskLevel === 4 ? 'ความเสี่ยงระดับปานกลางค่อนข้างสูง'
+                    : customerData?.riskLevel === 5 ? 'ความเสี่ยงะดับสูงสุด' : '-' }} |
+                  Evaluate Date: {{customerData?.evaluateDate | dateYear}} |
+                  Expire Date: {{date | aDate }}
+                </p>
+                <span class="ml-2 badge badge-white">Fx &nbsp;
+                  <span
+                    class="m-0 badge-small-in-overlap-badge text-center"
+                    [class.badge-dark-blue]="fx === true"
+                    [class.badge-dark-grey]="fx === false"
+                  >{{fx === true ? 'YES' : 'NO'}}
+                    <span
+                      class="m-0 badge-small-in-badge text-center"
+                      [class.badge-dark-blue]="fx === false"
+                      [class.badge-dark-grey]="fx === true"
+                    >{{fx === false ? 'YES' : 'NO'}}
+                    </span>
+                  </span>
+                </span>
+                <span class="ml-2 badge badge-white">Commo &nbsp;
+                  <span
+                    class="m-0 badge-small-in-overlap-badge text-center"
+                    [class.badge-dark-blue]="comMo === true"
+                    [class.badge-dark-grey]="comMo === false"
+                  >{{comMo === true ? 'YES' : 'NO'}}
+                    <span
+                      class="m-0 badge-small-in-badge text-center"
+                      [class.badge-dark-blue]="comMo === false"
+                      [class.badge-dark-grey]="comMo === true"
+                    >{{comMo === false ? 'YES' : 'NO'}}
+                    </span>
+                  </span>
+                </span>
+                <a class="pl-2 text-link">ดูรายละเอียด</a>
+              </div>
+            </div>
+            <div class="col-12 _g-text-title py-2">
+              <span>CDD Score</span>
+              <div class="d-flex">
+                <p class="mb-0">
+                  {{customerData?.cddScore ? customerData?.cddScore : '-'}} |
+                  {{customerData?.cddScore === 1 ? 'ความเสี่ยงระดับต่ำ' : customerData?.cddScore === 2 ? 'ความเสี่ยงระดับปานกลาง'
+                  : customerData?.cddScore === 3 ? 'ความเสี่ยงระดับสูง' : '-' }} |
+                  Review Date: {{customerData?.reviewDate | dateYear}} |
+                  Expire Date: {{date | aDate }}
+                </p>
+                <a class="pl-2 text-link">ดูรายละเอียด</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Section การเปิดบัญชีกองทุนรวม End-->
+    </div>
+  </div>
+</div>
+
+<!--  ไฟล์ยืนยันการเปิก บช-->
+<shared-view-file-confirm-account-opening [account]="true">
+</shared-view-file-confirm-account-opening>
+
+<div class="_g-header justify-content-end">
+  <div class="d-flex">
+    <button
+      *ngIf="customerData.vulnerableFlag !== true"
+      type="button"
+      class="btn btn-clear  mr-1 mb-1"
+      (click)="goToNoteForm($event)"
+    ><span>Reject</span>
+    </button>
+    <!--    <button-->
+    <!--      type="button"-->
+    <!--      class="btn btn-primary  mr-1 mb-1"-->
+    <!--    ><span>Approve</span>-->
+    <!--    </button>-->
+    <button
+      type="button"
+      class="btn btn-secondary  mr-1 mb-1"
+      (click)="goBack()"
+    ><span>กลับ</span>
+    </button>
+  </div>
+</div>
+
+<lib-modal
+  #formNoteModal
+  [showHeader]="false"
+  modalSize="lg"
+>
+  <fe-account-ats-form-note
+    #note
+    *ngIf="formNoteModal.isOpen"
+    (cancel)="formNoteModal.close()"
+    (save)="save($event)"
+  >
+  </fe-account-ats-form-note>
+
+</lib-modal>
+

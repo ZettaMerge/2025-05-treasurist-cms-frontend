@@ -1,0 +1,303 @@
+<section id="form-career-general">
+  <div class="card-header pl-0">
+    <span class="_g-text-header-title">ข้อมูลอาชีพ</span>
+  </div>
+  <div class="card-body py-0 px-0">
+    <div class="row">
+      <div class="col-12 _g-card-form px-0">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+          <div class="row">
+            <div class="col-xl-6 col-lg-6 col-sm-12 _g-text-title"
+            >
+              <div class="form-group">
+                <label class="col-form-label">อาชีพ</label>
+                <div class="form-input">
+                  <shared-occupation-dropdown
+                    placeholder="อาชีพ"
+                    id="career"
+                    name="career"
+                    [(ngModel)]="occupationId"
+                    (ngModelChange)="onOccupationChange($event)"
+                    required
+                  >
+                  </shared-occupation-dropdown>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-sm-12 _g-text-title">
+              <div class="form-group">
+                <label class="col-form-label">อาชีพอื่นๆ</label>
+                <div class="form-input">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="อาชีพอื่นๆ"
+                    id="JobTitle"
+                    name="JobTitle"
+                    [(ngModel)]="data.occupationOther"
+                    [disabled]="isOtherOccupation"
+                    required
+                  >
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6  col-sm-12">
+          <div class="row">
+            <div class="col-xl-5 col-lg-6 col-sm-12 _g-text-title">
+              <div class="form-group">
+                <label class="col-form-label">ประเภทธุรกิจ</label>
+                <div class="form-input">
+                  <shared-business-dropdown
+                    placeholder="ประเภทธุรกิจ"
+                    id="businessType"
+                    name="businessType"
+                    [(ngModel)]="businessTypeId"
+                    (ngModelChange)="onBusinessChange($event)"
+                    [disabled]="isTypeBusiness"
+                    required
+                  >
+                  </shared-business-dropdown>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-7 col-lg-6 col-sm-12 _g-text-title">
+              <div class="form-group">
+                <label class="col-form-label">ประเภทธุรกิจอื่นๆ</label>
+                <div class="form-input">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="ประเภทธุรกิจอื่นๆ"
+                    id="WorkName"
+                    name="WorkName"
+                    [(ngModel)]="data.businessTypeOther"
+                    [disabled]="isOtherBusiness"
+                    required
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 _g-card-form px-0" *ngIf="isWorkAddress">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+          <div class="row">
+            <div class="col-xl-6 col-lg-6 col-sm-12 _g-text-title"
+            >
+              <div class="form-group">
+                <label class="col-form-label">ชื่อที่อยู่ที่ทำงาน</label>
+                <div class="form-input">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="ชื่อที่อยู่ที่ทำงาน"
+                    id="companyName"
+                    name="companyName"
+                    [(ngModel)]="data.companyName"
+                    required
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-sm-12 _g-text-title">
+              <div class="form-group">
+                <label class="col-form-label">ตำแหน่งงาน</label>
+                <div class="form-input">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="ตำแหน่งงาน"
+                    id="workPosition"
+                    name="workPosition"
+                    [(ngModel)]="data.workPosition"
+                    required
+                  >
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="isWorkAddress"
+       class="_card-header">
+    <span class="_g-text-header-sub-title">ที่อยู่ที่ทำงาน</span>
+  </div>
+  <div class="col-12 d-flex px-0" *ngIf="isWorkAddress">
+    <div class="col-12">
+      <div class="row">
+        <div class="col-12 pl-0">
+          <li class="d-inline-block mr-2 mb-2">
+            <div class="checkbox"
+                 [class._check-box-valid-form]="isValidWorkAddress"
+            >
+              <input
+                type="checkbox"
+                id="workAddressIdCard"
+                name="workAddressIdCard"
+                [(ngModel)]="isWorkAddressIdCard"
+                (ngModelChange)="onChangCheckBoxAddressIdCard($event)"
+              >
+              <label for="workAddressIdCard"><span>ตามบัตรประชาชน</span></label>
+            </div>
+          </li>
+          <li class="d-inline-block mr-2 mb-2">
+            <div class="checkbox"
+                 [class._check-box-valid-form]="isValidWorkAddress"
+            >
+              <input
+                type="checkbox"
+                id="workAddressPresent"
+                name="workAddressPresent"
+                [(ngModel)]="isWorkCurrentAddress"
+                (ngModelChange)="onChangCheckBoxCurrentAddress($event)"
+              >
+              <label for="workAddressPresent"><span>ตามที่อยู่ปัจจุบัน</span></label>
+            </div>
+          </li>
+          <li class="d-inline-block mr-2 mb-2">
+            <div class="checkbox"
+                 [class._check-box-valid-form]="isValidWorkAddress"
+            >
+              <input
+                type="checkbox"
+                id="workAddressOther"
+                name="workAddressOther"
+                [(ngModel)]="isWorkAddressOther"
+                (ngModelChange)="onChangCheckBoxAddressOther($event)"
+              >
+              <label for="workAddressOther"><span>อื่น ๆ</span></label>
+            </div>
+          </li>
+        </div>
+        <error-message-control
+          *ngIf="isValidWorkAddress"
+          [text]="'โปรดระบุข้อมูลให้ครบถ้วน'">
+        </error-message-control>
+      </div>
+    </div>
+  </div>
+  <fe-form-account-form-work-address
+    *ngIf="isWorkAddressOther"
+    [data]="workAddressData"
+  >
+  </fe-form-account-form-work-address>
+
+
+  <div class="_card-header">
+    <span class="_g-text-header-sub-title">ที่อยู่ในการจัดส่งเอกสาร</span>
+  </div>
+  <div class="col-12 d-flex px-0">
+    <div class="col-12">
+      <div class="row">
+        <div class="col-12 pl-0">
+          <li class="d-inline-block mr-2 mb-2">
+            <div class="checkbox"
+                 [class._check-box-valid-form]="isValidMailAddress"
+            >
+              <input
+                type="checkbox"
+                id="deliveryAddressIdCard"
+                name="deliveryAddressIdCard"
+                [(ngModel)]="isDocumentDeliveryAddressIdCard"
+                (ngModelChange)="onChangCheckBoxDeliveryAddressIdCard($event)"
+              >
+              <label for="deliveryAddressIdCard"><span>ตามบัตรประชาชน</span></label>
+            </div>
+          </li>
+          <li class="d-inline-block mr-2 mb-2">
+            <div class="checkbox"
+                 [class._check-box-valid-form]="isValidMailAddress"
+            >
+              <input
+                type="checkbox"
+                id="deliveryAddressPresent"
+                name="deliveryAddressPresent"
+                [(ngModel)]="isDocumentDeliveryCurrentAddress"
+                (ngModelChange)="onChangCheckBoxDeliveryCurrentAddress($event)"
+              >
+              <label for="deliveryAddressPresent"><span>ตามที่อยู่ปัจจุบัน</span></label>
+            </div>
+          </li>
+          <li class="d-inline-block mr-2 mb-2">
+            <div class="checkbox"
+                 [class._check-box-valid-form]="isValidMailAddress"
+            >
+              <input
+                type="checkbox"
+                id="deliveryAddressWork"
+                name="deliveryAddressWork"
+                [(ngModel)]="isDocumentDeliveryWorkAddress"
+                (ngModelChange)="onChangCheckBoxDeliveryWorkAddress($event)"
+              >
+              <label for="deliveryAddressWork"><span>ตามที่อยู่ที่ทำงาน</span></label>
+            </div>
+          </li>
+          <li class="d-inline-block mr-2 mb-2">
+            <div class="checkbox"
+                 [class._check-box-valid-form]="isValidMailAddress"
+            >
+              <input
+                type="checkbox"
+                id="deliveryAddressOther"
+                name="deliveryAddressOther"
+                [(ngModel)]="isDocumentDeliveryAddressOther"
+                (ngModelChange)="onChangCheckBoxDeliveryAddressOther($event)"
+              >
+              <label for="deliveryAddressOther"><span>อื่น ๆ</span></label>
+            </div>
+          </li>
+        </div>
+        <error-message-control
+          class="text-bold-500"
+          *ngIf="isValidMailAddress"
+          [text]="'โปรดระบุข้อมูลให้ครบถ้วน'">
+        </error-message-control>
+      </div>
+    </div>
+  </div>
+
+  <fe-form-account-form-mail-address
+    *ngIf="isDocumentDeliveryAddressOther"
+    [data]="mailingAddressData"
+  >
+
+  </fe-form-account-form-mail-address>
+
+  <div class="_card-header">
+    <span class="_g-text-header-sub-title">วิธีการรับเอกสาร</span>
+  </div>
+  <div class="col-12 d-flex px-0">
+    <div class="col-12">
+      <div class="row">
+        <div class="col-12 pl-0">
+          <li class="d-inline-block mr-2 mb-2">
+            <div class="checkbox"
+                 [class._check-box-valid-form]="isValidMailMethod"
+            >
+              <input
+                type="checkbox"
+                id="receiptDocumentEmail"
+                name="receiptDocumentEmail"
+                [(ngModel)]="isEmail"
+                (ngModelChange)="onChangReceiptDocumentsEmail($event)"
+              >
+              <label for="receiptDocumentEmail"><span>ตามอีเมล</span></label>
+            </div>
+          </li>
+        </div>
+        <error-message-control
+          class="text-bold-500"
+          *ngIf="isValidMailMethod"
+          [text]="'โปรดระบุข้อมูลให้ครบถ้วน'">
+        </error-message-control>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,107 @@
+<div class="_g-card-detail">
+  <div class="d-flex justify-content-between align-items-center">
+    <span class="_g-text-header-title">ข้อมูลการขาย</span>
+  </div>
+  <div class="row">
+    <div class="col-12 d-flex px-0 py-1">
+      <div class="col-5">
+        <div class="row">
+          <div class="col-6 _g-text-title">
+            <span>วันที่ส่งคำสั่ง</span>
+            <p>{{redemptionData?.transactionDateTime | aDate}}</p>
+          </div>
+          <div class="col-6 _g-text-title">
+            <span>กองทุน</span>
+            <p>{{redemptionData?.fundCode}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-7">
+        <div class="row">
+          <div class="col-8 _g-text-title">
+            <span>ชื่อกองทุนรวม</span>
+            <p>{{redemptionData?.thFundName}}</p>
+          </div>
+          <div class="col-4 _g-text-title">
+            <span>บลจ.</span>
+            <p>{{redemptionData?.amcCode}}</p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 d-flex px-0 py-1">
+      <div class="col-5">
+        <div class="row">
+          <div class="col-6 _g-text-title">
+            <span>มูลค่าหน่วยลงทุน (บาท/หน่วย)</span>
+            <p>{{redemptionData?.allottedNav ? redemptionData?.allottedNav: '-'}}</p>
+
+          </div>
+          <div class="col-6 _g-text-title">
+            <span>เลขที่ผู้ถือหน่วยลงทุน</span>
+            <p>{{redemptionData?.unitholderId}}</p>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-7">
+        <div class="row">
+          <div class="col-4 _g-text-title">
+            <span>จำนวน (บาท)</span>
+            <p *ngIf="!redemptionData?.allottedAmount && !redemptionData?.amount ">-</p>
+            <p *ngIf="redemptionData?.allottedAmount">{{redemptionData?.allottedAmount | number: '1.2-2'}}</p>
+            <p *ngIf="!redemptionData?.allottedAmount">{{redemptionData?.amount | number: '1.2-2'}}</p>
+
+          </div>
+          <div class="col-4 _g-text-title">
+            <span>จำนวน (หน่วย)</span>
+            <p *ngIf="!redemptionData?.allottedUnit && !redemptionData?.unit ">-</p>
+            <p *ngIf="redemptionData?.allottedUnit">{{redemptionData?.allottedUnit | number: '1.2-2'}}</p>
+            <p *ngIf="!redemptionData?.allottedUnit">{{redemptionData?.unit | number: '1.2-2'}}</p>
+          </div>
+          <div class="col-4 _g-text-title">
+            <span>วันที่ทำรายการ</span>
+            <p>{{!redemptionData?.effectiveDate ? '-':redemptionData?.effectiveDate | aDate}}</p>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 d-flex px-0 py-1">
+      <div class="col-5">
+        <div class="row">
+          <div class="col-6 _g-text-title">
+            <span>วันที่จัดสรร</span>
+            <p>{{!redemptionData?.allotmentDate ? '-': redemptionData?.allotmentDate | aDate}}</p>
+
+          </div>
+          <div class="col-6 _g-text-title">
+            <span>จำนวนจัดสรร (หน่วย)</span>
+            <p *ngIf="!redemptionData?.allottedUnit && !redemptionData?.unit">-</p>
+            <p *ngIf="redemptionData?.allottedUnit">{{redemptionData?.allottedUnit | number: '1.4-4'}}</p>
+            <p *ngIf="!redemptionData?.allottedUnit">{{redemptionData?.unit | number: '1.4-4'}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-7">
+        <div class="row">
+          <div class="col-4 _g-text-title">
+            <span>บัญชีรับเงิน</span>
+            <p *ngIf="redemptionData?.bankCode">{{redemptionData?.bankShortName}}</p>
+            <p *ngIf="!redemptionData?.bankCode">-</p>
+          </div>
+          <div class="col-4 _g-text-title">
+            <span>เลขที่บัญชี</span>
+            <p>{{redemptionData?.bankNo ?redemptionData?.bankNo : '-' }}</p>
+          </div>
+          <div class="col-4 _g-text-title">
+            <span>วันที่ได้รับเงิน</span>
+            <p>{{redemptionData?.settlementDate ?redemptionData?.settlementDate: '-' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

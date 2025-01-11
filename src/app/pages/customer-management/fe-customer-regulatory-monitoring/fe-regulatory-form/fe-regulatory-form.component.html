@@ -1,0 +1,199 @@
+<form
+  #form="ngForm"
+  [class.submitted]="form.submitted"
+  (ngSubmit)="onSave(form)"
+>
+  <div class="card-body">
+    <div class="d-flex justify-content-between">
+      <div>
+        <span class="text-primary font-size-medium">{{isNew ? 'สร้างรายการ' : 'แก้ไข'}} </span>
+        <span class="text-primary font-size-medium">{{regulatoryType === 'cdd' ? 'CDD Checklist' : regulatoryType === 'pep' ? 'PEP List' : 'AMLO'}}</span>
+      </div>
+<!--      <a *ngIf="!isNew" class="font-size-medium"><i class="ic ic-delete text-primary"></i> ลบรายการ</a>-->
+    </div>
+    <div class="d-flex"
+         [ngClass]="{'pt-4': !isNew}"
+    >
+      <div class="col-6 pl-0">
+        <div class="form-group">
+          <label class="col-form-label is-required">ชื่อจริง</label>
+          <div class="form-input">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="โปรดระบุ"
+              id="firstName"
+              name="firstName"
+              [(ngModel)]="regulatoryData.firstName"
+              required
+            >
+          </div>
+        </div>
+      </div>
+      <div class="col-6 pr-0">
+        <div class="form-group">
+          <label class="col-form-label is-required">นามสกุลจริง</label>
+          <div class="form-input">
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              class="form-control"
+              placeholder="โปรดระบุ"
+              [(ngModel)]="regulatoryData.lastName"
+              required
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex">
+      <div class="col-6 pl-0" *ngIf="regulatoryType !== 'pep'">
+        <div class="form-group">
+          <label class="col-form-label is-required">เลขบัตรประชาชน / Passport</label>
+          <div class="form-input">
+            <input
+              type="text"
+              id="cid"
+              name="cid"
+              class="form-control"
+              placeholder="โปรดระบุ"
+              [(ngModel)]="regulatoryData.identifyNo"
+              required
+            >
+          </div>
+        </div>
+      </div>
+      <div class="col-6 pl-0" *ngIf="regulatoryType === 'pep'">
+        <div class="form-group">
+          <label class="col-form-label">เลขบัตรประชาชน / Passport</label>
+          <div class="form-input">
+            <input
+              type="text"
+              id="cid-pep"
+              name="cid-pep"
+              class="form-control"
+              placeholder="โปรดระบุ"
+              [(ngModel)]="regulatoryData.identifyNo"
+            >
+          </div>
+        </div>
+      </div>
+      <div class="col-6 pr-0">
+        <div class="form-group">
+          <label class="col-form-label">วัน/เดือน/ปีเกิด <span class="text-italic text-muted">Optional</span></label>
+          <div class="form-input">
+            <pn-date-picker
+              placeholder="dd/mm/yyyy"
+              id="birthDate"
+              name="birthDate"
+              [(ngModel)]="regulatoryData.birthdate"
+            >
+            </pn-date-picker>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex">
+      <div class="col-6 pl-0" *ngIf="regulatoryType === 'cdd'">
+        <div class="form-group">
+          <label class="col-form-label is-required">Code</label>
+          <div class="form-input">
+            <pn-dynamic-dropdown
+              id="code"
+              name="code"
+              placeholder="เลือก"
+              [list]="listsDropdown"
+              [(ngModel)]="code"
+              (ngModelChange)="checkList(code)"
+              required
+            >
+            </pn-dynamic-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 pl-0 d-flex">
+        <div class="col-7"  *ngIf="regulatoryType !== 'pep'">
+          <div class="form-group">
+            <label class="col-form-label is-required">Type</label>
+            <div class="form-input">
+              <div class="d-flex">
+                <pn-segmented-control
+                  *ngIf="regulatoryType === 'cdd' && !cddCode"
+                  name="typeCdd"
+                  id="typeCdd"
+                  [list]="typeCddCode"
+                  [(ngModel)]="type"
+                >
+                </pn-segmented-control>
+                <pn-segmented-control
+                  *ngIf="regulatoryType === 'cdd' && cddCode && cddCode.name === 'HR-02'"
+                  name="type"
+                  id="type"
+                  [list]="typeCddCodeHr2"
+                  [(ngModel)]="typeCdd"
+                >
+                </pn-segmented-control>
+                <pn-segmented-control
+                  *ngIf="regulatoryType === 'cdd' && cddCode && cddCode.name === 'HR-08-RISK'"
+                  name="type-rh-8"
+                  id="type-rh-8"
+                  [list]="typeCddCodeRh8"
+                  [(ngModel)]="typeCdd"
+                >
+                </pn-segmented-control>
+              </div>
+              <pn-segmented-control
+                *ngIf="regulatoryType === 'amlo'"
+                name="type-amlo"
+                id="type-amlo"
+                [list]="typeAmloList"
+                [(ngModel)]="typeAmlo"
+              >
+              </pn-segmented-control>
+            </div>
+          </div>
+        </div>
+        <div class="">
+          <div class="form-group">
+            <label class="col-form-label is-required">สถานะ</label>
+            <div class="form-input">
+              <pn-segmented-control
+                id="status-regular"
+                name="status-regular"
+                [list]="statusList"
+                [(ngModel)]="status"
+                [ngModelOptions]="{standalone: true}"
+              >
+              </pn-segmented-control>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end pt-3">
+      <div class="col-6 d-flex pr-0">
+        <div class="col-6 pl-0 _display-btn">
+          <button
+            type="button"
+            class="btn btn-clear flex-1"
+            (click)="onCancel()"
+          >
+            <span><i class="ic-cross"></i>ยกเลิก</span>
+          </button>
+        </div>
+        <div class="col-6 pr-0 _display-btn">
+          <button
+            type="submit"
+            class="btn btn-primary flex-1"
+          >
+            <span><i class="ic-cross"></i>{{isNew ? 'สร้าง': 'บันทึก'}}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

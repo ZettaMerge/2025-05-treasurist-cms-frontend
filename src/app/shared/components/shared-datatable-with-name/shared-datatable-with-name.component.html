@@ -1,0 +1,19 @@
+<div class="d-flex align-items-center">
+  <div>
+    <span>{{id}}</span>&nbsp;
+    <span *ngIf="riskLevel"
+    class="m-0 badge-small text-center"
+    [class.badge-light-green]="riskLevel === 1"
+    [class.badge-yellow]="riskLevel === 2"
+    [class.badge-light-orange]="riskLevel === 3"
+    [class.badge-dark-orange]="riskLevel === 4"
+    [class.badge-danger]="riskLevel === 5"
+    >{{riskLevel}}</span>
+    <span
+      *ngIf="riskLevelOpenAccount"
+      class="m-0 badge-small text-center badge-danger"
+    >{{riskLevelOpenAccount}}</span>
+    <p class="m-0 text-muted">{{firstName}}  {{lastName}}</p>
+  </div>
+</div>
+

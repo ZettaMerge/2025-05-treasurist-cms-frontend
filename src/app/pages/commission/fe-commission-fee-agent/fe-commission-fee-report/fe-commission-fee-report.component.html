@@ -1,0 +1,123 @@
+<!--HEADER-->
+<div class="_g-header">
+  <h1 class="_g-title-header">Agent Fee Report</h1>
+  <div class="_g-header justify-content-end">
+    <button
+      type="button"
+      class="btn btn-secondary  mr-1 mb-1"
+      (click)="goBack()"
+    ><span>กลับ</span>
+    </button>
+  </div>
+</div>
+<!--HEADER-->
+<!--AGENT REPORT-->
+<div class="card _g-card-content-tab">
+  <div class="card-body">
+    <div class="d-flex justify-content-between">
+      <a class="text-muted" (click)="goBack()"><i class="ic ic-chevron-left"></i> กลับ</a>
+      <span class="badge"
+            [class.badge-success]="paymentData.status === 'published'"
+            [class.badge-dark]="paymentData.status === 'draft'"
+      >{{paymentData.status === 'published' ? 'PUBLISHED' : paymentData.status === 'draft' ? 'DRAFT' : ''}}</span>
+    </div>
+    <div class="row pt-4 pb-2">
+      <div class="col-12 d-flex px-0 py-1">
+        <div class="col-3 _g-text-title">
+          <span>Payment</span>
+          <p>{{paymentData.paymentDate | aDate}}</p>
+        </div>
+        <div class="col-9 d-flex">
+          <div class="col-5 _g-text-title">
+            <span>Description</span>
+            <p>{{paymentData.description}}</p>
+          </div>
+          <div class="col-4 _g-text-title">
+            <span>Type</span>
+            <p>{{type}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div
+      class="col-12 pt-3"
+      *ngIf="rows && rows?.length === 0"
+    >
+      <pn-data-not-found
+        [isShowAddButton]="false"
+      >
+      </pn-data-not-found>
+    </div>
+    <div
+      class="pt-3"
+      [hidden]="rows && rows?.length === 0"
+    >
+      <div class="d-flex justify-content-between">
+        <div class="col-6 px-0">
+          <pn-grid-per-page
+            [page]="page"
+            (setPerPage)="grid.setPerPage($event)"
+          ></pn-grid-per-page>
+        </div>
+      </div>
+      <div class="_g-table-container">
+        <pn-lib-grid
+          #grid
+          [sort]="{ prop: 'accountName', asc: false }"
+          [bodyHeight]="'auto'"
+          [dataSub]="dataSub"
+          [rows]="rows"
+          [columns]="columns"
+          [rowHeight]="85"
+          [externalPaging]="true"
+          [(page)]="page"
+          (pageChange)="pageChange()"
+          (sortChange)="onSortChange($event)"
+          (detailInfo)="detailInfo($event)"
+        ></pn-lib-grid>
+      </div>
+    </div>
+<!--    <div class="d-flex _report-list-header">-->
+<!--      <div class="col-5 d-flex">-->
+<!--        <div class="col-6 text-bold-500">กองทุน</div>-->
+<!--        <div class="col-6 text-bold-500">บลจ.</div>-->
+<!--      </div>-->
+<!--      <div class="col-7 d-flex">-->
+<!--        <div class="col-4 text-bold-500">Agent fee</div>-->
+<!--        <div class="col-4 text-bold-500">Account Name</div>-->
+<!--        <div class="col-4 text-bold-500">Account No</div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <hr>-->
+
+<!--    <div *ngFor="let report of reportList">-->
+<!--      <div class="_report-list col-12 d-flex px-0 pb-2 pt-2">-->
+<!--        <div class="col-5 d-flex">-->
+<!--          <div class="col-6">{{report.fund}}</div>-->
+<!--          <div class="col-6">{{report.amc}}</div>-->
+<!--        </div>-->
+<!--        <div class="col-7 d-flex">-->
+<!--          <div class="col-4">{{report.agFee | aDecimal}}</div>-->
+<!--          <div class="col-4">{{report.accountName}}</div>-->
+<!--          <div class="col-4">{{report.accNo}}</div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <hr>-->
+<!--    </div>-->
+  </div>
+</div>
+<!--AGENT REPORT-->
+
+
+<!--FOOTER-->
+<div class="_g-header justify-content-end">
+  <button
+    type="button"
+    class="btn btn-secondary  mr-1 mb-1"
+    (click)="goBack()"
+  ><span>กลับ</span>
+  </button>
+</div>
+<!--FOOTER-->
+

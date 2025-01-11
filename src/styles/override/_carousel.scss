@@ -1,0 +1,230 @@
+// Carousel
+
+$carousel-control-color-custom: $white !default;
+$carousel-control-width-custom: 15% !default;
+$carousel-control-opacity-custom: .5 !default;
+$carousel-control-hover-opacity-custom: .9 !default;
+$carousel-control-transition-custom: opacity .15s ease !default;
+
+$carousel-indicator-width-custom: 10px !default;
+$carousel-indicator-height-custom: 10px !default;
+$carousel-indicator-radius-custom: 10px !default;
+$carousel-indicator-hit-area-height-custom: 0px !default;
+$carousel-indicator-spacer-custom: 3px !default;
+$carousel-indicator-active-bg-custom: $white !default;
+$carousel-indicator-transition-custom: opacity .6s ease !default;
+
+$carousel-caption-width-custom: 70% !default;
+$carousel-caption-color-custom: $white !default;
+
+$carousel-control-icon-width-custom: 20px !default;
+
+$carousel-control-prev-icon-bg-custom: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' fill='#{$carousel-control-color}' width='8' height='8' viewBox='0 0 8 8'><path d='M5.25 0l-4 4 4 4 1.5-1.5L4.25 4l2.5-2.5L5.25 0z'/></svg>") !default;
+$carousel-control-next-icon-bg-custom: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' fill='#{$carousel-control-color}' width='8' height='8' viewBox='0 0 8 8'><path d='M2.75 0l-1.5 1.5L3.75 4l-2.5 2.5L2.75 8l4-4-4-4z'/></svg>") !default;
+
+$carousel-transition-duration-custom: .6s !default;
+$carousel-transition-custom: transform $carousel-transition-duration-custom ease-in-out !default; // Define transform transition first if using multiple transitions (e.g., `transform 2s ease, opacity .5s ease-out`)
+
+
+// Notes on the classes:
+//
+// 1. .carousel.pointer-event should ideally be pan-y (to allow for users to scroll vertically)
+//    even when their scroll action started on a carousel, but for compatibility (with Firefox)
+//    we're preventing all actions instead
+// 2. The .carousel-item-left and .carousel-item-right is used to indicate where
+//    the active slide is heading.
+// 3. .active.carousel-item is the current slide.
+// 4. .active.carousel-item-left and .active.carousel-item-right is the current
+//    slide in its in-transition state. Only one of these occurs at a time.
+// 5. .carousel-item-next.carousel-item-left and .carousel-item-prev.carousel-item-right
+//    is the upcoming slide in transition.
+
+.carousel {
+  position: relative;
+}
+
+.carousel.pointer-event {
+  touch-action: pan-y;
+}
+
+.carousel-inner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  @include clearfix();
+}
+
+.carousel-item {
+  position: relative;
+  display: none;
+  float: left;
+  width: 100%;
+  margin-right: -100%;
+  backface-visibility: hidden;
+  @include transition($carousel-transition-custom);
+}
+
+.carousel-item.active,
+.carousel-item-next,
+.carousel-item-prev {
+  display: block;
+}
+
+.carousel-item-next:not(.carousel-item-left),
+.active.carousel-item-right {
+  transform: translateX(100%);
+}
+
+.carousel-item-prev:not(.carousel-item-right),
+.active.carousel-item-left {
+  transform: translateX(-100%);
+}
+
+
+//
+// Alternate transitions
+//
+
+.carousel-fade {
+  .carousel-item {
+    opacity: 0;
+    transition-property: opacity;
+    transform: none;
+  }
+
+  .carousel-item.active,
+  .carousel-item-next.carousel-item-left,
+  .carousel-item-prev.carousel-item-right {
+    z-index: 1;
+    opacity: 1;
+  }
+
+  .active.carousel-item-left,
+  .active.carousel-item-right {
+    z-index: 0;
+    opacity: 0;
+    @include transition(opacity 0s $carousel-transition-duration-custom);
+  }
+}
+
+
+//
+// Left/right controls for nav
+//
+
+.carousel-control-prev,
+.carousel-control-next {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  // Use flex for alignment (1-3)
+  display: flex; // 1. allow flex styles
+  align-items: center; // 2. vertically center contents
+  justify-content: center; // 3. horizontally center contents
+  width: $carousel-control-width-custom;
+  color: $carousel-control-color-custom;
+  text-align: center;
+  opacity: $carousel-control-opacity-custom;
+  @include transition($carousel-control-transition-custom);
+
+  // Hover/focus state
+  @include hover-focus() {
+    color: $carousel-control-color-custom;
+    text-decoration: none;
+    outline: 0;
+    opacity: $carousel-control-hover-opacity-custom;
+  }
+}
+
+.carousel-control-prev {
+  left: 0;
+  @if $enable-gradients {
+    background-image: linear-gradient(90deg, rgba($black, .25), rgba($black, .001));
+  }
+}
+
+.carousel-control-next {
+  right: 0;
+  @if $enable-gradients {
+    background-image: linear-gradient(270deg, rgba($black, .25), rgba($black, .001));
+  }
+}
+
+// Icons for within
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  display: inline-block;
+  width: $carousel-control-icon-width-custom;
+  height: $carousel-control-icon-width-custom;
+  background: 50% / 100% 100% no-repeat;
+}
+
+.carousel-control-prev-icon {
+  background-image: escape-svg($carousel-control-prev-icon-bg-custom);
+}
+
+.carousel-control-next-icon {
+  background-image: escape-svg($carousel-control-next-icon-bg-custom);
+}
+
+
+// Optional indicator pips
+//
+// Add an ordered list with the following class and add a list item for each
+// slide your carousel holds.
+
+.carousel-indicators {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 15;
+  display: flex;
+  justify-content: center;
+  padding-left: 0; // override <ol> default
+  // Use the .carousel-control's width as margin so we don't overlay those
+  margin-right: $carousel-control-width-custom;
+  margin-left: $carousel-control-width-custom;
+  list-style: none;
+
+  li {
+    box-sizing: content-box;
+    flex: 0 1 auto;
+    width: $carousel-indicator-width-custom;
+    height: $carousel-indicator-height-custom;
+    margin-right: $carousel-indicator-spacer-custom;
+    margin-left: $carousel-indicator-spacer-custom;
+    text-indent: -999px;
+    cursor: pointer;
+    background-color: $carousel-indicator-active-bg-custom;
+    background-clip: padding-box;
+    border-radius: $carousel-indicator-radius-custom;
+    // Use transparent borders to increase the hit area by 10px on top and bottom.
+    border-top: $carousel-indicator-hit-area-height-custom solid transparent;
+    border-bottom: $carousel-indicator-hit-area-height-custom solid transparent;
+    opacity: .5;
+    @include transition($carousel-indicator-transition-custom);
+  }
+
+  .active {
+    opacity: 1;
+  }
+}
+
+
+// Optional captions
+//
+//
+
+.carousel-caption {
+  position: absolute;
+  right: (100% - $carousel-caption-width-custom) / 2;
+  bottom: 20px;
+  left: (100% - $carousel-caption-width-custom) / 2;
+  z-index: 10;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  color: $carousel-caption-color-custom;
+  text-align: center;
+}

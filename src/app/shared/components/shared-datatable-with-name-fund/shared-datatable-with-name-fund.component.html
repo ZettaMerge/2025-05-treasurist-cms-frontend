@@ -1,0 +1,19 @@
+<div class="d-flex align-items-center">
+  <div>
+    <span>{{fundCode}}</span>&nbsp;
+    <span
+      *ngIf="riskLevel"
+      class="m-0 badge-small text-center"
+      [class.badge-green]="riskLevel === '1'"
+      [class.badge-light-v1-green]="riskLevel === '2'"
+      [class.badge-light-green]="riskLevel === '3'"
+      [class.badge-yellow]="riskLevel === '4'"
+      [class.badge-light-orange]="riskLevel === '5'"
+      [class.badge-dark-orange]="riskLevel === '6'"
+      [class.badge-danger-v1]="riskLevel === '7'"
+      [class.badge-danger-v2]="riskLevel === '8'"
+      [class.badge-danger]="riskLevel === '9'"
+    >{{riskLevel}}</span>
+    <p *ngIf="fundName" class="text-muted mb-0">{{fundName}}</p>
+  </div>
+</div>

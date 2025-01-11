@@ -1,0 +1,11 @@
+<input
+  class="form-control {{classInput}}"
+  type="time"
+  [min]="min"
+  [max]="max"
+  [required]="required"
+  [placeholder]="placeholder"
+  [ngModel]="value"
+  (ngModelChange)="onValueChange($event)"
+  [disabled]="disabled"
+>

@@ -1,0 +1,93 @@
+<div class="card-body pl-0 pt-0">
+  <div class="row">
+    <div class="col-12 d-flex px-0">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-12 _g-text-title">
+            <span class="py-2">Risk Level</span>
+            <div class="d-flex">
+              <p class="mb-0">
+                {{data?.riskLevel ? data?.riskLevel : '-'}} |
+                {{data?.riskLevel === 1 ? 'ความเสี่ยงระดับต่ำ' : data?.riskLevel === 2 ? 'ความเสี่ยงระดับปานกลางค่อนข้างต่ำ'
+                      : data?.riskLevel === 3 ? 'ความเสี่ยงระดับปานกลาง' : data?.riskLevel === 4 ? 'ความเสี่ยงระดับปานกลางค่อนข้างสูง'
+                        : data?.riskLevel === 5 ? 'ความเสี่ยงะดับสูงสุด' : '-' }} |
+                Evaluate Date: {{data?.evaluateDate | dateYear}} |
+                Expire Date: {{date | aDate }}
+              </p>
+              <span class="ml-2 badge badge-white">Fx &nbsp;
+                <span
+                  class="m-0 badge-small-in-overlap-badge text-center"
+                  [class.badge-dark-blue]="fx === true"
+                  [class.badge-dark-grey]="fx === false"
+                >{{fx === true ? 'YES' : 'NO'}}
+                  <span
+                    class="m-0 badge-small-in-badge text-center"
+                    [class.badge-dark-blue]="fx === false"
+                    [class.badge-dark-grey]="fx === true"
+                  >{{fx === false ? 'YES' : 'NO'}}
+                  </span>
+                </span>
+              </span>
+              <span class="ml-2 badge badge-white">Commo &nbsp;
+                <span
+                  class="m-0 badge-small-in-overlap-badge text-center"
+                  [class.badge-dark-blue]="comMo === true"
+                  [class.badge-dark-grey]="comMo === false"
+                >{{comMo === true ? 'YES' : 'NO'}}
+                  <span
+                    class="m-0 badge-small-in-badge text-center"
+                    [class.badge-dark-blue]="comMo === false"
+                    [class.badge-dark-grey]="comMo === true"
+                  >{{comMo === false ? 'YES' : 'NO'}}
+                  </span>
+                </span>
+              </span>
+              <a class="pl-2 text-link" (click)="onOpenRiskDetailModal()">ดูรายละเอียด</a>
+            </div>
+          </div>
+          <div class="col-12 _g-text-title pt-2">
+            <span class="py-2">CDD Score</span>
+            <div class="d-flex">
+              <p class="mb-0">
+                {{data?.cddScore ? data?.cddScore : '-'}} |
+                {{data?.cddScore === 1 ? 'ความเสี่ยงระดับต่ำ' : data?.cddScore === 2 ? 'ความเสี่ยงระดับปานกลาง'
+                      : data?.cddScore === 3 ? 'ความเสี่ยงระดับสูง' : '-' }} |
+                Review Date: {{data?.reviewDate | dateYear}} |
+                Expire Date: {{date | aDate }}
+              </p>
+              <a class="pl-2 text-link" (click)="onOpenCddDetailModal()">ดูรายละเอียด</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<lib-modal
+  #detailRiskModal
+  modalSize="lg"
+  [showHeader]="false"
+>
+  <shared-view-popup-detail-risk
+    #formDetailRiskModal
+    *ngIf="detailRiskModal.isOpen"
+    (cancel)="detailRiskModal.close()"
+  >
+  </shared-view-popup-detail-risk>
+
+</lib-modal>
+
+<lib-modal
+  #detailCddModal
+  modalSize="lg"
+  [showHeader]="false"
+>
+  <shared-view-popup-detail-cdd
+    #formDetailCddModal
+    *ngIf="detailCddModal.isOpen"
+    (cancel)="detailCddModal.close()"
+  >
+  </shared-view-popup-detail-cdd>
+
+</lib-modal>

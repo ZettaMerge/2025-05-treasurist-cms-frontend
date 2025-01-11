@@ -1,0 +1,260 @@
+<div>
+  <div class="d-flex pt-2 px-0">
+    <div class="pl-0 col-xl-4 col-lg-4 col-12">
+      <div class="card card-inverse _bg-grey">
+        <div class="card-content">
+          <div class="card-body">
+            <div class="media">
+              <div class="media-body text-left">
+                <span>มูลค่าพอร์ตรวม</span>
+                <h3 class="card-text" *ngIf="fundPlanData.portValue">{{fundPlanData.portValue | aDecimal}} บาท</h3>
+                <h3 class="card-text" *ngIf="!fundPlanData.portValue">-</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-12">
+      <div class="card card-inverse _bg-grey">
+        <div class="card-content">
+          <div class="card-body">
+            <div class="media">
+              <div class="media-body text-left">
+                <span>ต้นทุนรวม</span>
+                <h3 class="card-text" *ngIf="fundPlanData.cost">{{fundPlanData.cost | aDecimal}} บาท</h3>
+                <h3 class="card-text" *ngIf="!fundPlanData.cost">-</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pr-0 col-xl-4 col-lg-4 col-12">
+      <div class="card card-inverse _bg-grey">
+        <div class="card-content">
+          <div class="card-body">
+            <div class="media">
+              <div class="media-body text-left">
+                <span>กำไร ขาดทุนรวม</span>
+                <h3 class="card-text"
+                    *ngIf="fundPlanData.profit"
+                    [class.text-danger]="fundPlanData.profit < 0"
+                    [class.text-success]="fundPlanData.profit > 0"
+                >
+                  <span *ngIf="fundPlanData.profit > 0"
+                        [class.text-success]="fundPlanData.profit > 0">+</span>
+                  {{fundPlanData.profit | aDecimal}} บาท ({{fundPlanData.profitPercent | aDecimal}}%)</h3>
+                <h3 class="card-text" *ngIf="!fundPlanData.profit">-</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div name="progress-wrapper" class="pb-4">
+    <div class="progress">
+      <div *ngIf="fundPlanData.moneyMarket" class="progress-bar bg-typeMM" role="progressbar"
+           style="width: {{fundPlanData.moneyMarket}}%"></div>
+      <div *ngIf="fundPlanData.fixedIncome" class="progress-bar bg-typeFI" role="progressbar"
+           style="width: {{fundPlanData.fixedIncome}}%"></div>
+      <div *ngIf="fundPlanData.mixed" class="progress-bar bg-typeM" role="progressbar"
+           style="width: {{fundPlanData.mixed}}%"></div>
+      <div *ngIf="fundPlanData.equity" class="progress-bar bg-typeE" role="progressbar"
+           style="width: {{fundPlanData.equity}}%"></div>
+      <div *ngIf="fundPlanData.property" class="progress-bar bg-typeP" role="progressbar"
+           style="width: {{fundPlanData.property}}%"></div>
+      <div *ngIf="fundPlanData.commodities" class="progress-bar bg-typeC" role="progressbar"
+           style="width: {{fundPlanData.commodities}}%"></div>
+      <div *ngIf="fundPlanData.miscellaneous" class="progress-bar bg-typeOther" role="progressbar"
+           style="width: {{fundPlanData.miscellaneous}}%"></div>
+    </div>
+    <div class="d-flex pt-1 _g-text-space">
+      <span class="_text-size">สัดส่วนกองทุน : </span>
+      <span *ngIf="fundPlanData.moneyMarket"><i
+        class="fa fa-circle mr-1 text-typeMM"></i>{{fundPlanData.moneyMarket | aDecimal}}% กองทุนตลาดเงิน</span>
+      <span *ngIf="fundPlanData.fixedIncome"><i
+        class="fa fa-circle mr-1 text-typeFI"></i>{{fundPlanData.fixedIncome | aDecimal}}% กองทุนตราสารหนี้</span>
+      <span *ngIf="fundPlanData.mixed"><i
+        class="fa fa-circle mr-1 text-typeM"></i>{{fundPlanData.mixed | aDecimal}}% กองทุนผสม</span>
+      <span *ngIf="fundPlanData.equity"><i
+        class="fa fa-circle mr-1 text-typeE"></i>{{fundPlanData.equity | aDecimal}}% กองทุนตราสารทุน</span>
+      <span *ngIf="fundPlanData.property"><i
+        class="fa fa-circle mr-1 text-typeP"></i>{{fundPlanData.property | aDecimal}}% กองทุนอสังหาริมทรัพย์และโครงสร้างพื้นฐาน</span>
+      <span *ngIf="fundPlanData.commodities"><i
+        class="fa fa-circle mr-1 text-typeC"></i>{{fundPlanData.commodities | aDecimal}}% กองทุนสินค้าโภคภัณฑ์</span>
+      <span *ngIf="fundPlanData.miscellaneous"><i
+        class="fa fa-circle mr-1 text-typeOther"></i>{{fundPlanData.miscellaneous | aDecimal}}% กองทุนอื่นๆ</span>
+    </div>
+  </div>
+
+
+  <div class="d-flex" *ngIf="canView">
+    <div class="col-6 d-flex pl-0">
+      <div class="col-6 pl-0 _display-btn">
+        <button
+          type="button"
+          class="btn btn-clear flex-1"
+          (click)="goToTransactionList('submitted')"
+        >
+          <span><i class="ic-cross"></i>สถานะรายการ</span>
+        </button>
+      </div>
+      <div class="col-6 pr-0 _display-btn">
+        <button
+          type="submit"
+          class="btn btn-clear flex-1"
+          (click)="goToTransactionList('all')"
+        >
+          <span><i class="ic-cross"></i>ประวัติรายการ</span>
+        </button>
+      </div>
+    </div>
+    <div class="col-6 d-flex pr-0">
+      <div class="col-6 pl-0 _display-btn">
+        <button
+          type="button"
+          class="btn btn-clear flex-1"
+          (click)="goToDividendDetail(fundPlanData)"
+        >
+          <span><i class="ic-cross"></i>ประวัติเงินปันผล</span>
+        </button>
+      </div>
+      <div class="col-6 pr-0 _display-btn">
+        <button
+          type="submit"
+          class="btn btn-clear flex-1"
+          (click)="goToDcaDetail(fundPlanData)"
+        >
+          <span><i class="ic-cross"></i>แผนการ DCA</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="pt-4">
+    <span class="_g-text-header-title">รายชื่อกองทุน</span>
+    <div class="_g-detail">
+      <div class="col-12 d-flex px-0 py-1">
+        <div class="col-6">
+          <div class="row">
+            <div class="col-4">
+              <span>กองทุน</span>
+            </div>
+            <div class="col-4">
+              <span>จำนวนหน่วย</span>
+            </div>
+            <div class="col-4">
+              <span>ต้นทุนรวม</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="row">
+            <div class="col-4">
+              <span>NAV</span>
+            </div>
+            <div class="col-4 text-center">
+              <span>มูลค่ากองทุน</span>
+            </div>
+            <div class="col-4 text-center">
+              <span>กำไร ขาดทุน</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+
+      <div class="col-12" *ngIf="fundPlanData.funds && fundPlanData.funds.length === 0">
+        <pn-data-not-found
+          [isShowActionTemplate]="false"
+          [message]="'ระบบไม่สามารถแสดงรายการได้ เนื่องจากไม่พบรายการข้อมูล'"
+        >
+        </pn-data-not-found>
+      </div>
+      <div *ngIf="fundPlanData.funds && fundPlanData.funds.length > 0">
+        <div *ngFor="let fund of fundPlanData.funds; let i = index;">
+          <div class="col-12 d-flex px-0 py-1 align-items-center justify-content-center">
+            <div class="col-6">
+              <div class="row">
+                <div class="col-4">
+                <span>{{fund.fundCode}}
+                  <span *ngIf="fund?.riskLevel"
+                        class="m-0 badge-small-in-badge text-center"
+                        [class.badge-green]="fund?.riskLevel === '1'"
+                        [class.badge-light-v1-green]="fund?.riskLevel === '2'"
+                        [class.badge-light-green]="fund?.riskLevel === '3'"
+                        [class.badge-yellow]="fund?.riskLevel === '4'"
+                        [class.badge-light-orange]="fund?.riskLevel === '5'"
+                        [class.badge-dark-orange]="fund?.riskLevel === '6'"
+                        [class.badge-danger-v1]="fund?.riskLevel === '7'"
+                        [class.badge-danger-v2]="fund?.riskLevel === '8'"
+                        [class.badge-danger]="fund?.riskLevel === '9'"
+                  >{{fund?.riskLevel}}</span>
+                </span>
+                  <p class="mb-0 text-muted">{{fund.amcCode}}</p>
+                </div>
+                <div class="col-4 p-2">
+                  <span>{{fund.unit | aDecimal: 4}}</span>
+                </div>
+                <div class="col-4">
+                  <span>{{fund.cost | aDecimal}}</span>
+                  <p class="mb-0 text-muted">ราคาเฉลี่ย: {{fund.avgCost}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="row pt-2 pb-2">
+                <div class="col-4 align-items-center">
+                  <span>{{fund.nav | aDecimal: 4}}</span>
+                  <p class="mb-0 text-muted">({{fund.navDate | aDate}})</p>
+                </div>
+                <div class="col-4 p-2 text-center">
+                  <span>{{fund.amount | aDecimal}}</span>
+                </div>
+                <div class="col-4 text-center">
+                <span
+                  [class.text-danger]="fund.profit < 0"
+                  [class.text-success]="fund.profit > 0"
+                >{{fund.profit > 0 ? '+' : ''}}{{fund.profit | aDecimal}}</span>
+                  <p
+                    [class.text-danger]="fund.profitPercent < 0"
+                    [class.text-success]="fund.profitPercent > 0"
+                    class="mb-0">({{fund.profitPercent > 0 ? '+' : ''}}{{fund.profitPercent | aDecimal}}%)</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+        </div>
+        <hr class="_border-summary">
+        <div class="col-12 d-flex px-0 py-2 align-items-center justify-content-center ">
+          <div class="col-6 d-flex">
+            <div class="col-4"><span class="font-weight-bold">รวม</span></div>
+            <div class="col-4"></div>
+            <div class="col-4"><span class="font-weight-bold">{{fundPlanData.cost | aDecimal}}</span></div>
+          </div>
+          <div class="col-6 d-flex align-items-center">
+            <div class="col-4"></div>
+            <div class="col-4 text-center font-weight-bold"><span>{{fundPlanData.portValue | aDecimal}}</span></div>
+            <div class="col-4 text-center">
+              <span
+                class="font-weight-bold"
+                [class.text-danger]="fundPlanData.profit < 0"
+                [class.text-success]="fundPlanData.profit > 0"
+              >{{fundPlanData.profit > 0 ? '+' : ''}}{{fundPlanData.profit | aDecimal}}</span>
+              <p
+                [class.text-danger]="fundPlanData.profitPercent < 0"
+                [class.text-success]="fundPlanData.profitPercent > 0"
+                class="mb-0 font-weight-bold">
+                ({{fundPlanData.profitPercent > 0 ? '+' : ''}}{{fundPlanData.profitPercent | aDecimal}}%)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

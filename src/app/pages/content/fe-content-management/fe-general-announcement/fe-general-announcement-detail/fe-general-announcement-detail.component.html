@@ -1,0 +1,97 @@
+<div id="announcement-email">
+  <div class="_g-header">
+    <h1 class="_g-title-header">รายละเอียด Announcement</h1>
+    <div class="_g-header justify-content-end">
+      <button
+        type="button"
+        class="btn btn-clear mr-1 mb-1"
+      ><span>ลบ</span>
+      </button>
+      <button
+        type="button"
+        class="btn btn btn-primary mr-1 mb-1"
+        (click)="goEdit()"
+      ><span>แก้ไข</span>
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary  mr-1 mb-1"
+        (click)="goBack()"
+      ><span>กลับ</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body pt-0">
+      <div class="card-header pl-0">
+        <span class="_g-text-header-title">รายละเอียด</span>
+      </div>
+
+      <div class="col-12 _g-card-form px-0">
+        <div class="_g-text-title">
+          <label>ชื่อหัวข้อ (ไทย)</label>
+          <p>ประกาศปิด</p>
+        </div>
+      </div>
+
+      <div class="col-12 _g-card-form px-0">
+        <div class=" col-6 _g-text-title pl-0">
+          <label>วันเวลาเริ่มต้น</label>
+          <p>20/08/2021 10:00 น.</p>
+        </div>
+
+        <div class=" col-6 _g-text-title">
+          <label>วันเวลาสิ้นสุด</label>
+          <p>20/08/2021 18:00 น.</p>
+        </div>
+      </div>
+
+      <div class="col-12 _g-card-form px-0 pb-3">
+        <div class=" _g-text-title">
+          <label>รายละเอียด (ไทย)</label>
+          <p [innerHTML]="detail  | safe: 'html'"></p>
+        </div>
+
+      </div>
+
+
+      <div class="col-12 px-0">
+        <div class="_g-card-sub-header pt-0">
+          <span class="_g-text-header-sub-title">ปิดรับออร์เดอร์</span>
+        </div>
+        <li class="d-inline-block mr-2 mb-2">
+          <div class="checkbox">
+            <input
+              type="checkbox"
+              id="status"
+              name="status"
+              [(ngModel)]="status"
+            >
+            <label for="status"><span>Active</span></label>
+          </div>
+        </li>
+      </div>
+    </div>
+  </div>
+
+  <div class="_g-header justify-content-end">
+    <button
+      type="button"
+      class="btn btn-clear mr-1 mb-1"
+    ><span>ลบ</span>
+    </button>
+    <button
+      type="button"
+      class="btn btn btn-primary mr-1 mb-1"
+      (click)="goEdit()"
+    ><span>แก้ไข</span>
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary  mr-1 mb-1"
+      (click)="goBack()"
+    ><span>กลับ</span>
+    </button>
+  </div>
+</div>

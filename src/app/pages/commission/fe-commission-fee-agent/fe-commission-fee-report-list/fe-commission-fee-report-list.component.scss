@@ -1,0 +1,12 @@
+@import "variables-custom";
+
+._bg-grey {
+  background-color: #fafafa !important;
+  span {
+    color: black;
+  }
+  h3 {
+    color: black;
+    font-weight: $weight-medium;
+  }
+}

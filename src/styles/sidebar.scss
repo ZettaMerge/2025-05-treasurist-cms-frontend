@@ -1,0 +1,25 @@
+.sidebar-header {
+  a.nav-toggle {
+    display: inline-block;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    right: 14px;
+    top: 25px;
+    color: rgba($white, 0.55);
+  }
+
+  a.nav-close {
+    display: inline-block;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    right: 14px;
+    top: 24px;
+    color: $white;
+  }
+}

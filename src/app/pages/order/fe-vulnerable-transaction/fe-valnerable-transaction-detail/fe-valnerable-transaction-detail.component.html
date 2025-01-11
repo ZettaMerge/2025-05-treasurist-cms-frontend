@@ -1,0 +1,46 @@
+<div class="_g-header justify-content-between">
+  <h1 class="_g-title-header">Transaction Detail</h1>
+  <div>
+    <button
+      *ngIf="subscriptionData?.status === 'SUBMITTED' || redemptionData?.status === 'SUBMITTED'"
+      type="button"
+      class="btn btn-primary  mr-1 "
+      (click)="onApprove()"
+    >Approve
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary  mr-1"
+      (click)="goBack()"
+    >กลับ
+    </button>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body _g-detail-wrapper">
+    <shared-view-transaction-info
+      [subscriptionData]="subscriptionData"
+      [redemptionData]="redemptionData"
+      [type]="type"
+    >
+    </shared-view-transaction-info>
+
+  </div>
+</div>
+
+<div class="_g-header justify-content-end">
+  <button
+    *ngIf="subscriptionData?.status === 'SUBMITTED'"
+    type="button"
+    class="btn btn-primary  mr-1 mb-1"
+    (click)="onApprove()"
+  >Approve
+  </button>
+  <button
+    type="button"
+    class="btn btn-secondary  mr-1 mb-1"
+    (click)="goBack()"
+  >กลับ
+  </button>
+</div>

@@ -1,0 +1,63 @@
+<div class="card-body">
+    <div id="sync" *ngIf="isShowSync">
+      <div class="d-flex align-items-center justify-content-center">
+        <h4>โปรดรอสักครู่</h4>
+      </div>
+      <div class="d-flex align-items-center justify-content-center">
+        <p>อยู่ในระหว่างการเชื่อมต่อเพื่อดาวน์โหลดข้อมูล</p>
+      </div>
+      <div class="d-flex align-items-center justify-content-center">
+        <img class="_loading" src="assets/img/loading-gif.gif" />
+      </div>
+      <div class="d-flex align-items-center justify-content-center">
+        <span class="text-muted">Loading...</span>
+      </div>
+      <div class="d-flex align-items-center justify-content-center pt-2">
+        <span class="text-primary">กรุณาอย่าปิดหน้าต่างนี้</span>
+      </div>
+    </div>
+  
+    <div id="sync-success" *ngIf="isShowSuccess">
+      <div class="d-flex align-items-center justify-content-center">
+        <h4>Sync สำเร็จแล้ว</h4>
+      </div>
+      <div class="d-flex align-items-center justify-content-center">
+        <img class="_loading" src="assets/img/check-underline-circle-outline.svg" />
+      </div>
+      <div class="d-flex align-items-center justify-content-center pt-3">
+        <button
+          type="button"
+          class="btn btn-primary mb-1 _custom-btn-size"
+          (click)="onSaveSyncData()"
+        ><span>ตกลง</span>
+        </button>
+      </div>
+    </div>
+  
+    <div id="sync-failed"  *ngIf="isShowFailed">
+      <div class="d-flex align-items-center justify-content-center">
+        <h4>Sync ไม่สำเร็จ</h4>
+      </div>
+  <!--    <div class="d-flex align-items-center justify-content-center">-->
+  <!--      <p>{{lastManualSyncDate | aDateTime}} น.</p>-->
+  <!--    </div>-->
+      <div class="d-flex align-items-center justify-content-center">
+        <img class="_loading" src="assets/img/check-underline-circle-outline-failed.svg" />
+      </div>
+      <div class="d-flex align-items-center justify-content-center pt-3">
+        <button
+          type="button"
+          class="btn btn-clear mb-1 _custom-btn-size-failed"
+          (click)="onCancel()"
+        ><span>ยกเลิก</span>
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary _g-btn-clear mb-1 _custom-btn-size-failed"
+          (click)="onSyncAgain()"
+        ><span>ลองใหม่อีกครั้ง</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  

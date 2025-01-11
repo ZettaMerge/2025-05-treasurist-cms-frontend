@@ -1,0 +1,248 @@
+<div class="d-flex pb-2">
+  <div class="col-11 px-0  d-flex">
+    <div class="col-2 pl-0 "><span>เลือกกองทุน SWITCH-OUT</span></div>
+    <div class="col-2 pl-0"><span>เลือกกองทุน SWITCH-IN</span></div>
+    <div class="col-5 pl-0"><span>จำนวนที่ต้องการสับเปลี่ยน</span></div>
+    <div class="col-3 pl-0"><span>วันที่ส่งคำสั่ง</span></div>
+  </div>
+  <div class="col-1 pl-0 d-flex"></div>
+</div>
+<hr>
+<div *ngFor="let switchData of fundSwitchArray; let i = index; let firstIndex = first;  let lastIndex = last;">
+  <div class="d-flex pb-2 pt-3">
+    <div class="col-11 px-0 d-flex">
+      <div class="col-2 pl-0">
+        <div class="form-group">
+          <div class="form-input">
+            <shared-fund-dropdown
+              placeholder="ค้นหา"
+              id="fundSWO-{{i}}"
+              name="fundSWO-{{i}}"
+              [autoReset]="true"
+              [amc]="undefined"
+              [fcnAccountId]="fcnAccountId || undefined"
+              [(ngModel)]="switchData.fundSWO.fondSwoCode"
+              (ngModelChange)="onChangeFundSWO($event, i, switchData)"
+              [disabled]="!fcnAccountId"
+              required
+            >
+            </shared-fund-dropdown>
+          </div>
+          <div
+            id="minimum-{{i}}"
+            name="minimum-{{i}}"
+            class="pt-1"
+            *ngIf="switchData.fundSWO.fondSwoCode"
+          >
+            <p class="mb-0 text-muted font-size-small">
+              ขั้นต่ำในการขาย {{ !switchData.fundSWO.swoLowSellVal ? 0 : switchData.fundSWO.swoLowSellVal | number: '1.2-2'}}
+              บาท หรือ {{ !switchData.fundSWO.swoLowSellUnit ? 0 : switchData.fundSWO.swoLowSellUnit | number: '1.4-4'}}
+              หน่วย</p>
+            <span
+              class="mb-0 text-muted font-size-small">ขั้นต่ำในการถือ {{ !switchData.fundSWO.swoLowBalVal ? 0 : switchData.fundSWO.swoLowBalVal | number: '1.2-2'}}
+              บาท หรือ {{ !switchData.fundSWO.swoLowBalUnit ? 0 : switchData.fundSWO.swoLowBalUnit | number: '1.4-4'}}
+              หน่วย</span>
+          </div>
+          <div
+            id="minimumValueBalance-{{i}}"
+            name="minimumValueBalance-{{i}}"
+            *ngIf="switchData.fundSWO.fondSwoCode"
+            class="pt-1"
+          >
+            <p class="mb-0 font-size-small">
+              มูลค่าในพอร์ต {{ !switchData.fundSWO.swoVal ? 0 : switchData.fundSWO.swoVal | number: '.2'}} บาท</p>
+            <span
+              class="mb-0 font-size-small">จำนวนหน่วยในพอร์ต {{ !switchData.fundSWO.swoUnit ? 0 : switchData.fundSWO.swoUnit | number: '.4'}}
+              หน่วย</span>
+          </div>
+          <!-- <div
+            *ngIf="switchData.fundSWO.balanceSwoVal"
+            class="pt-1"
+          >
+            <p class="mb-0 font-size-small">มูลค่าในพอร์ต {{ !switchData.fundSWO.balanceSwoVal ? 0 : switchData.fundSWO.balanceSwoVal | number: '.2'}} บาท</p>
+            <span class="mb-0 font-size-small">จำนวนหน่วยในพอร์ต {{ !switchData.fundSWO.balanceSwoUnit ? 0 : switchData.fundSWO.balanceSwoUnit | number: '.4'}} หน่วย</span>
+          </div> -->
+        </div>
+      </div>
+      <div class="col-2 pl-0">
+        <div class="form-group">
+          <div class="form-input">
+            <shared-fund-dropdown
+              placeholder="ค้นหา"
+              id="fundSWI-{{i}}"
+              name="fundSWI-{{i}}"
+              [autoReset]="true"
+              [isActive]="true"
+              [(ngModel)]="switchData.fundSWI.fondSwiCode"
+              [disabled]="!switchData.fundSWO.fondSwoCode && !fcnAccountId"
+              (ngModelChange)="onChangeFundSWI($event, i)"
+              [ngModelOptions]="{ standalone: true }"
+              [required]="!switchData.fundSWI.fondSwiCode"
+            >
+            </shared-fund-dropdown>
+          </div>
+          <div
+            id="swiByMinimum-{{i}}"
+            name="swiByMinimum-{{i}}"
+            *ngIf="switchData.fundSWI.fondSwiCode"
+            class="pt-1"
+          >
+            <p class="mb-0 text-muted font-size-small">
+              ขั้นต่ำในการซื้อ {{ switchData.fundSWI.swiByMinimumVal | number: '1.2-2'}} บาท</p>
+          </div>
+          <error-message-control
+            id="isFundDouble-{{i}}"
+            name="isFundDouble-{{i}}"
+            *ngIf="switchData.isFundDouble"
+            [text]="'*** กองทุน SWITCH-OUT กับ กองทุน SWITCH-IN ต้องเป็นคนละกอง'"
+          >
+          </error-message-control>
+          <error-message-control
+            id="isFundSwiDouble-{{i}}"
+            name="isFundSwiDouble-{{i}}"
+            *ngIf="switchData.isFundSwiDouble"
+            [text]="'กองทุน SWITCH-IN นี้ถูกเลือกไปแล้วกรุณาเลือกกองทุนทใหม่'"
+          >
+          </error-message-control>
+        </div>
+      </div>
+      <div class="col-5 pl-0 d-flex">
+        <div class="col-4 px-0">
+          <div class="form-group position-relative">
+            <input
+              *ngIf="switchData.typeSell?.id === 1"
+              type="text"
+              class="form-control"
+              placeholder="0.00"
+              id="amount-switch-{{i}}"
+              name="amount-switch-{{i}}"
+              [(ngModel)]="switchData.amount"
+              mask="separator.2"
+              thousandSeparator=","
+              onlyPositive
+              (ngModelChange)="fundAmountSWHChange($event , i , switchData)"
+              (focus)="onFocusAmount(i)"
+              (blur)="onBlurEvent($event , i, switchData)"
+              [disabled]="switchData.isSellAll === true"
+              required
+            >
+            <input
+              *ngIf="switchData.typeSell?.id === 2"
+              type="text"
+              class="form-control"
+              [placeholder]="'0.0000'"
+              id="unit-switch-{{i}}"
+              name="unit-amount-switch-{{i}}"
+              [(ngModel)]="switchData.amount"
+              mask="separator.4"
+              thousandSeparator=","
+              onlyPositive
+              (ngModelChange)="fundAmountSWHChange($event , i , switchData)"
+              (focus)="onFocusAmount(i)"
+              (blur)="onBlurEvent($event , i, switchData)"
+              [disabled]="switchData.isSellAll === true"
+              required
+            >
+          </div>
+          <error-message-control
+            id="isErrorSaleValue-{{i}}"
+            name="isErrorSaleValue-{{i}}"
+            *ngIf="switchData.isErrorSaleValue"
+            [text]="'มูลค่าการขายมากกว่ามูลค่าในพอร์ตที่ทำรายการได้'"
+          >
+          </error-message-control>
+          <error-message-control
+            id="isErrorMinimumHolding-{{i}}"
+            name="isErrorMinimumHolding-{{i}}"
+            *ngIf="switchData.isErrorMinimumHolding"
+            [text]="'มูลค่าหรือจำนวนหน่วยคงเหลือต่ำกว่าขั้นต่ำในการถือ'"
+          >
+          </error-message-control>
+          <error-message-control
+            id="isErrorMinimumSell-{{i}}"
+            name="isErrorMinimumSell-{{i}}"
+            *ngIf="switchData.isErrorMinimumSell"
+            [text]="'มูลค่าการขายต่ำกว่ามูลค่าขั้นต่ำในการขาย'"
+          >
+          </error-message-control>
+          <error-message-control
+            id="isErrorMinimumInvest-{{i}}"
+            name="isErrorMinimumInvest-{{i}}"
+            *ngIf="switchData.isErrorMinimumInvest"
+            [text]="'จำนวนเงินลงทุนน้อยกว่าจำนวนเงินขั้นต่ำที่กำหนด'"
+          >
+          </error-message-control>
+        </div>
+        <div class="col-4 pr-0">
+          <div class="form-group position-relative">
+            <pn-dynamic-dropdown
+              id="typeSell-{{i}}"
+              name="typeSell-{{i}}"
+              [list]="lists"
+              [(ngModel)]="switchData.typeSell"
+              (ngModelChange)="onTypeSellChange(i , switchData)"
+              [disabled]="switchData.isSellAll === true"
+            >
+            </pn-dynamic-dropdown>
+          </div>
+        </div>
+        <div class="col-4 pr-0">
+          <div class="d-flex pt-1 pl-2">
+            <ul class="list-unstyled mb-0">
+              <li class="d-inline-block mr-2">
+                <div class="radio">
+                  <input
+                    type="radio"
+                    name="all-{{i}}"
+                    id="all-{{i}}"
+                    [checked]="switchData.isSellAll"
+                    (click)="onClickSellAll($event , switchData , i)"
+                  >
+                  <label for="all-{{i}}">ทั้งหมด</label>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-3 pl-0">
+        <div class="form-input">
+          <pn-date-picker
+            placeholder="dd/mm/yyyy"
+            id="switchData-date-{{i}}"
+            name="switchData-date-{{i}}"
+            [(ngModel)]="switchData.effectiveDate"
+            [disabledDates]="switchData.disabledDates"
+            [min]="switchData.minDate"
+            [max]="maxDate"
+            [daysDisabled]="[6,0]"
+            required
+            (ngModelChange)="onChangeDate(i)"
+          >
+          </pn-date-picker>
+        </div>
+        <div
+          id="cutOff-{{i}}"
+          name="cutOff-{{i}}"
+          *ngIf="switchData.fundSWO.swoCutOff"
+          class="pt-1"
+        >
+          <span class="text-muted font-size-small">(ปิดรับคำสั่ง {{switchData.fundSWO.swoCutOff | aTime}}
+            น. ของวัน)</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-1 text-center pt-2">
+      <a
+        (click)="deleteFund(i, switchData)"
+        class="text-primary font-size-large"
+      ><i class="ic ic-delete"></i>
+      </a>
+    </div>
+  </div>
+  <hr>
+
+</div>
+<div class="d-flex align-items-center justify-content-end pt-2">
+  <a (click)="addFund($event)"><i class="ic ic-plus-circle text-primary pr-1"></i>เพิ่มกองทุน</a>
+</div>

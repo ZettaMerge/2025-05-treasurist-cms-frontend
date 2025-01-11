@@ -1,0 +1,192 @@
+<div class="_g-header">
+  <h1 class="_g-title-header">รายละเอียดปรับสมดุลพอร์ต</h1>
+  <div class="_g-header justify-content-end">
+    <button
+      type="button"
+      class="btn btn-secondary  mr-1 mb-1"
+      (click)="goBack()"
+    ><span>กลับ</span>
+    </button>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body _g-detail-wrapper">
+    <div class="d-flex justify-content-between">
+      <span class="_g-text-header-title">ข้อมูลทั่วไป</span>
+      <span
+        class="badge"
+        [class.badge-primary]="reBalanceData?.status === 'PENDING'"
+        [class.badge-danger]="reBalanceData?.status === 'DECLINED'"
+        [class.badge-info]="reBalanceData?.status === 'ACCEPTED'"
+        [class.badge-purple]="reBalanceData?.status === 'ORDER_EXP'"
+      >
+        {{reBalanceData?.status === 'EXPIRE' ? 'ORDER EXP.' : reBalanceData?.status}}
+      </span>
+    </div>
+
+    <!--    INFO-->
+    <div class="row">
+      <div class="col-12 d-flex px-0 py-1">
+        <div class="col-7">
+          <div class="row">
+            <div class="col-4 _g-text-title">
+              <span>วันที่ส่งคำสั่งให้ลูกค้า</span>
+              <p>{{!reBalanceData?.createdDate ? '-' : reBalanceData?.createdDate | aDate}}</p>
+            </div>
+            <div class="col-4 _g-text-title">
+              <span>IC License</span>
+              <p>{{reBalanceData?.agent?.icLicense}} {{reBalanceData?.agent?.user?.firstName}} {{reBalanceData?.agent?.user?.lastName}}</p>
+            </div>
+            <div class="col-4 _g-text-title">
+              <span>Account ID</span>
+              <p>{{reBalanceData?.fundPlan?.fcnAccountId}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-5">
+          <div class="row">
+            <div class="col-6 _g-text-title">
+              <span>ชื่อ-นามสกุล</span>
+              <p>{{reBalanceData?.user?.account?.thFirstname}} {{reBalanceData?.user?.account?.thLastname}}</p>
+            </div>
+            <div class="col-6 _g-text-title">
+              <span>วันที่ทำรายการ</span>
+              <div class="row ml-0">
+                <p>{{!reBalanceData?.confirmationDate  ? '-' : reBalanceData?.confirmationDate | aDate}}</p>&nbsp;
+                <img
+                  *ngIf="reBalanceData?.status === 'ACCEPTED' && onExpireDate(reBalanceData) === true"
+                  class="_late-img"
+                  src="assets/img/late.png"
+                >
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <!--    BUY-->
+    <div class="d-flex justify-content-between align-items-center pt-2">
+      <span class="_g-text-header-title">ข้อมูลแผนลงทุน</span>
+    </div>
+    <div class="row">
+      <div class="col-12 d-flex px-0 py-1">
+        <div class="col-7">
+          <div class="row">
+            <div class="col-4 _g-text-title">
+              <span>ประเภทแผน</span>
+              <p>{{reBalanceData?.fundPlan?.planType === 'AGENT_PLAN' ? 'Agent Plan' : reBalanceData?.fundPlan?.planType === 'CUSTOMIZED_PLAN' ? 'Investor Plan' : reBalanceData?.fundPlan?.planType === 'RISK_BASED_PLAN' ? 'Treasurist Plan' : '-'}}</p>
+            </div>
+            <div class="col-4 _g-text-title">
+              <span>ชื่อแผนลงทุน</span>
+              <p>{{reBalanceData?.fundPlan?.name}}</p>
+            </div>
+            <div class="col-4 _g-text-title">
+              <span>มูลค่าพอร์ตรวม</span>
+              <p>{{!reBalanceData?.planBalance  ? '-' : reBalanceData?.planBalance | aDecimal}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-5">
+          <div class="row">
+            <div class="col-6 _g-text-title">
+              <span>มูลค่าลงทุนต่อเดือน</span>
+              <p>{{!reBalanceData?.recurringCost ? '-' : reBalanceData?.recurringCost | aDecimal}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+
+    <!--    Fund-->
+    <div class="d-flex justify-content-between align-items-center pt-2">
+      <span class="_g-text-header-title mb-0">รายการกองทุน</span>
+    </div>
+    <div class="py-4 pr-3">
+      <div class="col-12 d-flex pl-0">
+        <div class="col-7 _left-wrapper">
+          <div class="row pl-4">
+            <div class="col-4 _g-text-title d-flex align-items-center _left-header">
+              <p class="mb-0">กองทุนต้นทาง</p>
+            </div>
+            <div class="col-3 _g-text-title d-flex align-items-center _left-header">
+              <p class="mb-0">บลจ. ต้นทาง</p>
+            </div>
+            <div class="col-3 _g-text-title d-flex align-items-center _left-header">
+              <p class="mb-0">จำนวนหน่วย</p>
+            </div>
+            <div class="col-2 _g-text-title d-flex align-items-center _left-header">
+              <p class="mb-0">จำนวนเงิน</p>
+            </div>
+          </div>
+          <div
+            class="row border-top pl-4"
+            *ngFor="let fund of reBalanceData.fundPlanReBalanceLogFunds"
+          >
+            <div
+              class="col-4 d-flex align-items-center _left-detail"
+            >
+              <div>
+                <span>{{fund.fundCode}}</span>
+                <p
+                  *ngIf="reBalanceData.status === 'ACCEPTED' && fund.isCompleteTransaction === false"
+                  class="text-danger mb-0"
+                ><img
+                    class="_g-remark-img"
+                    src="assets/img/triangle-warning.png"
+                  />
+                  ทำรายการไม่สำเร็จ
+                </p>
+              </div>
+            </div>
+            <div class="col-3 _g-text-title d-flex align-items-center _left-detail">
+              {{fund.amcCode}}
+            </div>
+            <div class="col-3 _g-text-title d-flex align-items-center _left-detail">
+              {{fund.unit | aDecimal : 4}}
+            </div>
+            <div class="col-2 _g-text-title d-flex align-items-center _left-detail">
+              {{fund.cost | aDecimal}}
+            </div>
+          </div>
+        </div>
+        <div class="col-5 _right-wrapper">
+          <div class="row pl-4">
+            <div class="col-5 _g-text-title d-flex align-items-center _right-header">
+              <p class="mb-0">กองทุนปลายทาง</p>
+            </div>
+            <div class="col-5 _g-text-title d-flex align-items-center _right-header">
+              <p class="mb-0">บลจ. ปลายทาง</p>
+            </div>
+            <div class="col-2 _g-text-title d-flex align-items-center _right-header">
+            </div>
+          </div>
+          <div
+            class="row border-top pl-4"
+            *ngFor="let fund of reBalanceData.fundPlanReBalanceLogFunds"
+          >
+            <div class="col-5 _g-text-title d-flex align-items-center _right-detail">
+              {{fund.counterFundCode}}
+            </div>
+            <div class="col-5 _g-text-title d-flex align-items-center _right-detail">
+              {{fund.counterAmcCode}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="_g-header justify-content-end">
+  <button
+    type="button"
+    class="btn btn-secondary  mr-1 mb-1"
+    (click)="goBack()"
+  ><span>กลับ</span>
+  </button>
+</div>

@@ -1,0 +1,60 @@
+<div class="card">
+  <div class="card-header">
+    <div class="d-flex">
+      <span class="_g-text-header-title">ไฟล์ยืนยันการเปิดบัญชี</span>
+      <span
+        *ngIf="!data.id"
+        class="_g-text-header-title text-danger ml-2">ต้อง Save Draft ก่อนจึงจะอัพโหลดได้</span>
+    </div>
+  </div>
+  <div class="card-body px-0 pt-0">
+    <div
+      class="col-12 _list-file-data border-bottom"
+      *ngFor="let file of listFile"
+    >
+      <div class="col-10">
+        <span>{{file.fileName}}</span> &nbsp;<span *ngIf="!file.isHaveData" class="text-danger text-bold-500">{{file.validate === true ? file.validateText: ''}}</span>
+      </div>
+      <div class="col-2 d-flex justify-content-end"
+           [ngClass]="{'_disable-wrapper' : !data.id}">
+        <a
+          *ngIf="!file.isHaveData"
+          [ngClass]="{'_disable' : !data.id, 'text-primary': data.id}"
+          class=" pr-1"
+          (click)="onOpenModal(file.value, data.userId)"
+        >
+          <i class="ic ic-plus"
+             [ngClass]="{'text-primary': data.id}">
+
+          </i> &nbsp;
+          <span [ngClass]="{'text-primary': data.id}">อัพโหลด</span>
+        </a>
+        <a *ngIf="file.isHaveData"
+          [ngClass]="{'_disable' : !data.id, 'text-primary': data.id}"
+          class=" pr-1"
+          (click)="onOpenModal(file.value, data.userId)"
+        >
+          <span [ngClass]="{'text-primary': data.id}">ดูรายละเอียด</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<lib-modal
+  #uploadModal
+  modalSize="lg"
+  [showHeader]="false"
+>
+  <!-- <lib-modal-title>แก้ไขทะเบียนรถลูกบ้าน</lib-modal-title> -->
+  <fe-open-account-form-upload-file
+    #formUpload
+    *ngIf="uploadModal.isOpen"
+    (cancel)="onUpdateFile($event)"
+    (save)="save($event)"
+    [mode]="mode"
+    [userId]="userId"
+  >
+  </fe-open-account-form-upload-file>
+
+</lib-modal>

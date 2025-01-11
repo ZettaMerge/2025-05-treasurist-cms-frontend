@@ -1,0 +1,113 @@
+<div class="_g-header">
+  <h1 class="_g-title-header">Agent Profile</h1>
+</div>
+
+<!--SECTION FILTER-->
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-7">
+        <div class="form-group">
+          <label class="col-form-label">ค้นหา</label>
+          <div class="form-input">
+            <input
+              type="text"
+              id="search"
+              name="search"
+              class="form-control"
+              placeholder="ชื่อหรือ IC License"
+              [(ngModel)]="filter.search"
+              (ngModelChange)="searchDebounce()"
+            >
+          </div>
+        </div>
+      </div>
+      <div class="col-5">
+        <div class="form-group">
+          <label class="col-form-label">Team.</label>
+          <div class="d-flex">
+            <div class="flex-1">
+              <shared-team-dropdown
+                placeholder="Team"
+                [(ngModel)]="filter.team"
+                (ngModelChange)="filterChange()"
+              >
+              </shared-team-dropdown>
+            </div>
+            <div class="_g-btn-clear">
+              <button
+                type="button"
+                class="btn btn-clear btn-lg mr-1 mb-1"
+                (click)="clearFilter()"
+              >ล้าง
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--SECTION FILTER-->
+
+<!--SECTION LIST-->
+<div class="card">
+  <div class="card-body">
+
+    <div>
+      <div class="d-flex justify-content-between">
+        <div class="col-6 px-0">
+          <pn-grid-per-page
+            [page]="page"
+            (setPerPage)="grid.setPerPage($event)"
+          ></pn-grid-per-page>
+        </div>
+        <div class="mr-2" *ngIf="canCreate">
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="add()"
+          >สร้างรายการใหม่
+          </button>
+        </div>
+      </div>
+      <div
+        class="col-12"
+        *ngIf="rows && rows?.length === 0"
+      >
+        <pn-data-not-found>
+        </pn-data-not-found>
+      </div>
+      <div
+        [hidden]="rows && rows?.length === 0"
+        class="_g-table-container"
+      >
+        <pn-lib-grid
+          #grid
+          [sort]="{prop: 'user.firstName', asc: false}"
+          [bodyHeight]="'auto'"
+          [dataSub]="dataSub"
+          [rows]="rows"
+          [columns]="columns"
+          [rowHeight]="65"
+          [externalPaging]="true"
+          [(page)]="page"
+          (pageChange)="pageChange()"
+          (sortChange)="onSortChange($event)"
+          (detailInfo)="detailInfo($event)"
+        ></pn-lib-grid>
+      </div>
+    </div>
+  </div>
+</div>
+<!--SECTION LIST-->
+
+
+<ng-template
+  #nameTpl
+  let-value="value"
+  let-row="row"
+>
+  <i *ngIf="row.isTeamLeader === true" class="ft ft-star-on text-primary"> &nbsp; </i><span *ngIf="row?.user?.firstName && row?.user?.lastName">{{row?.user?.firstName}} {{row?.user?.lastName}}</span><br>
+  <span *ngIf="!row?.user?.firstName && !row?.user?.lastName">-</span>
+</ng-template>

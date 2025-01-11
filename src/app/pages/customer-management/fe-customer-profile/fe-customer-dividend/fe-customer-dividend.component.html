@@ -1,0 +1,77 @@
+<div class="_g-header">
+  <h1 class="_g-title-header">ประวัติเงินปันผล</h1>
+  <button
+    type="button"
+    class="btn btn-outline-primary ml-2 mb-1"
+    (click)="onExportFile()"
+  >
+    <span class="icon"><i class="ft ft-upload"></i></span>
+    <span>Export</span>
+  </button>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <div
+      class="col-12"
+      *ngIf="rows && rows?.length === 0"
+    >
+      <pn-data-not-found>
+      </pn-data-not-found>
+    </div>
+    <div [hidden]="rows && rows?.length === 0">
+      <div>
+        <pn-grid-per-page
+          [page]="page"
+          (setPerPage)="grid.setPerPage($event)"
+        ></pn-grid-per-page>
+      </div>
+      <div class="_g-table-container">
+        <pn-lib-grid
+          #grid
+          [bodyHeight]="'auto'"
+          [sort]="{prop: 'paymentDate', asc: false}"
+          [dataSub]="dataSub"
+          [rows]="rows"
+          [columns]="columns"
+          [rowHeight]="65"
+          [externalPaging]="true"
+          [(page)]="page"
+          (pageChange)="pageChange()"
+          (sortChange)="onSortChange($event)"
+        ></pn-lib-grid>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--// TEMPLATE-->
+<ng-template
+  #fundTpl
+  let-value="value"
+  let-row="row"
+>
+  <!-- <span class="m-0">{{value}}</span>&nbsp; -->
+  <shared-datatable-with-name-fund
+    [fundCode]="row.fundCode"
+    [riskLevel]="row.fundRiskLevel ? row.fundRiskLevel.toString() : ''"
+    [fundName]="row.amcCode"
+  >
+  </shared-datatable-with-name-fund>
+
+</ng-template>
+
+
+<ng-template
+  #accountTpl
+  let-value="value"
+  let-row="row"
+>
+  <!-- <span class="m-0">{{value}}</span>&nbsp; -->
+  <shared-datatable-with-name
+    [id]="row.bankShortName"
+    [firstName]="row.bankAccount"
+  >
+  </shared-datatable-with-name>
+
+</ng-template>

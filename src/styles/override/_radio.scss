@@ -1,0 +1,131 @@
+._radio {
+  padding-top: calc(0.375rem + 1px);
+}
+//.radio {
+//  input[type="radio"] {
+//    & ~ label {
+//      font-size: $size-normal;
+//      color: $text-primary;
+//      &:before {
+//        border-color: $primary;
+//      }
+//      &:after {
+//        background-color: $primary;
+//      }
+//    }
+//  }
+//  &.radio-secondary {
+//    input[type="radio"] {
+//      & ~ label {
+//        &:before {
+//          border-color: $secondary;
+//        }
+//        &:after {
+//          background-color: $secondary;
+//        }
+//      }
+//      &:checked {
+//        & ~ label {
+//          &:after {
+//            background-color: $secondary;
+//          }
+//        }
+//      }
+//    }
+//  }
+//}
+
+
+.radio {
+  label {
+    border: 1px solid #e3e3e3;
+    padding-left: 1.25rem;
+    font-size: 1rem;
+    margin-left: 0;
+    font-size: $size-normal;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    border-radius: $border-radius-sm;
+    padding: 0rem 0.7rem;
+    transition: background-color 0.25s ease-in-out, border-color 0.25s ease-in-out;
+    &:before,
+    &:after {
+      border-color: #e3e3e3;
+      transition: background-color 0.25s ease-in-out, border-color 0.25s ease-in-out;
+      top: 9px;
+      left: 8px;
+    }
+    span {
+      margin-left: 1.3rem;
+    }
+  }
+  input[type="radio"] {
+    &:checked {
+      ~ label {
+        background: #fbf5e5;
+        border-color: $primary;
+      }
+      ~ label:before {
+        border-color: $primary;
+        background-color: white;
+      }
+      ~ label:after {
+        border-color: #fff;
+        transform: scale(1.2);
+        background-color: $primary;
+        /* height: 0.4rem; */
+        /* width: 0.7rem; */
+        top: 10px;
+        left: 14px;
+      }
+    }
+    &:disabled {
+      ~ label {
+        border-color: #e3e3e3;
+        background: $border-light;
+      }
+      ~ label:before,
+      ~ label:after {
+        border-color: #e3e3e3;
+        border-width: 2px;
+      }
+      &:checked {
+        ~ label:after {
+          border-color: #e3e3e3;
+        }
+      }
+    }
+  }
+  &.radio-secondary {
+    label {
+      &:after,
+      &:before {
+        border-color: $secondary;
+      }
+    }
+    input[type="radio"] {
+      &:checked {
+        ~ label {
+          background: map-get($secondary-color, lighten-2);
+          border-color: $secondary;
+          &:before {
+            background-color: $secondary;
+            border-color: white;
+          }
+          &:after {
+            transform: scale(1.2);
+            /* height: 0.4rem; */
+            /* width: 0.7rem; */
+            top: 10px;
+            left: 14px;
+            border-color: white;
+            background-color: $secondary;
+          }
+        }
+      }
+    }
+  }
+}
+
+// form label, .form-group label

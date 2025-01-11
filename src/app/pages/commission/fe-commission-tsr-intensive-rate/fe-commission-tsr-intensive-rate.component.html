@@ -1,0 +1,186 @@
+<div class="_g-header justify-content-between">
+  <h1 class="_g-title-header">TSR Incentive Rate</h1>
+  <div class="d-flex" *ngIf="canExport">
+    <button
+      class="btn btn-export mr-2"
+      (click)="exportReport()"
+    >
+      <span><i class="ft ft-upload"></i>Export</span>
+    </button>
+    <div class="form-input">
+      <div class="align-items-center d-flex justify-content-center _upload-file">
+        <label
+          for="file-upload-front-End"
+          class="pt-1"
+        ><i class="ft ft-download"></i>Import</label>
+        <input
+          #fileInput
+          ng2FileSelect
+          id="file-upload-front-End"
+          type="file"
+          class="file-input"
+          accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          (change)="onChangeFileImport($event);"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--SECTION FILTER-->
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-5">
+        <div class="form-group">
+          <label class="col-form-label">ค้นหา</label>
+          <div class="form-input">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Fund Code"
+              [(ngModel)]="filter.fundCode"
+              (ngModelChange)="searchTextChange($event)"
+            >
+          </div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+          <label class="col-form-label">บลจ.</label>
+          <div class="d-flex">
+            <div class="flex-1">
+              <shared-asset-dropdown
+                placeholder="ทั้งหมด"
+                [(ngModel)]="filter.amcCode"
+                (ngModelChange)="filterAmcChange($event)"
+                [autoReset]="true"
+              >
+              </shared-asset-dropdown>
+            </div>
+            <div class="_btn-clear">
+              <button
+                type="button"
+                class="btn btn-clear btn-lg"
+                (click)="clearFilter()"
+              >ล้าง
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--SECTION LIST-->
+<div class="card">
+  <div class="card-body">
+    <div
+      class="col-12"
+      *ngIf="rows && rows?.length === 0"
+    >
+      <pn-data-not-found>
+      </pn-data-not-found>
+    </div>
+    <div [hidden]="rows && rows?.length === 0">
+      <div class="d-flex justify-content-between">
+        <div class="col-6 px-0">
+          <pn-grid-per-page
+            [page]="page"
+            (setPerPage)="grid.setPerPage($event)"
+          ></pn-grid-per-page>
+        </div>
+      </div>
+
+      <div class="_g-table-container">
+        <pn-lib-grid
+          #grid
+          [sort]="{ prop: 'amcCode', asc: true }"
+          [bodyHeight]="'auto'"
+          [dataSub]="dataSub"
+          [rows]="rows"
+          [columns]="columns"
+          [rowHeight]="65"
+          [externalPaging]="true"
+          [(page)]="page"
+          (pageChange)="pageChange()"
+          (sortChange)="onSortChange($event)"
+          (detailInfo)="detailInfo($event)"
+        ></pn-lib-grid>
+      </div>
+    </div>
+  </div>
+</div>
+<!--SECTION LIST-->
+
+<ng-template
+  #statusTpl
+  let-value="value"
+  let-row="row"
+>
+  <span
+    *ngIf="value"
+    class="badge"
+    [class.badge-success]="value === 'ACTIVE'"
+    [class.badge-dark]="value === 'INACTIVE'"
+  >{{value}}</span>
+  <span *ngIf="!value">-</span>
+</ng-template>
+
+<ng-template
+  #rateTpl
+  let-value="value"
+  let-row="row"
+>
+  {{value}}%
+</ng-template>
+
+<ng-template
+  #amcFETpl
+  let-value="value"
+  let-row="row"
+>
+  {{value | aDecimal: 4 }}
+</ng-template>
+
+<ng-template
+  #tsrFeIncentiveReteTpl
+  let-value="value"
+  let-row="row"
+>
+  <span class="_text-dark-blue">{{value | aDecimal: 2 }}%</span>
+</ng-template>
+
+<ng-template
+  #tsrFeFinalReteTpl
+  let-value="value"
+  let-row="row"
+>
+  <span class="_text-dark-blue _text-weight">{{value | aDecimal: 4 }}</span>
+</ng-template>
+
+<ng-template
+  #amcMgmtTpl
+  let-value="value"
+  let-row="row"
+>
+  {{value | aDecimal: 4 }}
+</ng-template>
+
+<ng-template
+  #tsrTrIncentiveReteTpl
+  let-value="value"
+  let-row="row"
+>
+  <span class="_text-primary">{{value | aDecimal: 2 }}%</span>
+</ng-template>
+
+<ng-template
+  #tsrTrFinalReteTpl
+  let-value="value"
+  let-row="row"
+>
+  <span class="_text-primary _text-weight">{{value | aDecimal: 4 }}</span>
+</ng-template>

@@ -1,0 +1,67 @@
+<div class="_g-header">
+  <h1 class="_g-title-header">แผนการ DCA</h1>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <div
+      class="col-12"
+      *ngIf="rows && rows?.length === 0"
+    >
+      <pn-data-not-found>
+      </pn-data-not-found>
+    </div>
+    <div [hidden]="rows && rows?.length === 0">
+<!--      <div>-->
+<!--        <pn-grid-per-page-->
+<!--          [page]="page"-->
+<!--          (setPerPage)="grid.setPerPage($event)"-->
+<!--        ></pn-grid-per-page>-->
+<!--      </div>-->
+      <div class="_g-table-container">
+        <pn-lib-grid
+          #grid
+          [bodyHeight]="'auto'"
+          [sort]="sort"
+          [dataSub]="dataSub"
+          [rows]="rows"
+          [columns]="columns"
+          [rowHeight]="65"
+          [externalPaging]="false"
+          [externalSorting]="false"
+          [(page)]="page"
+          (pageChange)="pageChange()"
+        ></pn-lib-grid>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--TEMPLATE-->
+
+<ng-template
+  #fundTpl
+  let-value="value"
+  let-row="row"
+>
+  <shared-datatable-with-name
+    [id]="row.fundCode"
+  >
+  </shared-datatable-with-name>
+</ng-template>
+
+<ng-template
+  #dcaTypeTpl
+  let-value="value"
+  let-row="row"
+>
+  {{value === 'MONTHLY' ? 'แบบรายเดือน' : 'แบบรายสัปดาห์' }}
+</ng-template>
+
+<ng-template
+  #selectDateTpl
+  let-value="value"
+  let-row="row"
+>
+  {{row.selectDay ? displayWeeklyDate(row.selectDay) : displayMonthlyDate(row.selectDate) }}
+</ng-template>

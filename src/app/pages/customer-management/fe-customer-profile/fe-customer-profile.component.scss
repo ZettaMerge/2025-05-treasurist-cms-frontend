@@ -1,0 +1,37 @@
+@import "variables-custom";
+
+
+._btn-action {
+  margin-right: $gutter;
+}
+
+._file-wrapper {
+  //padding-top: 0.85rem;
+  //padding-left: 1rem;
+  //padding-right: 1rem;
+
+  ._title {
+    ._text-head-title {
+      font-size: $size-medium;
+    }
+
+    ._text-color {
+      color: $muted;
+    }
+  }
+}
+
+._file-content {
+  ._file-title {
+    padding-top: 1.75rem;
+    padding-left: 2.5rem;
+    padding-bottom: 1rem;
+  }
+
+  ._file-data {
+    padding-top: 1.75rem;
+    padding-left: 2.5rem;
+    padding-right: 1.5rem;
+    padding-bottom: 1rem;
+  }
+}

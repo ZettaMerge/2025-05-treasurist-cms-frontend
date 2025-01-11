@@ -1,0 +1,91 @@
+<div id="inforemation">
+  <div class="_g-header">
+    <h1 class="_g-title-header">Information</h1>
+    <div *ngIf="isShowNoDetail" class="_g-header justify-content-end d-flex">
+      <button
+        type="button"
+        class="btn btn-secondary _g-space-btn"
+        (click)="goBack()"
+      ><span>กลับ</span>
+      </button>
+    </div>
+    <div *ngIf="!isShowNoDetail" class="_g-header justify-content-end d-flex">
+      <button
+        type="button"
+        class="btn btn-primary _g-space-btn"
+        (click)="edit()"
+      ><span>แก้ไข</span>
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="goBack()"
+      ><span>กลับ</span>
+      </button>
+    </div>
+
+  </div>
+
+  <!--แบบ ยังไม่มีข้อมูล-->
+  <div class="card" *ngIf="isShowNoDetail">
+    <div class="card-body">
+      <div class="d-flex align-items-center justify-content-center">
+        <div class="col-12 text-center">
+          <p class="text-muted">ยังไม่มีข้อมูล</p>
+          <button
+            type="button"
+            class="col-2 btn btn-primary  mr-1 mb-1"
+            (click)="add()"
+          ><span>สร้าง</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" *ngIf="!isShowNoDetail">
+    <div class="card-body">
+      <div class="col-12 pb-3 px-0">
+        <span class="_g-text-header-title">รายละเอียด</span>
+      </div>
+      <div class="_g-card-content-tab" *ngFor="let informationData of informationDatas; let i = index">
+        <div>
+          <div class="col-12 _g-text-title px-0">
+            <span>ชื่อหัวข้อ {{i + 1}}</span>
+            <p>{{informationData.title}}</p>
+          </div>
+
+          <div class="col-12 px-0 pb-3" *ngFor="let qaArr of informationData.qaArray">
+            <div class="_bg-card p-2">
+              <div class="col-12 _g-text-title">
+                <span>คำถาม</span>
+                <p>{{qaArr.question}}</p>
+              </div>
+              <div class="col-12 _g-text-title">
+                <span>คำตอบ</span>
+                <p>{{qaArr.answer}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+      </div>
+
+    </div>
+  </div>
+
+  <div *ngIf="!isShowNoDetail" class="_g-header justify-content-end d-flex">
+    <button
+      type="button"
+      class="btn btn-primary  _g-space-btn"
+      (click)="edit()"
+    ><span>แก้ไข</span>
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="goBack()"
+    ><span>กลับ</span>
+    </button>
+  </div>
+</div>

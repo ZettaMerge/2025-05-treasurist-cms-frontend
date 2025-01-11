@@ -1,0 +1,66 @@
+<div id="general-email">
+  <div class="_g-header">
+    <h1 class="_g-title-header">Email</h1>
+    <div class="_g-header d-flex justify-content-end">
+      <button
+        *ngIf="detailEmail"
+        type="button"
+        class="btn btn btn-primary _g-space-btn"
+        (click)="goEdit()"
+      ><span>แก้ไข</span>
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="goBack()"
+      ><span>กลับ</span>
+      </button>
+    </div>
+  </div>
+
+  <div
+    class="card"
+    *ngIf="!detailEmail"
+  >
+    <div class="card-body">
+      <div class="align-items-center d-flex flex-column justify-content-center">
+        <p class="text-muted font-size-medium mr-1">ยังไม่มีข้อมูล</p>
+        <button
+          type="button"
+          class="btn btn-primary mb-1"
+          (click)="goToCreate()"
+        ><span>สร้าง</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="card"
+    *ngIf="detailEmail"
+  >
+    <div class="card-body pt-0">
+      <div class="card-header pl-0">
+        <span class="_g-text-header-title">รายละเอียด</span>
+      </div>
+      <div [innerHTML]="detailEmail  | safe: 'html'"></div>
+    </div>
+  </div>
+
+  <div class="_g-header justify-content-end d-flex"  *ngIf="detailEmail">
+    <button
+      type="button"
+      class="btn btn btn-primary _g-space-btn"
+      (click)="goEdit()"
+    ><span>แก้ไข</span>
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary  mr-1 mb-1"
+      (click)="goBack()"
+    ><span>กลับ</span>
+    </button>
+  </div>
+
+
+</div>

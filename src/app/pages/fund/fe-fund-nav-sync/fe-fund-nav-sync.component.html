@@ -1,0 +1,190 @@
+<form
+  #form="ngForm"
+  [class.submitted]="form.submitted"
+  (ngSubmit)="onSave(form)"
+>
+  <div class="card-body">
+    <div class="d-flex justify-content-between">
+      <span class="text-primary font-size-medium">Update Fund NAV</span>
+    </div>
+
+    <div class="col-8 px-0">
+      <div class="form-group">
+        <label class="col-form-label">กองทุน</label>
+        <div class="form-input">
+          <shared-fund-without-fund-mapping-dropdown
+            placeholder="กองทุน"
+            name="funds"
+            [(ngModel)]="fundData"
+            (ngModelChange)="onChangeFund($event)"
+          >
+          </shared-fund-without-fund-mapping-dropdown>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="fundData">
+      <div class="col-6">
+        <div class="form-group">
+          <label class="col-form-label">Nav Date</label>
+          <div class="form-input">
+            <pn-date-picker
+              placeholder="dd/mm/yyyy"
+              id="date"
+              name="date"
+              [(ngModel)]="fundNavData.navDate"
+            >
+            </pn-date-picker>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label class="col-form-label">Nav</label>
+          <div class="form-input">
+            <input
+              class="form-control"
+              type="text"
+              name="nav"
+              id="nav"
+              thousandSeparator=","
+              mask="separator"
+              [(ngModel)]="fundNavData.nav"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label class="col-form-label">AUM</label>
+          <div class="form-input">
+            <input
+              class="form-control"
+              type="text"
+              name="aum"
+              id="aum"
+              thousandSeparator=","
+              mask="separator"
+              [(ngModel)]="fundNavData.aum"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label class="col-form-label">Offer Nav</label>
+          <div class="form-input">
+            <input
+              class="form-control"
+              type="text"
+              name="offerNav"
+              id="offerNav"
+              thousandSeparator=","
+              mask="separator"
+              [(ngModel)]="fundNavData.offerNav"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label class="col-form-label">Bid Nav</label>
+          <div class="form-input">
+            <input
+              class="form-control"
+              type="text"
+              name="bidNav"
+              id="bidNav"
+              thousandSeparator=","
+              mask="separator"
+              [(ngModel)]="fundNavData.bidNav"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label class="col-form-label">Switch Out Nav</label>
+          <div class="form-input">
+            <input
+              class="form-control"
+              type="text"
+              name="switchOutNav"
+              id="switchOutNav"
+              thousandSeparator=","
+              mask="separator"
+              [(ngModel)]="fundNavData.switchOutNav"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label class="col-form-label">Switch In Nav</label>
+          <div class="form-input">
+            <input
+              class="form-control"
+              type="text"
+              name="switchIntNav"
+              id="switchIntNav"
+              thousandSeparator=","
+              mask="separator"
+              [(ngModel)]="fundNavData.switchInNav"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label class="col-form-label">Total Unit</label>
+          <div class="form-input">
+            <input
+              class="form-control"
+              type="text"
+              name="totalUnit"
+              id="totalUnit"
+              thousandSeparator=","
+              mask="separator"
+              [(ngModel)]="fundNavData.totalUnit"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label class="col-form-label">Total AUM</label>
+          <div class="form-input">
+            <input
+              class="form-control"
+              type="text"
+              name="totalAUM"
+              name="totalAUM"
+              thousandSeparator=","
+              mask="separator"
+              [(ngModel)]="fundNavData.totalAum"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end pt-3">
+      <div class="col-6 d-flex pr-0">
+        <div class="col-6 pl-0 _display-btn">
+          <button
+            type="button"
+            class="btn btn-clear flex-1"
+            (click)="onCancel()"
+          >
+            <span><i class="ic-cross"></i>ยกเลิก</span>
+          </button>
+        </div>
+        <div class="col-6 pr-0 _display-btn">
+          <button type="submit" class="btn btn-primary flex-1">
+            <span><i class="ic-cross"></i>Update Fund NAV</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

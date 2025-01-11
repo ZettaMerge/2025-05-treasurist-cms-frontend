@@ -1,0 +1,11 @@
+<input
+  #input
+  class="input"
+  type="text"
+  [ngModel]="value"
+  (ngModelChange)="onValueChange($event)"
+  [placeholder]="placeholder"
+  [maxLength]="maxlength"
+  [disabled]="disabled"
+  (blur)="onBlur($event)"
+>

@@ -1,0 +1,45 @@
+@import "variables-custom";
+
+._account-ats-filter {
+  ._btn-clear {
+    margin-left: $grid-gutter-width;
+  }
+}
+
+._text-width {
+  width: 100px;
+}
+
+._btn-clear {
+  margin-left: $grid-gutter-width;
+  //margin-left: 3rem;
+}
+
+._display-filter {
+  display: flex;
+}
+
+._text-width {
+  width: 90px;
+}
+
+._disable-note {
+  color: $muted;
+  pointer-events: none;
+}
+._disable-note-wrapper {
+  cursor: not-allowed;
+}
+
+
+@media (max-width: $bp-sm) {
+  ._display-filter {
+    display: block;
+  }
+}
+
+@media (max-width: 810px) {
+  ._display-filter {
+    display: block;
+  }
+}

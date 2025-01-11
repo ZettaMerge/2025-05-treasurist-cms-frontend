@@ -1,0 +1,20 @@
+@import "variables-custom";
+
+._file-content {
+  padding-bottom: 1rem;
+
+  ._file-title {
+
+  }
+
+  ._file-data {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    padding-left: 2.5rem;
+    //padding-right: 1.5rem;
+
+  }
+
+}

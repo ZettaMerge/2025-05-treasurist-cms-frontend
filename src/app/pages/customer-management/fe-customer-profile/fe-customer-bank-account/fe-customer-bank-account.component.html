@@ -1,0 +1,72 @@
+<!--Section account for subscription Start-->
+<div class="_customer-bank-wrapper">
+  <div class="_title d-flex justify-content-between align-items-center">
+    <span class="_text-head-title">บัญชีสำหรับ Subscription</span>
+  </div>
+  <div class="_g-table-container _file-content">
+    <div class="col-12 d-flex _file-title border-bottom justify-content-between align-items-center">
+      <div class="col-4"><span>ชื่อธนาคาร</span></div>
+      <div class="col-3"><span>สาขา</span></div>
+      <div class="col-3"><span>เลขบัญชี</span></div>
+      <div class="col-2"><span></span></div>
+    </div>
+
+    <!--    <div class="col-12 d-flex _file-data border-bottom" *ngFor="let acc of bankAccountData.bankSubscription">-->
+    <div class="col-12 d-flex _file-data border-bottom">
+      <div class="col-4"><span>{{bankAccountData?.bankSubscription?.bankCode}}
+        {{bankAccountData?.bankSubscription?.shortBankName}}
+        {{bankAccountData?.bankSubscription?.thBankName}}</span>
+      </div>
+      <div class="col-3">
+        <span>
+          {{bankAccountData?.bankSubscription?.branchCode}}
+          {{bankAccountData?.bankSubscription?.thBranchName}}
+        </span>
+      </div>
+      <div class="col-3"><span>{{bankAccountData?.bankSubscription?.bankNo}}</span></div>
+      <div class="col-2"><a class="text-primary pr-1"><i class="ft ft-download text-primary font-medium-4"></i> &nbsp;
+        <span
+          class="text-primary">ดาวน์โหลด</span></a></div>
+    </div>
+  </div>
+</div>
+<!--Section account for subscriptionEnd-->
+
+
+<!--Section account for redemtion Start-->
+<div class="_customer-redemtion-wrapper">
+  <div class="_title d-flex justify-content-between align-items-center">
+    <span class="_text-head-title">บัญชีสำหรับ Redemtion</span>
+  </div>
+  <div class="_g-table-container _file-content">
+    <div class="col-12 d-flex _file-title border-bottom justify-content-between align-items-center">
+      <div class="col-4"><span>ชื่อธนาคาร</span></div>
+      <div class="col-3"><span>สาขา</span></div>
+      <div class="col-3"><span>เลขบัญชี</span></div>
+      <div class="col-2"><span></span></div>
+    </div>
+
+    <!--    <div class="col-12 d-flex _file-data border-bottom" *ngFor="let acc of accData">-->
+    <div class="col-12 d-flex _file-data border-bottom">
+      <div class="col-4"><span>
+        {{bankAccountData?.bankRedemption?.bankCode}}
+        {{bankAccountData?.bankRedemption?.shortBankName}}
+        {{bankAccountData?.bankRedemption?.thBankName}}
+      </span></div>
+      <div class="col-3">
+        <span>
+          {{bankAccountData?.bankRedemption?.branchCode}}
+          {{bankAccountData?.bankRedemption?.thBranchName}}
+        </span>
+      </div>
+      <div class="col-3">
+        <span>
+          {{bankAccountData?.bankRedemption?.bankNo}}
+        </span></div>
+      <div class="col-2"><a class="text-primary pr-1"><i class="ft ft-download text-primary font-medium-4"></i> &nbsp;
+        <span
+          class="text-primary">ดาวน์โหลด</span></a></div>
+    </div>
+  </div>
+</div>
+<!--Section account for redemtion End-->

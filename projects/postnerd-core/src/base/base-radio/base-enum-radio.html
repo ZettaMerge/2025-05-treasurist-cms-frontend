@@ -1,0 +1,14 @@
+<div [class._g-radio-vertical]="isVertical">
+  <label
+    class="radio {{ controlClass }}"
+    *ngFor="let option of optionList"
+  >
+    <input
+      type="radio"
+      [(ngModel)]="value"
+      [value]="option"
+      (change)="onSelect()"
+    >
+    <span>{{ option | readable}}</span>
+  </label>
+</div>

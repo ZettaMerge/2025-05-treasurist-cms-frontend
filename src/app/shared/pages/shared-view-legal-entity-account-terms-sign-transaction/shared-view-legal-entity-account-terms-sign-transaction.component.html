@@ -1,0 +1,110 @@
+<!-- <div class="_g-detail"> -->
+  <div class="row">
+    <div class="col-12 px-0 py-1">
+      <div class="col-6 _g-text-title">
+        <span>เงื่อนไขการลงนามการทำธุรกรรม</span>
+        <p>นายศกุนพัฒน์ จิรวุฒิตานันท์   เป็นผู้มีอำนาจกระทำแทน</p>
+      </div>
+    </div>
+
+    <div class="col-12 px-0 py-1">
+      <div class="col-6 _g-text-title">
+        <p>ผู้รับมอบอำนาจทอดาุดท้ายในการทำธุรกรรม</p>
+      </div>
+    </div>
+
+    <div class="col-12 d-flex px-0 py-1">
+      <div class="col-6">
+        <div class="row">
+          <div class="col-6 _g-text-title">
+            <span>ชื่อ-นามสกุล</span>
+            <p>ศกุนพัฒน์ จิรวุฒิตานันท์</p>
+          </div>
+          <div class="col-6 _g-text-title">
+            <span>วัน/เดือน/ปีเกิด</span>
+            <p>26/06/1987</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="row">
+          <div class="col-6 _g-text-title">
+            <span>ประเภทหลักฐาน</span>
+            <p>บัตรประชาชน</p>
+          </div>
+          <div class="col-6 _g-text-title">
+            <span>เลขบัตรประชาชน / Passport</span>
+            <p>203945674</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 d-flex px-0 py-1">
+      <div class="col-6">
+        <div class="row">
+          <div class="col-6 _g-text-title">
+            <span>วันหมดอายุบัตร (ค.ศ.)</span>
+            <p>-</p>
+          </div>
+          <div class="col-6 _g-text-title">
+            <span>ประเทศที่ออก</span>
+            <p>-</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 px-0 py-1">
+      <div class="col-6 _g-text-title">
+        <p class="mb-0">ที่อยู่ตามประเภทหลักฐาน</p>
+      </div>
+    </div>
+  </div>
+<!-- </div> -->
+
+<shared-view-legal-entity-account-address
+  [data]="data"
+>
+
+</shared-view-legal-entity-account-address>
+
+<div class="col-12 px-0">
+  <div class="pt-2 pb-2">
+    <span>ที่อยู่ปัจจุบัน</span>
+  </div>
+  <div class="col-12 d-flex px-0 py-1">
+    <div>
+      <li class="d-inline-block mr-2 mb-2">
+        <div class="checkbox _g-checkbox-display-none">
+          <input
+            type="checkbox"
+            id="current-address"
+            [checked]="data?.fatca === false"
+          >
+          <label
+            for="status-politic"><span>ตามประเภทหลักฐาน</span></label>
+        </div>
+      </li>
+    </div>
+  </div>
+</div>
+<div class="col-12 px-0">
+  <div class="pt-2 pb-2">
+    <span>เป็นผู้มีสถานภาพทางการเมืองหรือเป็นสมาชิกในครอบครัวผู้มีสถานภาพทางการเมืองหรือไม่</span>
+  </div>
+  <div class="col-12 d-flex px-0 py-1">
+    <div>
+      <li class="d-inline-block mr-2 mb-2">
+        <div class="checkbox _g-checkbox-display-none">
+          <input
+            type="checkbox"
+            id="status-politic"
+            [checked]="data?.fatca === false"
+          >
+          <label
+            for="status-politic"><span>{{data?.fatca === false ? 'ไม่ใช่' : 'ใช่'}}</span></label>
+        </div>
+      </li>
+    </div>
+  </div>
+</div>

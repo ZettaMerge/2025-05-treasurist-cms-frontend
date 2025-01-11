@@ -1,0 +1,75 @@
+<!-- <div class="card" *ngIf="customer">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-center">
+      <span class="_g-text-header-title">ไฟล์ยืนยันการเปิดบัญชี</span>
+      <span class="_g-text-muted">Accepted by : Ireans Bay</span>
+    </div>
+    <div class="_g-table-container _file-content">
+      <div class="col-12 _g-list-file-header-title border-bottom">
+        <div class="col-10">
+          <span>หัวข้อ</span>
+        </div>
+      </div>
+      <div class="col-12 _g-list-file-data border-bottom" *ngFor="let file of fileData">
+        <div class="col-10">
+          <span>{{file.fileName}}</span>
+        </div>
+        <div class="col-2">
+          <a class="text-primary pr-1"><i class="ft ft-download text-primary font-medium-4"></i> &nbsp; <span
+            class="text-primary">ดาวน์โหลด</span></a>
+        </div>
+      </div>
+      <div></div>
+    </div>
+  </div>
+</div> -->
+
+<div class="card">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-center">
+      <span class="_g-text-header-title">ไฟล์ยืนยันการเปิดบัญชี</span>
+      <!--      <span class="_g-text-muted">Accepted by : Ireans Bay</span>-->
+    </div>
+    <div class="_g-table-container _file-content pt-2">
+      <div
+        class="col-12 _g-list-file-data border-bottom"
+        *ngFor="let file of fileData"
+      >
+        <div class="col-10">
+          <span>{{ file.fileName }}</span>
+        </div>
+        <div class="col-2">
+          <a
+            *ngIf="
+              file.typeForAccountFile !== 'BankAccount' ||
+              (file.typeForAccountFile === 'BankAccount' && !file.isNoHaveFile)
+            "
+            class="text-link"
+            (click)="onOpenFileDetailModal(file, data)"
+            >ดูรายละเอียด</a
+          >
+          <span
+            *ngIf="
+              file.typeForAccountFile === 'BankAccount' && file.isNoHaveFile
+            "
+            >SKIPPED</span
+          >
+        </div>
+      </div>
+      <div></div>
+    </div>
+  </div>
+</div>
+
+<lib-modal #detailfileModal modalSize="lg" [showHeader]="false">
+  <shared-view-popup-detail-file-account-opening
+    #formListFileModal
+    *ngIf="detailfileModal.isOpen"
+    (cancel)="detailfileModal.close()"
+    [mode]="mode"
+    [accountFile]="accountFile"
+    [account]="account"
+    [customer]="customer"
+  >
+  </shared-view-popup-detail-file-account-opening>
+</lib-modal>

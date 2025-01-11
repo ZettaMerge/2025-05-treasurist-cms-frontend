@@ -1,0 +1,380 @@
+<div class="card-body">
+  <div class="d-flex justify-content-between">
+    <div>
+      <span class="text-primary font-size-medium">ระบุลูกค้า</span>
+    </div>
+  </div>
+  <!--Content Filter-->
+  <div class="col-12">
+    <div class="row _customer-filter">
+      <div class="d-flex col-xl-6  col-lg-6 col-md-12 px-0">
+        <div class="col-6">
+          <div class="form-group">
+            <label class="col-form-label">ค้นหา</label>
+            <div class="form-input">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="ชื่อลูกค้า, ID Card, อีเมล, เบอร์โทรศัพท์"
+                name="search"
+                id="search"
+                [(ngModel)]="filter.search"
+                (ngModelChange)="searchTextChange($event)"
+              >
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label class="col-form-label">ประเภทลูกค้า</label>
+            <pn-dynamic-dropdown
+              [showAll]="true"
+              placeholder="ประเภทลูกค้า"
+              [(ngModel)]="filter.accountType"
+              [list]="listsCustomerDropdown"
+              (ngModelChange)="filterChange($event)"
+              [multiple]="true"
+            >
+            </pn-dynamic-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-6 col-lg-6 col-md-12">
+        <div class="row">
+          <div class="col-4">
+            <div class="form-group">
+              <label class="col-form-label">Fx</label>
+              <div class="form-group _form">
+                <pn-segmented-control
+                  id="fx"
+                  name="fx"
+                  [list]="typeList"
+                  [(ngModel)]="filter.fx"
+                  (ngModelChange)="filterChange($event)"
+                >
+                </pn-segmented-control>
+              </div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+              <label class="col-form-label">Commo</label>
+              <div class="form-group _form">
+                <pn-segmented-control
+                  id="commo"
+                  name="commo"
+                  [list]="typeList"
+                  [(ngModel)]="filter.comMo"
+                  (ngModelChange)="filterChange($event)"
+                >
+                </pn-segmented-control>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-6 col-lg-6 col-md-12">
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <label class="col-form-label">บลจ.</label>
+              <shared-asset-form-fund-mapping-dropdown
+                placeholder="บลจ."
+                [(ngModel)]="filter.amc"
+                (ngModelChange)="filterAmcChange($event)"
+                [autoReset]="true"
+                [multiple]="true"
+              >
+              </shared-asset-form-fund-mapping-dropdown>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label class="col-form-label">กองทุน</label>
+              <shared-fund-dropdown
+                placeholder="กองทุน"
+                [(ngModel)]="filter.fund"
+                (ngModelChange)="filterFundChange($event)"
+                [multiple]="true"
+              >
+              </shared-fund-dropdown>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-6 col-lg-6 col-md-12 ">
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <label class="col-form-label">IC License</label>
+              <shared-ic-license-dropdown
+                placeholder="IC License"
+                [(ngModel)]="filter.searchIC"
+                (ngModelChange)="filterChange($event)"
+                [multiple]="true"
+              >
+
+              </shared-ic-license-dropdown>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label class="col-form-label">Team</label>
+              <shared-team-dropdown
+                [(ngModel)]="filter.searchTeam"
+                (ngModelChange)="filterChange($event)"
+                placeholder="Team"
+                [multiple]="true"
+              >
+
+              </shared-team-dropdown>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-5 col-lg-4 col-md-12">
+        <div class="row">
+          <div class="col-12 d-flex">
+            <div class="form-group _form">
+              <label class="col-form-label">CDD Score</label>
+              <pn-segmented-control
+                name="cdd"
+                [list]="cddList"
+                [(ngModel)]="filter.cdd"
+                (ngModelChange)="filterChange($event)"
+              >
+              </pn-segmented-control>
+            </div>
+            <div class="form-group _form">
+              <label class="col-form-label">Risk Level</label>
+              <div class="d-flex">
+                <div class="flex-1">
+                  <pn-segmented-control
+                    name="risk"
+                    [list]="riskList"
+                    [(ngModel)]="filter.riskLevel"
+                    (ngModelChange)="filterChange($event)"
+                  >
+                  </pn-segmented-control>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-7 col-lg-8 col-md-12 d-flex">
+        <div class="form-group _form">
+          <label class="col-form-label">กำไร ขาดทุน</label>
+          <pn-segmented-control
+            name="profit"
+            [list]="profitList"
+            [(ngModel)]="filter.profit"
+            (ngModelChange)="onChangeProfit($event)"
+
+          >
+          </pn-segmented-control>
+        </div>
+        <div class="d-flex pt-4">
+          <div class="form-group">
+            <div class="form-input">
+              <input
+                name="low"
+                type="number"
+                class="form-control"
+                placeholder="ตํ่าสุด"
+                [(ngModel)]="filter.low"
+                (ngModelChange)="filterChangeLow($event)"
+                (blur)="onsetDecimal(filter.low, 'low')"
+              >
+            </div>
+          </div>
+          <span class="ml-2 mr-2 mt-2">-</span>
+          <div class="form-group">
+            <div class="form-input">
+              <input
+                name="high"
+                type="number"
+                class="form-control"
+                placeholder="สูงสุด"
+                [(ngModel)]="filter.high"
+                (ngModelChange)="filterChangeHigh($event)"
+                (blur)="onsetDecimal(filter.high, 'high')"
+              >
+            </div>
+          </div>
+          <div class="_btn-clear">
+            <button
+              type="button"
+              class="btn btn-clear btn-lg mr-1 mb-1"
+              (click)="clearFilter()"
+            >ล้าง
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!--  LIST-->
+  <div>
+    <div
+      class="col-12"
+      *ngIf="rows && rows?.length === 0"
+    >
+      <pn-data-not-found>
+      </pn-data-not-found>
+    </div>
+    <div [hidden]="rows && rows?.length === 0">
+      <div class="_g-table-container">
+        <pn-lib-grid
+          #grid
+          [bodyHeight]="'auto'"
+          [sort]="{prop: 'customerName', asc: false}"
+          [dataSub]="dataSub"
+          [rows]="rows"
+          [columns]="columns"
+          [rowHeight]="65"
+          [externalPaging]="true"
+          [(page)]="page"
+          (pageChange)="pageChange()"
+          (sortChange)="onSortChange($event)"
+          (edit)="edit($event)"
+        ></pn-lib-grid>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-end pt-3">
+    <div class="col-6 d-flex pl-0">
+      <span class="text-bold-500">เลือก </span>
+      <span class="text-bold-500 text-primary">&nbsp;{{balanceList.length}}</span>
+<!--      <span class="text-bold-500 text-primary">&nbsp;{{balanceArray?.length > 0 ? balanceArray?.length : getCustomerRecord(balanceList)}}</span>-->
+      <span class="text-bold-500 text-muted">/{{allRecordCustomer}}</span>
+    </div>
+    <div class="col-6 d-flex pr-0">
+      <div class="col-6 pl-0 _display-btn">
+        <button
+          type="button"
+          class="btn btn-clear flex-1"
+          (click)="onCancel()"
+        >
+          <span><i class="ic-cross"></i>ยกเลิก</span>
+        </button>
+      </div>
+      <div class="col-6 pr-0 _display-btn">
+        <button
+          type="submit"
+          class="btn btn-primary flex-1"
+          (click)="onSave()"
+        >
+          <span><i class="ic-cross"></i>ยืนยัน</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--TEMPLATE-->
+
+<!-- header Checkbox -->
+<ng-template
+  #headerCheckboxTpl
+  let-value="value"
+  let-row="row"
+>
+  <div class="checkbox mt-2 ml-3 border-0">
+    <input
+      type="checkbox"
+      name="isSelectedAll"
+      id="isSelectedAll"
+      [(ngModel)]="selectAll"
+      (ngModelChange)="onClickAll($event)"
+    />
+    <label class="border-0 bg-transparent" for="isSelectedAll"></label>
+  </div>
+</ng-template>
+
+<!-- cell checkboxTpl -->
+<ng-template
+  #checkboxTpl
+  let-row="row"
+  let-isSelected="isSelected"
+  let-onCheckboxChangeFn="onCheckboxChangeFn"
+  let-index="index"
+>
+  <div
+    class="checkbox border-0"
+  >
+    <input
+      type="checkbox"
+      name="isSelected{{ row.balanceId }}"
+      id="isSelected{{ row.balanceId }}"
+      [(ngModel)]="row.isAllow"
+      (ngModelChange)="onClickCheck($event, row, row.balanceId)"
+    />
+    <label class="border-0 bg-transparent" for="isSelected{{ row.balanceId }}"></label>
+  </div>
+</ng-template>
+
+<ng-template
+  #nameTpl
+  let-value="value"
+  let-row="row"
+>
+  <shared-datatable-with-name
+    [id]="row?.customerName"
+  >
+  </shared-datatable-with-name>
+</ng-template>
+
+<ng-template
+  #fundTpl
+  let-value="value"
+  let-row="row"
+>
+  <shared-datatable-with-name-fund
+    [fundCode]="row.fundCode"
+    [riskLevel]="row.fundRiskLevel"
+    [fundName]="row.amcCode"
+
+  >
+  </shared-datatable-with-name-fund>
+</ng-template>
+
+
+<ng-template
+  #portTpl
+  let-value="value"
+  let-row="row"
+>
+  <span class="text-bold-500">{{row.amount | aDecimal}}</span>
+</ng-template>
+
+<ng-template
+  #portCostTpl
+  let-value="value"
+  let-row="row"
+>
+  <span>{{row.cost | aDecimal}}</span>
+</ng-template>
+
+
+<ng-template
+  #profit
+  let-value="value"
+  let-row="row"
+>
+  <!--  <div class="width-120 align-items-center">-->
+  <span
+    [ngClass]="{'text-success': row.profit >= 0, 'text-danger': row.profit < 0, 'text-black': !row.profit}">{{row.profit | aDecimal}}</span>
+  <p
+    *ngIf="row.profitPercent !== 'NaN'"
+    class="m-0"
+    [ngClass]="{'text-success': row.profitPercent >= 0, 'text-danger': row.profitPercent < 0, 'text-black' : !row.profitPercent}"
+  >
+    <span>({{row.profitPercent | aDecimal}}{{row.profitPercent ? '%' : ''}})</span>
+  </p>
+  <!--  </div>-->
+
+</ng-template>

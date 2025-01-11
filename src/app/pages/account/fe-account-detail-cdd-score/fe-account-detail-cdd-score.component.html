@@ -1,0 +1,83 @@
+<div class="card-content">
+  <div class="card-header pb-0">
+    <h5 class="card-title text-primary">รายละเอียด</h5>
+  </div>
+  <div class="card-body py-0" *ngIf="!customerType">
+    <div class="col-12 px-0 d-flex">
+      <div class="col-3 px-0">
+        <div class="form-group">
+          <label class="col-form-label">แก้ไข CDD Score</label>
+          <div class="form-group _form">
+            <pn-segmented-control
+              name="cdd-score"
+              [list]="cddScoreList"
+              [(ngModel)]="cddScore.score"
+              (ngModelChange)="cddScoreChange($event)"
+            >
+            </pn-segmented-control>
+          </div>
+        </div>
+      </div>
+      <div class="col-9 px-0">
+        <div class="form-group">
+          <label class="col-form-label">ระบุเหตุผล (CDD Score = 3)</label>
+          <div class="form-group _form">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="โปรดระบุ"
+              [(ngModel)]="cddScore.cddScoreReason"
+              [disabled]="isCddReason"
+            >
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="card-body py-0" *ngIf="customerType">
+    <div class="d-flex px-0">
+      <div class="col-4 _g-text-title px-0">
+        <span class="col-form-label">CDD Score</span>
+        <p>{{cddScore.score || '-'}}</p>
+      </div>
+      <div class="_g-text-title">
+        <span class="col-form-label">เหตุผล (CDD Score = 3)</span>
+        <p>{{cddScore.cddScoreReason || '-'}}</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="_modal-footer">
+  <div class="_g-text-title">
+    <span>
+      Review Date: {{cddDate | aDate}} |
+      Expire Date: {{cddScoreData?.expiredDate | aDate }}
+    </span>
+    <!--    <span>-->
+    <!--      {{cddScoreData?.score || '-'}} |-->
+    <!--      {{cddScoreData?.score === 1 ? 'ความเสี่ยงระดับต่ำ' : cddScoreData?.score === 2 ? 'ความเสี่ยงระดับปานกลาง'-->
+    <!--      : cddScoreData?.score === 3 ? 'ความเสี่ยงระดับสูง' : '-' }} |-->
+    <!--      Review Date: {{cddScoreData?.reviewDate | dateYear}} |-->
+    <!--      Expire Date: {{cddScoreData?.expiredDate | aDate }}-->
+    <!--    </span>-->
+  </div>
+  <div>
+    <button
+      type="button"
+      class="btn btn-clear  mr-1 mb-1"
+      (click)="onCancel()"
+    ><span>{{customerType ? 'ปิด' : 'ยกเลิก'}}</span>
+    </button>
+    <button
+      *ngIf="!customerType"
+      type="submit"
+      class="btn btn-primary  mr-1 mb-1"
+      (click)="onSubmit()"
+    ><span>บันทึก</span>
+    </button>
+  </div>
+</div>

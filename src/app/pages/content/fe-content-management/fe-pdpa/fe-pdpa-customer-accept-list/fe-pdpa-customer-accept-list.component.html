@@ -1,0 +1,67 @@
+<div id="customer-accept-list">
+  <div>
+    <div class="_g-pager-with-tab d-flex justify-content-between">
+      <div class="col-6 pl-0">
+        <pn-grid-per-page
+          [page]="page"
+          (setPerPage)="grid.setPerPage($event)"
+        ></pn-grid-per-page>
+      </div>
+      <div class="col-3">
+        <shared-terms-condition-version-dropdown
+          placeholder="เวอร์ชัน"
+          [(ngModel)]="filter.version"
+          (ngModelChange)="filterChange()"
+          [contentType]="'PDPA'"
+        >
+        </shared-terms-condition-version-dropdown>
+      </div>
+    </div>
+    <div
+      class="col-12"
+      *ngIf="rows && rows?.length === 0"
+    >
+      <pn-data-not-found>
+      </pn-data-not-found>
+    </div>
+    <div
+      [hidden]="rows && rows?.length === 0"
+      class="_g-table-container"
+    >
+      <pn-lib-grid
+        #grid
+        [sort]="{ prop: 'title', asc: true }"
+        [bodyHeight]="'auto'"
+        [dataSub]="dataSub"
+        [rows]="rows"
+        [columns]="columns"
+        [rowHeight]="65"
+        [externalPaging]="true"
+        [(page)]="page"
+        (pageChange)="pageChange()"
+        (sortChange)="sortChange()"
+      ></pn-lib-grid>
+    </div>
+  </div>
+</div>
+
+<ng-template
+  #versionTpl
+  let-value="value"
+  let-row="row"
+>
+  Version {{value}}
+</ng-template>
+
+
+<ng-template
+  #customerTpl
+  let-value="value"
+  let-row="row"
+>
+  <span
+    class="badge"
+    [class.badge-danger]="value === 'vulnerable'"
+    [class.badge-secondary]="value === 'general'"
+  >{{customerEnumText[value]}}</span>
+</ng-template>

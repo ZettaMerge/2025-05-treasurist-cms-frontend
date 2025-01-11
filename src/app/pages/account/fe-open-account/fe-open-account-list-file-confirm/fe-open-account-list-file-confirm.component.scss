@@ -1,0 +1,21 @@
+@import "variables-custom";
+
+._list-file-data {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+  padding-left: 2.5rem;
+  padding-right: 1.5rem;
+}
+
+._disable {
+  color: $muted;
+  pointer-events: none;
+}
+
+._disable-wrapper {
+  color: $muted;
+  cursor: not-allowed;
+}
+

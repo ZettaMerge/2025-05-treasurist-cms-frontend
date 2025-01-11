@@ -1,0 +1,30 @@
+<div class="card-body _modal-wrapper">
+  <span class="text-primary font-medium-3">ยืนยันการลบ{{title ? title : ''}}</span>
+
+  <div class="pt-4">
+    <div class="col-12 px-0">
+      <span>{{message ? message: 'คุณต้องการลบข้อมูลหรือไม่ ?'}}</span>
+    </div>
+    <div class="col-12 d-flex pt-4 px-0">
+      <div class="pr-2">
+        <button
+          type="button"
+          class="btn btn-clear flex-1 _display-btn"
+          (click)="onCancel()"
+        >
+          <span><i class="ic-cross"></i>ยกเลิก</span>
+        </button>
+      </div>
+      <div class="">
+        <button
+          type="submit"
+          class="btn btn-primary flex-1 _display-btn"
+          (click)="onSave($event)"
+        >
+          <span><i class="ic-cross"></i>ยืนยันการลบ</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+

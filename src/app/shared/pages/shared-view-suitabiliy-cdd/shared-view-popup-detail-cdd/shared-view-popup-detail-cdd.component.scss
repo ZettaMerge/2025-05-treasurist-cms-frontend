@@ -1,0 +1,20 @@
+@import "variables-custom";
+
+._modal-footer {
+  min-height: 65px;
+  // border-top: 1px solid #f0f0f0;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+._card-header {
+  padding: 0.75rem 1.5rem;
+  height: calc(40px + 2rem);
+  min-height: calc(40px + 1.5rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(0, 0, 0, 0);
+}

@@ -1,0 +1,123 @@
+<form
+  #form="ngForm"
+  [class.submitted]="form.submitted"
+  (ngSubmit)="onSave(form)"
+>
+  <div id="terms-condition-form">
+    <div class="_g-header">
+      <h1 class="_g-title-header">{{termAndConditionId ? 'แก้ไข' : 'สร้าง'}} ข้อกำหนดการใช้งาน</h1>
+      <div class="_g-header d-flex justify-content-end">
+        <button
+          *ngIf="canCreate"
+          type="submit"
+          class="btn btn-primary  mr-1 mb-1"
+        ><span>บันทึก</span>
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary  mr-1 mb-1"
+          (click)="goBack()"
+        ><span>กลับ</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <div class="_g-header-card ">
+          <span class="_g-text-header-title">รายละเอียด</span>
+        </div>
+        <div class="row">
+          <div class="col-10">
+            <div class="form-group">
+              <label class="col-form-label">ชื่อหัวข้อ</label>
+              <div class="form-input">
+                <input
+                  type="text"
+                  name="title"
+                  class="form-control"
+                  placeholder="โปรดระบุ"
+                  [(ngModel)]="termsCondition.title"
+                  required
+                  [disabled]="canView && !canCreate"
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="form-group">
+              <label class="col-form-label">เวอร์ชัน</label>
+              <div class="form-input">
+                <input
+                  type="text"
+                  name="version"
+                  class="form-control"
+                  [(ngModel)]="'Version ' + termsCondition.version"
+                  required
+                  [disabled]="true"
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-group">
+              <label class="col-form-label">รายละเอียด</label>
+              <div class="form-input">
+                <shared-editor
+                  placeholder="รายละเอียด"
+                  id="description"
+                  name="description"
+                  [class._g-disable]="canView && !canCreate"
+                  [(ngModel)]="termsCondition.detail"
+                  required
+                ></shared-editor>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="d-flex justify-content-between">
+              <pn-toggle
+                class="mb-2"
+                id="status"
+                name="status"
+                [(ngModel)]="termsCondition.isActive"
+                (ngModelChange)="statusChange($event)"
+                [disabled]="canView && !canCreate"
+              >
+                <pn-toggle-right>
+                  <div class="ml-2">
+                    <label class="mb-0 font-size-normal">{{termsCondition.isActive ? 'Active' :'Inactive'}}</label>
+                    <label class="text-primary">&nbsp; {{termsCondition.isActive === true ? message: ''}}</label>
+                  </div>
+                </pn-toggle-right>
+              </pn-toggle>
+
+              <button
+                *ngIf="canCreate"
+                type="button"
+                class="btn btn-clear"
+                (click)="clearData()"
+              >ล้างข้อมูล</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="_g-header d-flex justify-content-end">
+      <button
+        *ngIf="canCreate"
+        type="submit"
+        class="btn btn-primary  mr-1 mb-1"
+      ><span>บันทึก</span>
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary  mr-1 mb-1"
+        (click)="goBack()"
+      ><span>กลับ</span>
+      </button>
+    </div>
+  </div>
+</form>

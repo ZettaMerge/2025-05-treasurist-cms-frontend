@@ -1,0 +1,81 @@
+<!-- <div
+  class="segmented-control-wrapper"
+  *ngIf="!haveIcon"
+>
+  <div class="segmented-control">
+    <input
+      *ngFor="let item of list"
+      type="radio"
+      #{{name}}_{{item.label}}"
+      [name]="name"
+      [value]="item.value"
+      [(ngModel)]="value"
+      (ngModelChange)="onValueChange($event)"
+    >
+
+    <label
+      *ngFor="let item of list"
+      for="{{name}}_{{item.label}}"
+      [attr.data-value]="item.label"
+    >
+      {{item.label}}
+    </label>
+  </div>
+</div>
+
+<div
+  class="segmented-control-wrapper-icon"
+  *ngIf="haveIcon"
+>
+  <div class="segmented-control-icon">
+    <input
+      *ngFor="let item of list"
+      type="radio"
+      #{{name}}_{{item.label}}"
+      [name]="name"
+      [value]="item.value"
+      [(ngModel)]="value"
+      (ngModelChange)="onValueChange($event)"
+    >
+
+    <label
+      *ngFor="let item of list"
+      for="{{name}}_{{item.label}}"
+      [attr.data-value]="item.label"
+    >
+      {{item.label}}
+    </label>
+  </div>
+</div> -->
+
+<div id="segmented-control" class="_segmented-container">
+  <div
+    #bg
+    class="_segmented-background"
+  ></div>
+  <div
+    #content
+    class="_segmented-wrapper-items"
+  >
+    <div
+      *ngFor="let item of list; let index = index"
+      class="_segmented-item"
+    >
+      <input
+        type="radio"
+        id="{{name}}_{{item.label}}"
+        [name]="name"
+        [value]="item.value"
+        [(ngModel)]="value"
+        (ngModelChange)="onValueChange($event)"
+      ><label
+        #l1
+        for="{{name}}_{{item.label}}"
+        (click)="onClick($event, index)"
+        [attr.data-value]="item.label"
+        [class.is-active]="item.value === value"
+      >{{item.label}}</label>
+    </div>
+
+  </div>
+</div>

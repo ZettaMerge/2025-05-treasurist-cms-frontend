@@ -1,0 +1,36 @@
+@import "variables-custom";
+
+._display-risk {
+  display: flex;
+  > span:not(:last-child) {
+    margin-right: 0.5rem;
+  }
+}
+
+._display-general {
+  display: flex;
+}
+
+._acc-redeem {
+  height: 75px;
+  align-items: center;
+}
+
+._list-file-data {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 75px;
+  //padding-right: 1rem;
+}
+
+._container {
+  position:relative;
+  display:block;
+}
+
+._container ._disable {
+  display: none;
+}
+
+

@@ -1,0 +1,182 @@
+<div class="card-body pl-0 pt-0">
+  <div class="row">
+    <div class="col-12 d-flex px-0 py-1">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-3 _g-text-title">
+            <span>อาชีพ</span>
+            <p>{{occupationId || '-'}}</p>
+          </div>
+          <div class="col-3 _g-text-title">
+            <span>อาชีพอื่นๆ</span>
+            <p>{{occupationOther || '-'}}</p>
+          </div>
+          <div class="col-3 _g-text-title">
+            <span>ประเภทธุรกิจ</span>
+            <p>{{businessTypeId || '-'}}</p>
+          </div>
+          <div class="col-3 _g-text-title">
+            <span>ประเภทธุรกิจอื่นๆ</span>
+            <p>{{businessTypeOther || '-'}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--    <div>{{isShowWorkAddress}}: isss</div>-->
+
+    <div class="col-12 d-flex px-0 py-1" *ngIf="isShowWorkAddress">
+      <div class="col-3 _g-text-title">
+        <span>ชื่อที่อยู่ที่ทำงาน</span>
+        <p>{{data?.companyName || '-'}}</p>
+      </div>
+      <div class="col-3 _g-text-title">
+        <span>ตำแหน่งงาน</span>
+        <p>{{data?.workPosition || '-'}}</p>
+      </div>
+    </div>
+    <div id="work-address" *ngIf="isShowWorkAddress">
+      <div class="_g-card-sub-header pl-2">
+        <span class="_g-text-header-sub-title">ที่อยู่ที่ทำงาน</span>
+      </div>
+      <div class="col-12 d-flex px-0 py-1">
+        <div class="col-12">
+          <li class="d-inline-block mr-2 mb-2" *ngIf="isWorkAddressIdCard">
+            <div class="checkbox _g-checkbox-display-none">
+              <input
+                type="checkbox"
+                id="idDocument"
+                name="idDocument"
+                checked
+              >
+              <label for="idDocument"><span>ตามบัตรประชาชน</span></label>
+            </div>
+          </li>
+          <li class="d-inline-block mr-2 mb-2" *ngIf="isWorkCurrentAddress">
+            <div class="checkbox _g-checkbox-display-none">
+              <input
+                type="checkbox"
+                id="Current"
+                name="Current"
+                checked
+              >
+              <label for="Current"><span>ตามที่อยู่ปัจจุบัน</span></label>
+            </div>
+          </li>
+          <li class="d-inline-block mr-2 mb-2" *ngIf="isWorkAddressOther">
+            <div class="checkbox _g-checkbox-display-none">
+              <input
+                type="checkbox"
+                id="other"
+                name="other"
+                checked
+              >
+              <label for="other"><span>อื่นๆ</span></label>
+            </div>
+          </li>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 px-0" *ngIf="isShowWorkAddress">
+      <shared-address
+        *ngIf="isWorkAddressOther"
+        [data]="data?.workAddress">
+      </shared-address>
+    </div>
+
+    <div id="address-send-doc">
+      <div class="_g-card-sub-header pl-2">
+        <span class="_g-text-header-sub-title">ที่อยู่ในการจัดส่งเอกสาร</span>
+      </div>
+    </div>
+    <div class="col-12 d-flex px-0 py-1">
+      <div class="col-12">
+        <li
+          *ngIf="data?.mailAddressFlag === 'IdDocument'"
+          class="d-inline-block mr-2 mb-2">
+          <div class="checkbox _g-checkbox-display-none">
+            <input
+              type="checkbox"
+              id="mail-idCard"
+              name="mail-idCard"
+              checked
+            >
+            <label for="mail-idCard"><span>ตามบัตรประชาชน</span></label>
+          </div>
+        </li>
+        <li
+          *ngIf="data?.mailAddressFlag === 'Current'"
+          class="d-inline-block mr-2 mb-2">
+          <div class="checkbox _g-checkbox-display-none">
+            <input
+              type="checkbox"
+              id="mail-current"
+              name="mail-current"
+              checked
+            >
+            <label for="mail-current"><span>ตามที่อยู่ปัจจุบัน</span></label>
+          </div>
+        </li>
+        <li
+          *ngIf="data?.mailAddressFlag === 'Work'"
+          class="d-inline-block mr-2 mb-2">
+          <div class="checkbox _g-checkbox-display-none">
+            <input
+              type="checkbox"
+              id="mail-work"
+              name="mail-work"
+              checked
+            >
+            <label for="mail-work"><span>ตามที่อยู่ที่ทำงาน</span></label>
+          </div>
+        </li>
+        <li
+          *ngIf="data?.mailAddressFlag === null"
+          class="d-inline-block mr-2 mb-2">
+          <div class="checkbox _g-checkbox-display-none">
+            <input
+              type="checkbox"
+              id="mail-other"
+              name="mail-other"
+              checked
+            >
+            <label for="mail-other"><span>อื่นๆ</span></label>
+          </div>
+        </li>
+
+      </div>
+    </div>
+
+    <div class="col-12 px-0">
+      <shared-address
+        *ngIf="data?.mailAddressFlag === null"
+        [data]="data?.mailingAddress">
+      </shared-address>
+    </div>
+
+    <div id="get-doc col-12">
+      <div class="_g-card-sub-header pl-2">
+        <span class="_g-text-header-sub-title">วิธีการรับเอกสาร</span>
+      </div>
+      <div class="col-12 d-flex px-0 py-1">
+        <div class="col-12">
+          <li class="d-inline-block mr-2 mb-2">
+            <div class="checkbox _g-checkbox-display-none">
+              <input
+                type="checkbox"
+                id="get-mail"
+                name="get-mail"
+                checked
+              >
+              <label
+                for="get-mail"
+                *ngIf="data?.mailMethod === 'Email'"
+              ><span>ตามอีเมล</span></label>
+            </div>
+          </li>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

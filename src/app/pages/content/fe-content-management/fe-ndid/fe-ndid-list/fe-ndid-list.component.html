@@ -1,0 +1,91 @@
+<div>
+  <div class="_g-pager-with-tab d-flex justify-content-between">
+    <div class="col-6 pl-0">
+      <pn-grid-per-page
+        [page]="page"
+        (setPerPage)="grid.setPerPage($event)"
+      ></pn-grid-per-page>
+    </div>
+    <div class="col-6 d-flex justify-content-end">
+      <button
+        *ngIf="canCreate"
+        type="button"
+        class="btn btn-primary"
+        (click)="add()"
+      >สร้างรายการใหม่
+      </button>
+    </div>
+  </div>
+  <div
+    class="col-12"
+    *ngIf="rows && rows.length === 0"
+  >
+    <pn-data-not-found>
+    </pn-data-not-found>
+  </div>
+  <div
+    [hidden]="rows && rows.length === 0"
+    class="_g-table-container"
+  >
+    <pn-lib-grid
+      #grid
+      [bodyHeight]="'auto'"
+      [dataSub]="dataSub"
+      [rows]="rows"
+      [columns]="columns"
+      [rowHeight]="65"
+      [externalPaging]="true"
+      [(page)]="page"
+      (pageChange)="pageChange()"
+      (sortChange)="sortChange()"
+      (edit)="edit($event)"
+    ></pn-lib-grid>
+  </div>
+</div>
+
+<ng-template
+  #statusTpl
+  let-value="value"
+  let-row="row"
+>
+  <span
+    class="badge"
+    [class.badge-success]="value === true"
+    [class.badge-secondary]="value !== true"
+  >{{value === true ? 'Active': 'Inactive'}}</span>
+</ng-template>
+
+<ng-template
+  #versionTpl
+  let-value="value"
+>
+  Version {{value}}
+</ng-template>
+
+<ng-template
+  #actionEditTpl
+  let-row="row"
+  let-value="value"
+>
+  <div
+    *ngIf="value"
+    class="d-flex justify-content-around align-items-center"
+  >
+    <a *ngIf="canCreate && canView || canCreate && !canView"
+       ngbTooltip="แก้ไข"
+       container="body"
+       class="_action-btn _edit-btn"
+       (click)="edit(row)"
+    >
+      <i class="ic ic-note-edit"></i>
+    </a>
+    <a *ngIf="!canCreate && canView"
+       ngbTooltip="แก้ไข"
+       container="body"
+       class="_action-btn _edit-btn"
+       (click)="edit(row)"
+    >
+      <i class="ic ic-eye-circle"></i>
+    </a>
+  </div>
+</ng-template>

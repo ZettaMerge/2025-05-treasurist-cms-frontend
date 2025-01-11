@@ -1,0 +1,258 @@
+<div id="account-ats-list">
+  <div class="_g-header">
+    <h1 class="_g-title-header">Account/ATS Approval</h1>
+  </div>
+
+  <!--  FILTER-->
+  <div class="card">
+    <div class="card-body">
+      <div class="row _account-ats-filter">
+        <div class="col-xl-8 col-lg-8 col-md-7">
+          <div class="form-group">
+            <label class="col-form-label">ค้นหา</label>
+            <div class="form-input">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="ชื่อลูกค้า, ID Card, Account ID, อีเมล หรือ เบอร์โทรศัพท์"
+                [(ngModel)]="filter.search"
+                (ngModelChange)="searchTextChange($event)"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-5">
+          <div class="form-group _form">
+            <label class="col-form-label">ประเภทลูกค้า</label>
+            <pn-segmented-control
+              name="customerType"
+              [list]="typeCustomerlists"
+              [(ngModel)]="customerType"
+              (ngModelChange)="filterChange()"
+            >
+            </pn-segmented-control>
+          </div>
+        </div>
+
+        <div class="col-xl-12 col-lg-12 col-md-12 _display-filter">
+          <div class="col-xl-6 col-lg-6 col-md-12 px-0">
+            <div class="row">
+              <div class="col-7">
+                <div class="form-group">
+                  <label class="col-form-label">ช่วงวันที่ทำรายการ</label>
+                  <pn-date-range-picker
+                    placeholder="dd/mm/yyyy - dd/mm/yyyy"
+                    [(ngModel)]="filter.dateRange"
+                    (ngModelChange)="filterChange()"
+                  >
+                  </pn-date-range-picker>
+                </div>
+              </div>
+              <div class="col-5">
+                <div class="form-group">
+                  <label class="col-form-label">IC License</label>
+                  <shared-ic-license-dropdown
+                    placeholder="ทั้งหมด"
+                    [(ngModel)]="filter.icLicense"
+                    (ngModelChange)="filterChange()"
+                  >
+                  </shared-ic-license-dropdown>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-6 col-lg-7 col-md-12">
+            <div class="row">
+              <div class="col-12 d-flex">
+                <div class="form-group _form">
+                  <label class="col-form-label">สถานะการ Approval</label>
+                  <pn-segmented-control
+                    name="statusApproval"
+                    [list]="statusApprovalList"
+                    [(ngModel)]="statusApproval"
+                    (ngModelChange)="filterChange()"
+                  >
+                  </pn-segmented-control>
+                </div>
+
+                <div class="d-flex align-items-center">
+                  <div class="_btn-clear">
+                    <button
+                      type="button"
+                      class="btn btn-clear btn-lg mt-3"
+                      (click)="clearFilter()"
+                    >
+                      ล้าง
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--  LIST-->
+  <div class="card">
+    <div class="card-body">
+      <div class="col-12" *ngIf="rows && rows?.length === 0">
+        <pn-data-not-found
+          [isShowAddButton]="false"
+          (clearFilter)="clearFilter()"
+        >
+        </pn-data-not-found>
+      </div>
+      <div [hidden]="rows && rows?.length === 0">
+        <div>
+          <pn-grid-per-page
+            [page]="page"
+            (setPerPage)="grid.setPerPage($event)"
+          ></pn-grid-per-page>
+        </div>
+        <div class="_g-table-container">
+          <pn-lib-grid
+            #grid
+            [sort]="{ prop: 'fcnAccountId', asc: false }"
+            [bodyHeight]="'auto'"
+            [dataSub]="dataSub"
+            [rows]="rows"
+            [columns]="columns"
+            [rowHeight]="65"
+            [externalPaging]="true"
+            [(page)]="page"
+            (pageChange)="pageChange()"
+            (sortChange)="onSortChange($event)"
+            (edit)="edit($event)"
+            (delete)="delete($event)"
+            (detailInfo)="detailInfo($event)"
+          ></pn-lib-grid>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Template-->
+<ng-template #nameTpl let-value="value" let-row="row">
+  <shared-datatable-with-name
+    [id]="row.fcnAccountId"
+    [firstName]="row.thFirstname"
+    [lastName]="row.thLastname"
+  >
+  </shared-datatable-with-name>
+</ng-template>
+
+<ng-template #phoneTpl let-value="value" let-row="row">
+  <shared-datatable-with-name [id]="row.mobileNumber" [firstName]="row.email">
+  </shared-datatable-with-name>
+</ng-template>
+
+<ng-template #accountType let-value="value" let-row="row">
+  <span>{{ row.accountType === "Individual" ? "General" : "Juristic" }} </span>
+  <p class="mb-0">{{ row.applicationDate | aDate }}</p>
+  <!--  <span>{{row.accountType}} - {{row.applicationDate | aDate}}</span>&nbsp;-->
+  <!--  <p class="m-0 text-muted">Referal Code: </p>-->
+</ng-template>
+
+<ng-template #accountTpl let-value="value" let-row="row">
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="_text-width">
+      <span
+        class="badge"
+        [class.badge-info]="value === 'Approved'"
+        [class.badge-warning]="value === 'Pending'"
+        >{{ value === "Approved" ? "APPROVED" : "PENDING" }}</span
+      >
+    </div>
+    <div class="d-flex">
+      <a
+        ngbTooltip="รายละเอียด"
+        container="body"
+        class="_action-btn _detail-btn"
+        (click)="accountDetail(row)"
+      >
+        <i class="ic ic-eye-circle"></i>
+      </a>
+      <div [ngClass]="{ '_disable-note-wrapper': value }">
+        <span
+          ngbTooltip="Note/Comment"
+          container="body"
+          class="_action-btn _detail-btn cursor-pointer"
+          [ngClass]="{ 'text-muted _disable-note': value === true }"
+          (click)="goToRejectDetail($event, row)"
+          ><i class="ft ft-file-text"></i
+        ></span>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #icLicenseTpl let-value="value" let-row="row">
+  <shared-datatable-with-name [id]="row.icLicense" [firstName]="row.updatedBy">
+  </shared-datatable-with-name>
+</ng-template>
+
+<ng-template #bankAccountTpl let-value="value" let-row="row">
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="_text-width">
+      <span
+        class="badge"
+        [class.badge-info]="value === true"
+        [class.badge-warning]="value !== true"
+        >{{ value === true ? "APPROVED" : "PENDING" }}</span
+      >
+    </div>
+    <div class="d-flex">
+      <a
+        ngbTooltip="รายละเอียด"
+        container="body"
+        class="_action-btn _detail-btn"
+        (click)="accountDetail(row)"
+      >
+        <i class="ic ic-eye-circle"></i>
+      </a>
+      <div [ngClass]="{ '_disable-note-wrapper': value }">
+        <span
+          ngbTooltip="Note/Comment"
+          container="body"
+          class="_action-btn _detail-btn cursor-pointer"
+          [ngClass]="{ 'text-muted _disable-note': value === true }"
+          (click)="goToRejectDetail($event, row)"
+          ><i class="ft ft-file-text"></i
+        ></span>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<lib-modal #rejectDetailModal modalSize="lg" [showHeader]="false">
+  <fe-reject-detail
+    *ngIf="rejectDetailModal.isOpen"
+    [accountId]="accountId"
+    (cancel)="rejectDetailModal.close()"
+  >
+  </fe-reject-detail>
+</lib-modal>
+
+<!--<ng-template-->
+<!--  #customerType-->
+<!--  let-value="value"-->
+<!--  let-row="row"-->
+<!--&gt;-->
+<!-- <span class="m-0 badge"-->
+<!--       [class.badge-secondary]="value === false"-->
+<!--       [class.badge-danger]="value !== false"-->
+<!-- >{{value === false ? 'General' : 'Vulnerable'}}</span>-->
+
+<!--</ng-template>-->
+
+<!--<ng-template-->
+<!--  #dateTpl-->
+<!--  let-value="value"-->
+<!--  let-row="row"-->
+<!--&gt;-->
+<!--  <span class="m-0">{{value | date: 'dd/MM/yyyy' }}</span>-->
+<!--</ng-template>-->

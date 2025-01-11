@@ -1,0 +1,569 @@
+$ngx-datatable-table-shadow: none !default;
+// $ngx-datatable-table-border: 1px solid $border !default;
+$ngx-datatable-table-border: 0px !default;
+$ngx-datatable-table-row-border: 1px solid $border !default;
+// $ngx-datatable-table-cell-border: 1px solid $border !default;
+$ngx-datatable-table-cell-border: 0px !default;
+
+$ngx-datatable-color: #000000 !default;
+$ngx-datatable-font-size: $size-normal !default;
+
+$ngx-datatable-row-background-color: #ffffff !default;
+$ngx-datatable-row-hover-background-color: #efefef !default;
+$ngx-datatable-striped-row-even-background-color: #f2f2f2 !default;
+$ngx-datatable-striped-row-even-hover-background-color: #efefef !default;
+$ngx-datatable-row-detail-background-color: #efefef !default;
+
+$ngx-datatable-table-head-cell-align: center !default;
+$ngx-datatable-table-head-cell-color: $text-primary !default;
+$ngx-datatable-table-head-cell-background-color: #fff !default;
+$ngx-datatable-table-head-cell-font-size: $size-normal !default;
+$ngx-datatable-table-head-cell-font-weight: $weight-semibold !default;
+
+$ngx-datatable-header-filter-wrapper-height: 3.6rem * 1.5 !default;
+$ngx-datatable-header-filter-wrapper-background-color: #f2f2f2 !default;
+$ngx-datatable-header-filter-height: 3.6rem !default;
+$ngx-datatable-header-filter-radius: 0 !default;
+$ngx-datatable-header-filter-border-color: #efefef !default;
+
+$ngx-datatable-foot-background-color: #f2f2f2 !default;
+$ngx-datatable-pager-color: #db9800 !default;
+$ngx-datatable-pager-background-color: #fff !default;
+
+$ngx-datatable-selection-background-color: #f5f6f8 !default;
+$ngx-datatable-selection-color: #ffffff !default;
+
+$ngx-datatable-summary-row-color: #666666 !default;
+$ngx-datatable-summary-row-background-color: #ffffff !default;
+
+.ngx-datatable.material {
+  box-shadow: $ngx-datatable-table-shadow;
+  border: $ngx-datatable-table-border;
+  background-color: $ngx-datatable-row-background-color;
+  width: 100%;
+
+  .visible {
+    height: 100%;
+  }
+
+  &:not(.cell-selection) .datatable-body-row:hover,
+  &:not(.cell-selection) .datatable-body-row:hover .datatable-row-group {
+    background-color: $ngx-datatable-row-hover-background-color;
+  }
+
+  &.striped {
+    .datatable-row-odd {
+      background-color: $ngx-datatable-striped-row-even-background-color;
+    }
+
+    &:not(.cell-selection) .datatable-body-row:hover,
+    &:not(.cell-selection) .datatable-body-row:hover .datatable-row-group {
+      .datatable-row-odd {
+        background-color: $ngx-datatable-striped-row-even-hover-background-color;
+      }
+    }
+  }
+
+  // selectable cursor
+  .selectable:not(.checkbox-selection) {
+    .datatable-body-row {
+      cursor: pointer;
+    }
+  }
+
+  // better ngx-datatable's sort arrow
+  .sortable {
+    .sort-btn {
+      color: $ngx-datatable-table-head-cell-color;
+      //font-weight: bold;
+      &:after {
+        // font-family: data-table;
+        // content: "c";
+        content: "\e920";
+        font-family: "icomoon" !important;
+        color: $primary;
+      }
+
+      &.datatable-icon-down:after,
+      &.datatable-icon-up:after {
+        content: "";
+      }
+      &.datatable-icon-down:before {
+        content: "\e91f";
+        font-family: "icomoon" !important;
+        color: $primary;
+      }
+      &.datatable-icon-up:before {
+        content: "\e921";
+        font-family: "icomoon" !important;
+        color: $primary;
+      }
+
+    }
+  }
+
+  // hide ngx-datatable's sort arrow
+  .datatable-header-cell-template-wrap {
+    > .sort-btn {
+      display: none !important;
+    }
+  }
+
+  // make sortable header clickable full area
+  .datatable-header-cell {
+    &.sortable {
+      .datatable-header-cell-template-wrap-custom-head {
+        cursor: pointer;
+      }
+
+      .group-header-cell-template {
+        .datatable-header-cell-template-wrap-custom-head {
+          cursor: auto;
+        }
+      }
+    }
+
+    .datatable-header-cell-wrapper {
+      cursor: auto;
+    }
+  }
+
+  // fix line-height
+  .datatable-body-cell,
+  .datatable-header-cell,
+  .datatable-header .datatable-header-cell .sort-btn {
+    line-height: 1.5;
+  }
+
+  // summary row
+  .datatable-summary-row .datatable-body-row {
+    color: $ngx-datatable-summary-row-color;
+    background-color: $ngx-datatable-summary-row-background-color;
+  }
+
+  // new style header
+  .datatable-header {
+    .datatable-header-inner {
+      height: 100%;
+    }
+
+    .datatable-header-cell {
+      font-weight: bold;
+      height: 100%;
+      // border-right: $ngx-datatable-table-cell-border;
+      border-right: 0px;
+      padding: 0;
+      overflow-x: visible;
+
+      &:first-of-type {
+        .datatable-header-cell-template-wrap {
+          .datatable-header-cell-template-wrap-custom-head {
+            padding-left: 1.5rem;
+          }
+        }
+      }
+
+      &:last-of-type {
+        .datatable-header-cell-template-wrap {
+          .datatable-header-cell-template-wrap-custom-head {
+            padding-right: 1.5rem;
+          }
+        }
+      }
+
+      &:last-child {
+        border-right: 0;
+      }
+
+      .datatable-header-cell-template-wrap {
+        text-align: $ngx-datatable-table-head-cell-align;
+        background-color: white !important;
+      }
+
+      .datatable-header-cell-wrapper {
+        .datatable-header-cell-label {
+          display: block;
+          white-space: pre-wrap;
+          color: $ngx-datatable-table-head-cell-color;
+          font-size: $ngx-datatable-table-head-cell-font-size;
+          font-weight: $ngx-datatable-table-head-cell-font-weight;
+          // text-align: left;
+        }
+      }
+
+      // @each $name, $pair in $colors {
+      //   $color: nth($pair, 1);
+      //   $color-invert: nth($pair, 2);
+      //   &.is-#{$name} {
+      //     .datatable-header-cell-template-wrap-custom-head {
+      //       background-color: $color;
+      //       color: $color-invert;
+      //     }
+      //   }
+      // }
+      &:not(.text-center) {
+        .datatable-header-cell-wrapper {
+          .datatable-header-cell-label {
+            text-align: left;
+          }
+        }
+      }
+    }
+
+    // header checkbox
+    .datatable-header-cell {
+      background-color: #f5f6f8;
+    }
+
+    .datatable-header-cell-template-wrap-custom {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+
+      // header filter
+      > .control {
+        height: $ngx-datatable-header-filter-wrapper-height;
+        padding: 0.85rem / 2;
+        background-color: $ngx-datatable-header-filter-wrapper-background-color;
+
+        .input,
+        .select select {
+          height: $ngx-datatable-header-filter-height;
+          border-radius: $ngx-datatable-header-filter-radius;
+          border-color: $ngx-datatable-header-filter-border-color;
+        }
+
+        .icon {
+          height: $ngx-datatable-header-filter-height;
+        }
+      }
+    }
+
+    .datatable-header-cell-template-wrap-custom-head {
+      background-color: $ngx-datatable-table-head-cell-background-color;
+      display: flex;
+      flex: auto;
+      padding: 0.5em 1em;
+      align-items: center;
+
+      &.group-header-cell-template {
+        flex-grow: 0;
+        padding: 0.5em 0;
+        border-bottom: $ngx-datatable-table-cell-border;
+      }
+
+      .datatable-header-cell-wrapper {
+        margin-right: 0.25rem;
+      }
+    }
+  }
+
+  // new style body
+  .datatable-body {
+    // height: calc(100% - 105px) !important;
+    .datatable-body-row {
+      border-bottom: $ngx-datatable-table-row-border;
+
+      .datatable-body-cell {
+        color: $ngx-datatable-color;
+        font-size: $ngx-datatable-font-size;
+        font-weight: inherit;
+        padding: 0.25em 1em;
+        border-right: $ngx-datatable-table-cell-border;
+        display: flex;
+        align-items: center;
+
+        &:first-of-type {
+          padding-left: 1.5rem;
+        }
+
+        &:last-of-type {
+          padding-right: 1.5rem;
+        }
+
+        &:last-child {
+          border-right: 0;
+        }
+
+        .datatable-body-cell-label * {
+          font-family: $font-secondary;
+        }
+
+        .input-group-inline,
+        .input-inline {
+          margin-top: -0.5rem;
+        }
+
+        // .datatable-checkbox input[type="checkbox"]:before {
+        //   transition: all 0.3s ease-in-out;
+        //   content: "";
+        //   position: absolute;
+        //   left: 0;
+        //   z-index: 1;
+        //   width: 1rem;
+        //   height: 1rem;
+        //   border: 2px solid #009688;
+        // }
+        ._action-btn {
+          opacity: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-left: 0.75rem;
+
+          &._edit-btn {
+            font-size: large;
+
+            .ic {
+              color: $primary;
+            }
+          }
+
+          &._delete-btn {
+            font-size: large;
+
+            .ic {
+              color: $primary;
+            }
+          }
+
+          &._detail-btn {
+            font-size: large;
+
+            .ic {
+              color: $primary;
+            }
+          }
+
+          &:hover {
+            opacity: 0.5;
+          }
+        }
+      }
+
+      // @include bg-color;
+    }
+
+    .datatable-row-detail {
+      background: $ngx-datatable-row-detail-background-color;
+    }
+  }
+
+  // new style footer
+
+  .datatable-footer {
+    // background-color: $ngx-datatable-foot-background-color !important;
+    border-top: 0;
+
+    .page-count {
+      flex: initial;
+      padding: 0;
+      padding-left: 1.5rem;
+      height: auto;
+      line-height: 1;
+    }
+
+    .datatable-pager {
+      min-width: 190px;
+      flex: 1;
+      margin-left: 0;
+      margin-right: 1rem;
+
+      a:hover {
+        background-color: $ngx-datatable-pager-color;
+        color: $ngx-datatable-pager-background-color;
+      }
+    }
+
+    .datatable-pager li.active a {
+      background-color: $ngx-datatable-pager-color;
+      color: $ngx-datatable-pager-background-color;
+      font-weight: $weight-normal;
+    }
+
+    .pager {
+      li {
+        &:first-child,
+        &:last-child {
+          font-size: 1.65rem;
+        }
+        a {
+          font-family: $font-secondary;
+          padding: 0;
+          margin: 6px 1px;
+          width: 25px;
+          height: 25px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          line-height: 27px;
+          border-radius: 4px;
+        }
+      }
+      //li {
+      //  &:first-child,
+      //  &:last-child {
+      //    display: none;
+      //  }
+      //
+      //  &:not(.pages) {
+      //    a {
+      //      background-color: #f3f6f9;
+      //
+      //      i {
+      //        line-height: 25px;
+      //        width: 25px;
+      //        height: 23px;
+      //        padding: 0;
+      //        display: flex;
+      //        align-items: center;
+      //        justify-content: center;
+      //        color: #7e8299;
+      //        font-size: $size-xsmall;
+      //      }
+      //
+      //      &:hover {
+      //        background-color: $ngx-datatable-pager-color;
+      //
+      //        i {
+      //          color: $ngx-datatable-pager-background-color;
+      //        }
+      //      }
+      //    }
+      //  }
+      //
+      //  &.disabled:not(.pages) {
+      //    a {
+      //      margin-right: 4px;
+      //      margin-left: 4px;
+      //      background-color: #f3f6f9 !important;
+      //      opacity: 0.6;
+      //
+      //      &:hover {
+      //        i {
+      //          color: #7e8299;
+      //        }
+      //      }
+      //    }
+      //  }
+      //
+      //  a {
+      //    font-family: $font-secondary;
+      //    padding: 0;
+      //    margin: 6px 1px;
+      //    width: 25px;
+      //    height: 25px;
+      //    display: flex;
+      //    align-items: center;
+      //    justify-content: center;
+      //    line-height: 27px;
+      //    border-radius: 4px;
+      //    // border: 1px solid transparent;
+      //  }
+      //}
+    }
+  }
+}
+
+// allow selection
+.ngx-datatable .datatable-body-cell,
+.ngx-datatable .datatable-header-cell {
+  -webkit-user-select: initial !important;
+  -moz-user-select: initial !important;
+  -ms-user-select: initial !important;
+  -o-user-select: initial !important;
+  user-select: initial !important;
+}
+
+// row/cell selection
+.ngx-datatable.material.selectable:not(.cell-selection) .datatable-body-row.active,
+.ngx-datatable.material.selectable:not(.cell-selection) .datatable-body-row.active:hover,
+.ngx-datatable.material.selectable:not(.cell-selection) .datatable-body-row.active .datatable-row-group,
+.ngx-datatable.material.selectable:not(.cell-selection) .datatable-body-row.active:hover .datatable-row-group,
+.ngx-datatable.material.cell-selection .datatable-body-cell.active,
+.ngx-datatable.material.cell-selection .datatable-body-cell.active:hover,
+.ngx-datatable.material.cell-selection .datatable-body-cell.active:focus,
+.ngx-datatable.material.cell-selection .datatable-body-cell.active .datatable-row-group,
+.ngx-datatable.material.cell-selection .datatable-body-cell.active:hover .datatable-row-group,
+.ngx-datatable.material.cell-selection .datatable-body-cell.active:focus .datatable-row-group {
+  // background-color: $ngx-datatable-selection-background-color;
+  .datatable-body-cell-label,
+  .ic {
+    //color: $ngx-datatable-selection-color;
+  }
+}
+
+// fix loading position
+.ngx-datatable.material .datatable-body .progress-linear {
+  position: relative;
+}
+
+.ngx-datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: #FFFFFF !important;
+}
+
+// ngx-datatable.ngx-datatable {
+//   .datatable-header {
+//     .datatable-header-inner {
+//       .datatable-row-center {
+//         .datatable-header-cell {
+//           &.sortable {
+//             .datatable-header-cell-template-wrap {
+//               display: flex;
+//               align-items: center;
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+
+// ._g-grid-class-400 {
+//   height: 400px;
+// }
+
+.datatable-per-page {
+  display: flex;
+  align-items: center;
+  font-size: $size-small;
+
+  ng-select.ng-select.ng-select-single {
+    min-width: 7rem;
+    width: 7rem;
+    margin: 0 0.5rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .ngx-datatable.material {
+    .datatable-footer {
+      .datatable-footer-inner {
+        display: flex;
+        height: 80px !important;
+        flex-direction: column;
+
+        .page-count {
+          padding: 0;
+          margin-top: 0.25rem;
+          display: flex;
+          align-items: center;
+          height: 25px;
+        }
+
+        .datatable-pager {
+          flex: inherit;
+          margin: 0;
+          margin-top: 0.25rem;
+        }
+      }
+
+      .datatable-pager {
+        text-align: center;
+      }
+    }
+  }
+}

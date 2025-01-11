@@ -1,0 +1,34 @@
+<div class="d-flex align-items-center">
+  <div class="_feature-news"
+  >
+    <img
+      *ngIf="pinned"
+      ngbTooltip="{{'Feature News'}}"
+      container="body"
+      class="_bookmark-img" src="assets/img/bookmark.png">
+  </div>
+  <img
+    class="_img"
+    [ngClass]="{'_img-square': isSquare === true }"
+    [src]="imageUrl"
+    imageFallback
+  />
+  <div class="align-items-center _g-data-table-2-line">
+    <div class="_detail">
+      <a
+        ngbTooltip="{{nameTh}}"
+        container="body"
+        class="m-0 _name"
+        (click)="onNameClick()"
+      >{{nameTh}}</a>
+    </div>
+    <!--    <p-->
+    <!--      *ngIf="category"-->
+    <!--      class="m-0 text-muted font-size-small"-->
+    <!--    >{{category}}</p>-->
+    <!--    <p-->
+    <!--      *ngIf="!category"-->
+    <!--      class="m-0 text-muted font-size-small"-->
+    <!--    >-</p>-->
+  </div>
+</div>

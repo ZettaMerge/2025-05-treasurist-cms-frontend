@@ -1,0 +1,62 @@
+<form
+  #form="ngForm"
+  [class.submitted]="form.submitted"
+  (ngSubmit)="onSave(form)"
+>
+  <div id="information-form">
+    <div class="_g-header">
+      <h1 class="_g-title-header">{{canCreate ? 'แก้ไข ': ''}}FAQs</h1>
+      <div class="_g-header justify-content-end d-flex">
+        <button *ngIf="canCreate"
+          type="submit"
+          class="btn btn-primary  _g-space-btn"
+        ><span>บันทึก</span>
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary "
+          (click)="goBack()"
+        ><span>กลับ</span>
+        </button>
+      </div>
+
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <label class="col-form-label">รายละเอียด</label>
+              <div class="form-input">
+                <shared-editor
+                  placeholder="รายละเอียด"
+                  id="description"
+                  name="description"
+                  [class._g-disable]="canView && !canCreate"
+                  [(ngModel)]="faqData.detail"
+                  required
+                ></shared-editor>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="_g-header justify-content-end d-flex pt-2">
+      <button *ngIf="canCreate"
+        type="submit"
+        class="btn btn-primary  _g-space-btn"
+      ><span>บันทึก</span>
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="goBack()"
+      ><span>กลับ</span>
+      </button>
+    </div>
+  </div>
+
+</form>
+

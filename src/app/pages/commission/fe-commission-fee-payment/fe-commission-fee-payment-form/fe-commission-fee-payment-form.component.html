@@ -1,0 +1,428 @@
+<form
+  #form="ngForm"
+  [class.submitted]="form.submitted"
+  (ngSubmit)="onSave(form)"
+>
+  <div id="payment-form">
+    <div class="_g-header justify-content-between">
+      <h1 class="_g-title-header">{{paymentId ? 'รายละเอียดรอบการจ่าย Commission' : 'สร้างรอบการจ่าย Commission'}}</h1>
+      <div *ngIf="paymentData?.status !== 'published'" class="_g-header justify-content-end">
+        <button
+          type="button"
+          class="btn btn-clear _g-space-btn mb-1"
+          (click)="onSaveDraft()"
+        ><span>Save Draft</span>
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary  _g-space-btn mb-1"
+        ><span>Publish</span>
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary  mb-1"
+          (click)="goBack()"
+        ><span>กลับ</span>
+        </button>
+      </div>
+      <div *ngIf="paymentData?.status === 'published'" class="_g-header justify-content-end">
+        <button
+          type="button"
+          class="btn btn-secondary  mb-1"
+          (click)="goBack()"
+        ><span>กลับ</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="card _g-card-content-tab">
+      <div class="card-body">
+        <div class="_g-header-card d-flex justify-content-between">
+          <span class="_g-text-header-title">ข้อมูลทั่วไป</span>
+          <span class="badge" *ngIf="paymentData?.status !== 'undefined'"
+                [class.badge-success]="paymentData?.status === 'published'"
+                [class.badge-dark]="paymentData?.status === 'draft'"
+          >{{paymentData?.status === 'draft' ? 'DRAFT' : paymentData?.status === 'published' ? 'PUBLISHED' : ''}}</span>
+        </div>
+
+        <div class="row">
+          <div class="col-4">
+            <div class="form-group">
+              <label class="col-form-label is-required">Payment Date</label>
+              <div class="form-input">
+                <pn-date-picker
+                  placeholder="dd/mm/yyyy"
+                  id="date"
+                  name="date"
+                  [class._valid-form]="isInvalidPaymentDate"
+                  [(ngModel)]="paymentData.paymentDate"
+                  (ngModelChange)="onDataChange($event, 'date')"
+                  [disabled]="paymentData.status === 'published'"
+                  required
+                >
+                </pn-date-picker>
+              </div>
+            </div>
+            <error-message-control
+              class="text-bold-500"
+              *ngIf="isInvalidPaymentDate"
+              [text]="'โปรดระบุข้อมูลให้ครบถ้วน'">
+            </error-message-control>
+          </div>
+          <div class="col-8">
+            <div class="form-group">
+              <label class="col-form-label is-required">Description</label>
+              <div class="form-input">
+                <input
+                  type="description"
+                  name="description"
+                  class="form-control"
+                  placeholder="โปรดระบุ"
+                  [class._valid-form]="isInvalidDescription"
+                  [disabled]="paymentData.status === 'published'"
+                  [(ngModel)]="paymentData.description"
+                  (ngModelChange)="onDataChange($event, 'description')"
+                  required
+                >
+              </div>
+            </div>
+            <error-message-control
+              class="text-bold-500"
+              *ngIf="isInvalidDescription"
+              [text]="'โปรดระบุข้อมูลให้ครบถ้วน'">
+            </error-message-control>
+          </div>
+        </div>
+        <hr class="my-3">
+
+        <div id="upload-form">
+          <div class="_g-header-card ">
+            <span class="_g-text-header-title">อัปโหลดไฟล์</span>
+          </div>
+          <div class="row">
+            <div class="col-6 d-flex px-0">
+              <div class="col-6 ">
+                <div class="form-group">
+                  <label class="col-form-label is-required">Front-End Fee</label>
+                  <div class="form-input">
+                    <div class="align-items-center d-flex justify-content-center"
+                         [class._upload-file]="paymentData?.status !== 'published'"
+                         [class._upload-file-disabled-publish]="paymentData?.status === 'published'"
+                    >
+                      <label
+                        for="file-upload-front-End"
+                        class="pt-1 _cursor-hover"
+                      ><i class="ft ft-download"></i>เลือกไฟล์ใหม่</label>
+                      <input
+                        #fileInput
+                        id="file-upload-front-End"
+                        type="file"
+                        class="file-input _cursor-hover"
+                        (change)="onChangeFileFrontEnd($event); onCheckFile()"
+                        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                      />
+                    </div>
+                  </div>
+                  <error-message-control
+                    *ngIf="isErrorFrontEnd"
+                    [text]="'ประเภทไฟล์ไม่ถูกต้อง ต้องเป็น .xlsx เท่านั้น'"
+                  >
+                  </error-message-control>
+                  <error-message-control
+                    *ngIf="isValidImportFrontEnd"
+                    [text]="'ยังไม่ได้เลือกไฟล์ กรุณาเลือกไฟล์'"
+                  >
+                  </error-message-control>
+                  <div
+                    class="pt-1"
+                    *ngIf="!isErrorFrontEnd && !isValidImportFrontEnd"
+                  >
+                    <span
+                      [ngClass]="{'_text-muted': !fileFrontEndCoverPreview}">{{ fileFrontEndCoverPreview ? fileFrontEndCoverPreview : 'ยังไม่ได้เลือกไฟล์' }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label class="col-form-label is-required">Trailing Fee</label>
+                  <div class="form-input">
+                    <div class="align-items-center d-flex justify-content-center"
+                         [class._upload-file]="paymentData?.status !== 'published'"
+                         [class._upload-file-disabled-publish]="paymentData?.status === 'published'"
+                    >
+                      <label
+                        for="file-upload-trailing"
+                        class="pt-1 _cursor-hover"
+                      ><i class="ft ft-download"></i>เลือกไฟล์ใหม่</label>
+                      <input
+                        #fileInput
+                        id="file-upload-trailing"
+                        type="file"
+                        class="file-input _cursor-hover"
+                        (change)="onChangeFileTrailing($event); onCheckFile()"
+                        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                      />
+                    </div>
+                  </div>
+                  <error-message-control
+                    *ngIf="isErrorTrailing"
+                    [text]="'ประเภทไฟล์ไม่ถูกต้อง ต้องเป็น .xlsx เท่านั้น'"
+                  >
+                  </error-message-control>
+                  <error-message-control
+                    *ngIf="isValidImportTrailing"
+                    [text]="'ยังไม่ได้เลือกไฟล์ กรุณาเลือกไฟล์'"
+                  >
+                  </error-message-control>
+                  <div
+                    class="pt-1"
+                    *ngIf="!isErrorTrailing && !isValidImportTrailing"
+                  >
+                    <span
+                      [ngClass]="{'_text-muted': !fileTrailingCoverPreview}">{{ fileTrailingCoverPreview && fileTrailingCoverPreview !== null ? fileTrailingCoverPreview : 'ยังไม่ได้เลือกไฟล์' }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 d-flex px-0">
+              <div class="col-6">
+                <div class="form-group">
+                  <label class="col-form-label">Promotion Fee</label>
+                  <div class="form-input">
+                    <div class="align-items-center d-flex justify-content-center"
+                         [class._upload-file]="paymentData?.status !== 'published'"
+                         [class._upload-file-disabled-publish]="paymentData?.status === 'published'"
+                    >
+                      <label
+                        for="file-upload-promotion"
+                        class="pt-1 _cursor-hover"
+                      ><i class="ft ft-download"></i>เลือกไฟล์ใหม่</label>
+                      <input
+                        #fileInput
+                        id="file-upload-promotion"
+                        type="file"
+                        class="file-input _cursor-hover"
+                        (change)="onChangeFilePromotion($event); onCheckFile()"
+                        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                      />
+                    </div>
+                  </div>
+                  <error-message-control
+                    *ngIf="isErrorPromotion"
+                    [text]="'ประเภทไฟล์ไม่ถูกต้อง ต้องเป็น .xlsx เท่านั้น'"
+                  >
+                  </error-message-control>
+                  <div
+                    class="pt-1"
+                    *ngIf="!isErrorPromotion"
+                  >
+                    <span
+                      [ngClass]="{'_text-muted': !filePromotionCoverPreview}">{{ filePromotionCoverPreview && filePromotionCoverPreview !== 'undefined' ? filePromotionCoverPreview : 'ยังไม่ได้เลือกไฟล์' }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label class="col-form-label"></label>
+                  <div class="form-input">
+                    <button
+                      type="button"
+                      class="btn col-12 _btn-top"
+                      [class.btn-primary]="paymentData?.status !== 'published' && fileTrailingCoverPreview && fileFrontEndCoverPreview && isDisableSummaryButton === false"
+                      [class.btn-secondary]="paymentData?.status === 'published' ||
+                                             paymentData?.status !== 'published' && !fileTrailingCoverPreview  && !fileFrontEndCoverPreview && isDisableSummaryButton === true ||
+                                             paymentData?.status !== 'published' && fileTrailingCoverPreview  && !fileFrontEndCoverPreview && isDisableSummaryButton === true ||
+                                             paymentData?.status !== 'published' && !fileTrailingCoverPreview  && fileFrontEndCoverPreview && isDisableSummaryButton === true ||
+                                             paymentData?.status !== 'published' && fileTrailingCoverPreview  && fileFrontEndCoverPreview && isDisableSummaryButton === true"
+                      (click)="onSummaryCommission()"
+                      [disabled]="isDisableSummaryButton"
+                    ><span>สรุปยอด Commission</span>
+                    </button>
+                  </div>
+                  <error-message-control
+                    *ngIf="isValidCommissionSummary"
+                    [text]="'ยังไม่ได้สรุปยอด Commission กรุณาสรุปยอด Commission'"
+                  >
+                  </error-message-control>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr
+          class="my-3"
+          *ngIf="paymentId || summaryId"
+        >
+
+        <div
+          id="summary-form"
+          *ngIf="paymentId || summaryId"
+        >
+          <div class="_g-header-card">
+            <span class="_g-text-header-title">สรุปยอด Commission</span>
+          </div>
+
+          <div class="col-12 px-0 d-flex">
+            <div class="col-3 px-0 _g-text-title">
+              <span>Total</span>
+              <p>{{paymentData?.total | aDecimal}}</p>
+            </div>
+            <div class="col-3 px-0 _g-text-title">
+              <span>TSR Fee</span>
+              <p>{{paymentData?.tsrFee | aDecimal}}</p>
+            </div>
+          </div>
+          <div class="col-12 px-0 d-flex">
+            <h3>Agent Fee </h3>
+            <h3 class="text-primary">&nbsp; {{paymentData?.agentFee | aDecimal}}</h3>
+            <h3>&nbsp; บาท</h3>
+          </div>
+          <div class="d-flex justify-content-between mt-3">
+            <div class=" col-4 pl-0">
+              <div class=" _card-summary">
+                <p>Front-End Fee</p>
+                <h4>{{paymentData?.agentFeFee | aDecimal}} บาท</h4>
+              </div>
+            </div>
+            <div class=" col-4">
+              <div class=" _card-summary">
+                <p>Trailing Fee</p>
+                <h4>{{paymentData?.agentTrFee | aDecimal}} บาท</h4>
+              </div>
+
+            </div>
+            <div class=" col-4">
+              <div class=" _card-summary">
+                <p>Promotion Fee</p>
+                <h4>{{paymentData?.agentProFee | aDecimal}} บาท</h4>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-4">
+            <div class="col-6 d-flex px-0">
+              <div class="col-6 ">
+                <div class="form-group">
+                  <div class="form-input">
+                    <button
+                      class="btn col-12"
+                      type="button"
+                      [class.btn-export]="paymentData?.status !== 'published' && paymentData?.paymentDate && paymentData?.description || paymentData?.status === 'published'"
+                      [class.btn-secondary]="paymentData?.status !== 'published' && !paymentData?.paymentDate || paymentData?.status !== 'published' && !paymentData?.description"
+                      [disabled]="canView && !canCreate && !canExport"
+                      (click)="exportReport()"
+                    >
+                      <span
+                        [class._text-muted]="paymentData?.status !== 'published' && !paymentData?.paymentDate || paymentData?.status !== 'published' && !paymentData?.description"
+                      ><i class="ft ft-upload font-weight-bold"></i>Export</span>
+                    </button>
+                  </div>
+                  <div
+                    class="pt-1"
+                    *ngIf="isExportPort"
+                  >
+                    <span>Export แล้ว</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <div class="form-input">
+                    <div
+                      class="align-items-center d-flex justify-content-center"
+                      [class._upload-file-disabled-publish]="isDisableNewFileButton && paymentData?.status === 'published'"
+                      [class._upload-file-disabled]="isDisableNewFileButton && !fileNewCoverPreview"
+                      [class._upload-file]="!isDisableNewFileButton || isDisableNewFileButton && fileNewCoverPreview "
+                    >
+                      <label
+                        for="file-upload-new-file"
+                        class="pt-1 _cursor-hover"
+                      ><i class="ft ft-download"></i>Import ไฟล์ใหม่</label>
+                      <input
+                        #fileInput
+                        id="file-upload-new-file"
+                        type="file"
+                        class="file-input _cursor-hover"
+                        (change)="onChangeFileImportNew($event); onCheckFile()"
+                        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                      />
+                    </div>
+                  </div>
+                  <error-message-control
+                    *ngIf="isErrorNewFile"
+                    [text]="'ประเภทไฟล์ไม่ถูกต้อง ต้องเป็น .xlsx เท่านั้น'"
+                  >
+                  </error-message-control>
+                  <div
+                    class="pt-1"
+                    *ngIf="!isErrorNewFile && paymentData?.status !== 'published'"
+                  >
+                    <span
+                      [ngClass]="{'_text-muted': !fileNewCoverPreview}">{{ fileNewCoverPreview ? fileNewCoverPreview : 'ยังไม่ได้เลือกไฟล์' }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6 d-flex px-0">
+              <div class="col-6">
+                <div class="form-group">
+                  <div class="form-input">
+                    <button
+                      type="button"
+                      class="btn col-12"
+                      (click)="onUpdateCommission()"
+                      [class.btn-primary]="paymentData?.status !== 'published' && fileNewCoverPreview && isDisableCustomUpdateCommission === false"
+                      [class.btn-secondary]="paymentData?.status === 'published' || paymentData?.status !== 'published' && !fileNewCoverPreview && isDisableUpdateButton || paymentData?.status !== 'published' && fileNewCoverPreview && isDisableUpdateButton && isDisableCustomUpdateCommission === true"
+                      [disabled]="isDisableUpdateButton"
+                    ><span>อัปเดต Commission</span>
+                    </button>
+                  </div>
+                </div>
+                <error-message-control
+                  *ngIf="isValidUpdateSummary"
+                  [text]="'ยังไม่ได้ อัปเดต Commission กรุณา อัปเดต Commission'"
+                >
+                </error-message-control>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+
+    <div *ngIf="paymentData?.status !== 'published'" class="_g-header justify-content-end">
+      <button
+        type="button"
+        class="btn btn-clear _g-space-btn mb-1"
+        (click)="onSaveDraft()"
+      ><span>Save Draft</span>
+      </button>
+      <button
+        type="submit"
+        class="btn btn-primary  _g-space-btn mb-1"
+      ><span>Publish</span>
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary  mb-1"
+        (click)="goBack()"
+      ><span>กลับ</span>
+      </button>
+    </div>
+    <div *ngIf="paymentData?.status === 'published'" class="_g-header justify-content-end">
+      <button
+        type="button"
+        class="btn btn-secondary  mb-1"
+        (click)="goBack()"
+      ><span>กลับ</span>
+      </button>
+    </div>
+
+  </div>
+
+
+</form>

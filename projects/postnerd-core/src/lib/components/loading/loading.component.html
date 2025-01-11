@@ -1,0 +1,14 @@
+<ngx-spinner
+  type="ball-spin-clockwise"
+  size="medium"
+  bgColor="rgba(0, 0, 0, 0.8)"
+  color="#fff"
+  [name]="name"
+  [fullScreen]="fullscreen"
+  [template]="templateLoading"
+>
+</ngx-spinner>
+
+<ng-template #loadingTpl>
+  <img src="assets/img/Loading.gif" />
+</ng-template>

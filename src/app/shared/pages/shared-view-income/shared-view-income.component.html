@@ -1,0 +1,106 @@
+<div class="card-body pl-0 pt-0">
+  <div class="row">
+    <div class="col-12 d-flex px-0">
+      <div class="col-12 px-0">
+        <div class="_g-card-sub-header pl-2">
+          <span class="_g-text-header-sub-title">ประเทศของแหล่งที่มารายได้</span>
+        </div>
+        <div class="col-12 d-flex px-0 py-1">
+          <div class="col-12">
+            <li class="d-inline-block mr-2 mb-2">
+              <div class="checkbox _g-checkbox-display-none">
+                <input
+                  type="checkbox"
+                  id="country-income"
+                  checked
+                >
+                <label for="country-income"><span>{{data?.incomeSourceCountry === 'TH' ? 'ไทย' : data?.incomeSourceCountry || '-'}}</span></label>
+              </div>
+            </li>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 d-flex px-0">
+      <div class="col-12 px-0">
+        <div class="_g-card-sub-header pl-2">
+          <span class="_g-text-header-sub-title">ที่มาของรายได้</span>
+        </div>
+        <div class="col-12 d-flex px-0 ">
+          <div class="col-12 d-flex">
+
+            <div *ngFor="let incomeSource of incomeSourceData; let i = index">
+              <li class="d-inline-block mr-2 mb-2">
+                <div class="checkbox _g-checkbox-display-none">
+                  <input
+                    type="checkbox"
+                    id="icome-{{incomeSource.name}}"
+                    name="icome-{{incomeSource.name}}"
+                    checked
+                  >
+                  <label for="icome-{{incomeSource.name}}">
+                  <span>
+                  {{incomeSource.name === 'SALARY' ? 'เงินเดือน' : incomeSource.name === 'SAVINGS' ? 'เงินออม' : incomeSource.name === 'RETIREMENT' ? 'เงินเกษียณ'
+                    : incomeSource.name === 'HERITAGE' ? 'มรดก' : incomeSource.name === 'OTHER' ? 'อื่นๆ :' : incomeSource.name === 'BUSINESS' ? 'ประกอบธุรกิจ'
+                      : incomeSource.name === 'INVESTMENT' ? 'เงินลงทุน' : ''
+                    }}
+                  </span><span *ngIf="incomeSource.name === 'OTHER'">{{data?.incomeSourceOther}}</span>
+                  </label>
+                </div>
+              </li>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 d-flex px-0 pt-2">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-3 _g-text-title">
+            <span>รายได้ต่อเดือน</span>
+            <p>{{monthlyIncomeLevel  || '-'}} บาท</p>
+          </div>
+          <div class="col-3 _g-text-title">
+            <span>มูลค่าทรัพย์สิน</span>
+            <p *ngIf="data?.assetValue">{{data?.assetValue | aDecimal}} บาท</p>
+            <p *ngIf="!data?.assetValue">-</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 d-flex px-0">
+      <div class="col-12 px-0">
+        <div class="_g-card-sub-header pl-2">
+          <span class="_g-text-header-sub-title">วัตถุประสงค์ในการลงทุน</span>
+        </div>
+        <div class="col-12 d-flex px-0 py-1">
+          <div class="col-12 d-flex">
+            <div *ngFor="let invest of inVestData; let i = index">
+              <li class="d-inline-block mr-2 mb-2">
+                <div class="checkbox _g-checkbox-display-none">
+                  <input
+                    type="checkbox"
+                    id="invest-{{invest.name}}"
+                    name="invest-{{invest.name}}"
+                    checked
+                  >
+                  <label for="invest-{{invest.name}}">
+                  <span>
+                  {{invest.name === 'Investment' ? 'เพื่อการลงทุน' : invest.name === 'RetirementInvestment' ? 'เพื่อการเกษียณ' : invest.name === 'ForTaxBenefits' ? 'ลดหย่อนภาษี'
+                    : invest.name === 'PleaseSpecify' ? 'อื่นๆ :' : ''
+                    }}
+                  </span><span *ngIf="invest.name === 'PleaseSpecify'">{{data?.investmentObjectiveOther}}</span>
+                  </label>
+                </div>
+              </li>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,36 @@
+@import "variables-custom";
+
+input[type="file"] {
+  display: none;
+}
+.custom-file-upload {
+  width: 100px;
+  height: 100px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid $secondary;
+  text-align: center;
+  i {
+    color: $primary-light;
+    font-size: $size-medium;
+  }
+  p {
+    color: $primary-light;
+    margin: 0;
+    font-size: $size-normal;
+  }
+  &.file-invalid {
+    border-color: $accent;
+    p,
+    i {
+      color: $accent;
+    }
+  }
+}
+
+._padding {
+  padding-top: 3rem;
+}

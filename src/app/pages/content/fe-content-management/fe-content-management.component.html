@@ -1,0 +1,140 @@
+<div id="content-management">
+  <div class="_g-header">
+    <h1 class="_g-title-header">Content Management</h1>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <span class="_g-text-header-title">General</span>
+
+      <div class="d-flex align-items-center pt-2">
+        <div
+          class="_card-wrapper"
+          (click)="goTo('file')"
+          [style]="{width: '15%'}"
+        >
+          <div class="align-self-center text-center pt-3">
+            <i class="ft-file-text font-large-1 float-center text-primary"></i>
+          </div>
+          <div class="text-center">
+            <p class="font-medium-2">File</p>
+          </div>
+        </div>
+        <div
+          class="_card-wrapper"
+          (click)="goTo('information')"
+          [style]="{width: '15%'}"
+        >
+          <div class="align-self-center text-center pt-3">
+            <i class="ft-alert-circle font-large-1 float-center text-primary"></i>
+          </div>
+          <div class="text-center">
+            <p class="font-medium-2">FAQs</p>
+          </div>
+        </div>
+        <div
+          class="_card-wrapper"
+          (click)="goTo('email')"
+          [style]="{width: '15%'}"
+        >
+          <div class="align-self-center text-center pt-3">
+            <i class="ft-mail font-large-1 float-center text-primary"></i>
+          </div>
+          <div class="text-center">
+            <p class="font-medium-2">Contact Us</p>
+          </div>
+        </div>
+        <div
+          class="_card-wrapper"
+          (click)="goTo('about-us')"
+          [style]="{width: '15%'}"
+        >
+          <div class="align-self-center text-center pt-3">
+            <i class="ic-card-account-details font-large-1 float-center text-primary"></i>
+          </div>
+          <div class="text-center">
+            <p class="font-medium-2">About Us</p>
+          </div>
+        </div>
+        <div
+          class="_card-wrapper"
+          (click)="goTo('fa-registration')"
+          [style]="{width: '15%'}"
+        >
+          <div class="align-self-center text-center pt-3">
+            <i class="ic-briefcase-account font-large-1 float-center text-primary"></i>
+          </div>
+          <div class="text-center">
+            <p class="font-medium-2">
+              FA
+              Registration
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body _g-detail-wrapper">
+      <span class="_g-text-header-title">Term and Condition</span>
+      <div class="d-flex pt-4">
+        <div class="col-6 d-flex">
+          <div class="col-6"><span class="text-bold-500">หัวข้อ</span></div>
+          <div class="col-6"><span class="text-bold-500">วันที่แก้ไขล่าสุด</span></div>
+        </div>
+        <div class="col-6">
+          <div class="col-6"><span class="text-bold-500">เวอร์ชันล่าสุด</span></div>
+        </div>
+      </div>
+      <hr>
+
+      <div class="d-flex">
+        <div class="col-6 d-flex">
+          <div class="col-6"><a
+              class="text-link"
+              (click)="goTo('terms')"
+            >ข้อกำหนดการใช้งาน</a></div>
+          <div class="col-6"><span>{{termsAndCondition.updatedDate | aDateTime}} น.</span></div>
+        </div>
+        <div class="col-6">
+          <div class="col-6"><span>Version {{termsAndCondition.version}}</span></div>
+        </div>
+      </div>
+      <hr>
+
+
+
+      <div class="d-flex">
+        <div class="col-6 d-flex">
+          <div class="col-6"><a
+              class="text-link"
+              (click)="goTo('pdpa')"
+            >PDPA</a></div>
+          <div class="col-6"><span>{{pdpa.updatedDate | aDateTime}} น.</span></div>
+        </div>
+        <div class="col-6">
+          <div class="col-6"><span>Version {{pdpa.version}}</span></div>
+        </div>
+      </div>
+      <hr>
+
+
+      <div class="d-flex">
+        <div class="col-6 d-flex">
+          <div class="col-6"><a
+              class="text-link"
+              (click)="goTo('ndid')"
+            >NDID</a></div>
+          <div class="col-6"><span>{{ndid.updatedDate | aDateTime}} น.</span></div>
+        </div>
+        <div class="col-6">
+          <div class="col-6"><span>Version {{ndid.version}}</span></div>
+        </div>
+      </div>
+      <hr>
+
+    </div>
+  </div>
+
+</div>

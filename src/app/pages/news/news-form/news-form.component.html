@@ -1,0 +1,251 @@
+<form
+  #form="ngForm"
+  [class.submitted]="form.submitted"
+  (ngSubmit)="onSave(form)"
+>
+  <!--  HEADER-->
+  <div class="_g-header">
+    <h1 class="_g-title-header" *ngIf="canCreate && canView || canCreate && !canView">{{!newsId ? 'สร้าง' : 'แก้ไข'}} News</h1>
+    <h1 class="_g-title-header" *ngIf="!canCreate && canView">News</h1>
+    <div class="_g-header justify-content-end">
+      <button *ngIf="canCreate"
+        type="submit"
+        class="btn btn-primary  _g-space-btn mb-1"
+      ><span>บันทึก</span>
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary  mr-1 mb-1"
+        (click)="goBack()"
+      ><span>กลับ</span>
+      </button>
+    </div>
+  </div>
+
+  <!--  FORM-->
+  <div class="card _g-card-content-tab">
+    <div class="card-body">
+      <div class="col-12 _g-card-form px-0">
+        <div class="col-12 pl-0">
+          <div class="row">
+            <div class="col-xl-12 col-md-12 col-sm-12">
+              <div class="form-group">
+                <label class="col-form-label is-required">หัวข้อ</label>
+                <div class="form-input">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="โปรดระบุ"
+                    id="title"
+                    name="title"
+                    [(ngModel)]="newsData.title"
+                    required
+                    [disabled]="canView && !canCreate"
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-4 col-md-4 col-sm-12">
+              <div class="form-group">
+                <label class="col-form-label">รูปภาพหน้าปก</label>
+                <div
+                  class="flex-1"
+                  #container
+                >
+                  <div class="form-input">
+                    <pn-file-image-input
+                      *ngIf="!imageCoverPreview"
+                      [(ngModel)]="imageCover"
+                      (onImageSelect)="onImageSelect($event)"
+                      [ngModelOptions]="{ standalone: true }"
+                      [class._g-disable]="canView && !canCreate"
+                      accept="image/*"
+                    ></pn-file-image-input>
+                    <!--                    [classInput]="form.submitted ? 'file-invalid' : ''"-->
+                    <div
+                      *ngIf="imageCoverPreview"
+                      class="_g-image-preview"
+                      [class._g-disable]="canView && !canCreate"
+                      [style.width]="'100%'"
+                      [style.height]="calculateHeight(container.offsetWidth)"
+                    >
+                      <a *ngIf="!canView || canCreate" (click)="removeImageCover()"><i class="ft-x-circle"></i></a>
+                      <img
+                        [style.width]="'100%'"
+                        [style.height]="'100%'"
+                        [src]="imageCoverPreview"
+                      />
+                      <!--                      <error-message-control-->
+                      <!--                        [text]="validateImage"-->
+                      <!--                        *ngIf="form.submitted && isChangeImageFailed"-->
+                      <!--                      ></error-message-control>-->
+                    </div>
+                    <!--                    <error-message-control-->
+                    <!--                      *ngIf="form.submitted"-->
+                    <!--                      [text]="'กรุณาเลือกรูปภาพ Banner'"-->
+                    <!--                      [class.d-none]="imageCoverPreview"-->
+                    <!--                    ></error-message-control>-->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-12 col-md-12 col-sm-12">
+              <div class="form-group">
+                <label class="text-muted">
+                  <p class="m-0">อัตราส่วนแนะนำ (1200 x 630 px)</p>
+                  <p class="m-0">เฉพาะไฟล์นามสกุล *.JPG หรือ *.PNG เท่านั้น</p>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-12 col-md-12 col-sm-12 d-flex">
+              <div class="col-4 px-0 d-flex flex-column">
+                <div class="form-group">
+                  <label class="col-form-label">รูปภาพ</label>
+                  <div
+                    class="flex-1"
+                    #container
+                  >
+                    <div class="form-input">
+                      <pn-file-image-input
+                        [class._g-disable]="canView && !canCreate"
+                        [(ngModel)]="imageCovers"
+                        (onImageSelect)="onImageSelects($event)"
+                        [ngModelOptions]="{ standalone: true }"
+                        [multiple]="true"
+                        accept="image/*"
+                      ></pn-file-image-input>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="text-muted">
+                    <p class="m-0">อัตราส่วนแนะนำ (1200 x 630 px)</p>
+                    <p class="m-0">เฉพาะไฟล์นามสกุล *.JPG หรือ *.PNG เท่านั้น</p>
+                    <p class="m-0">บันทึกได้มากกว่า 1 รูป</p>
+                  </label>
+                </div>
+              </div>
+              <div class="col-8 d-flex flex-column">
+                <div
+                  *ngFor="let image of imageCoverPreviews; let index = index"
+                >
+                  <form #form="ngForm">
+                    <div class="_file-wrapper col-12 justify-content-start">
+                      <div class="col-md-1 col-lg-1 col-xl-1 d-flex align-items-center mr-2">
+                        <div class="drag-icon">
+                          <i
+                            class="ic ic-align-justify text-primary"
+                          ></i>
+                          <span
+                            class="drag-index ml-2 label-index"
+                            style="margin-bottom: 0.3rem"
+                          >{{index + 1}}</span>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <img
+                          class="_img ml-2"
+                          [src]="image.src"
+                        />
+                      </div>
+                      <div class="d-flex align-items-center justify-content-between col-7">
+                        <div class="col-6 d-flex">
+                          <p class="mx-2 _image-name">{{ image.name.substring(image.name.lastIndexOf('/') + 1, image.name.length)}}</p>
+                        </div>
+                        <div class="col-6" [class._g-disable]="canView && !canCreate">
+                          <a
+                            *ngIf="!canView || canCreate"
+                            class="text-icon text-danger ml-2"
+                            (click)="removeImageCovers(index)"
+                          >
+                            <i class="ic ic-delete"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-12 col-md-12 col-sm-12">
+              <div class="form-group">
+                <label class="col-form-label is-required">เนื้อหา</label>
+                <div class="form-input">
+                  <shared-editor
+                    [(ngModel)]="newsData.detail"
+                    placeholder="รายละเอียด"
+                    id="detail"
+                    name="detail"
+                    required
+                    [class._g-disable]="canView && !canCreate"
+                  ></shared-editor>
+                  <!--                  <label class="text-muted p-1">ขนาดเนื้อหาไม่ควรเกิน 1 MB-->
+                  <!--                    หากเกินระบบจะมีการแจ้งเตือนเพื่อให้ปรับลดข้อมูลหรือขนาดรูปในเนื้อหา</label>-->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-12 col-md-12 col-sm-12 d-flex align-items-center">
+              <div class="d-flex justify-content-between _g-space-btn">
+                <pn-toggle
+                  class="mb-2"
+                  id="pin"
+                  name="pin"
+                  [(ngModel)]="pinned"
+                  (ngModelChange)="onChangeStatus($event, 'pinned')"
+                  [disabled]="canView && !canCreate"
+                >
+                  <pn-toggle-right>
+                    <div class="ml-2">
+                      <label class="mb-0 font-size-normal">Feature News</label>
+                    </div>
+                  </pn-toggle-right>
+                </pn-toggle>
+              </div>
+              <div class="d-flex justify-content-between _g-space-btn">
+                <pn-toggle
+                  class="mb-2"
+                  id="status"
+                  name="status"
+                  [(ngModel)]="status"
+                  (ngModelChange)="onChangeStatus($event, 'status')"
+                  [disabled]="canView && !canCreate"
+                >
+                  <pn-toggle-right>
+                    <div class="ml-2">
+                      <label class="mb-0 font-size-normal">{{status ? 'Publish' : 'Close'}}</label>
+                    </div>
+                  </pn-toggle-right>
+                </pn-toggle>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--  FOOTER-->
+  <div class="_g-header justify-content-end">
+    <button *ngIf="canCreate"
+      type="submit"
+      class="btn btn-primary  _g-space-btn mb-1"
+    ><span>บันทึก</span>
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary  mr-1 mb-1"
+      (click)="goBack()"
+    ><span>กลับ</span>
+    </button>
+  </div>
+</form>
+

@@ -1,0 +1,235 @@
+<div id="addressInfo">
+  <div class="row">
+    <div class="col-12 _g-card-form">
+      <div class="col-xl-5 col-lg-6 col-md-6 col-sm-12">
+        <div class="row">
+          <div class="col-xl-6 col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label">เลขที่</label>
+              <div class="form-input">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="โปรดระบุ"
+                  id="houseNo"
+                  name="houseNo"
+                  [(ngModel)]="addressInfoData.houseNo"
+                  required
+                >
+              </div>
+            </div>
+
+          </div>
+          <div class="col-xl-6 col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label ">หมู่ที่</label>
+              <div class="form-input">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="โปรดระบุ"
+                  id="villageNo"
+                  name="villageNo"
+                  [(ngModel)]="addressInfoData.villageNo"
+                  required
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-7 col-lg-6 col-md-6 col-sm-12">
+        <div class="row">
+          <div class="col-xl-4 col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label">อาคาร / หมู่บ้าน</label>
+              <div class="form-input">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="โปรดระบุ"
+                  id="building"
+                  name="building"
+                  [(ngModel)]="addressInfoData.building"
+                  required
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label">เลขที่ห้อง</label>
+              <div class="form-input">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="โปรดระบุ"
+                  id="roomNumber"
+                  name="roomNumber"
+                  [(ngModel)]="addressInfoData.roomNumber"
+                  required
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 col-sm-12  _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label">ชั้น</label>
+              <div class="form-input">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="โปรดระบุ"
+                  id="floor"
+                  name="floor"
+                  [(ngModel)]="addressInfoData.floor"
+                  required
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 _g-card-form ">
+      <div class="col-xl-5 col-lg-6 col-md-6 col-sm-12">
+        <div class="row">
+          <div class="col-xl-6 col-sm-12  _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label">ชอย</label>
+              <div class="form-input">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="โปรดระบุ"
+                  id="lane"
+                  name="lane"
+                  [(ngModel)]="addressInfoData.lane"
+                  required
+                >
+              </div>
+            </div>
+
+          </div>
+          <div class="col-xl-6 col-sm-12  _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label ">ถนน</label>
+              <div class="form-input">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="โปรดระบุ"
+                  id="road"
+                  name="road"
+                  [(ngModel)]="addressInfoData.road"
+                  required
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-7 col-lg-6 col-md-6 col-sm-12 ">
+        <div class="row">
+          <div class="col-xl-4 col-sm-12  _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label">จังหวัด</label>
+              <div class="form-input">
+                <shared-province-dropdown
+                  name="province"
+                  placeholder="เลือก"
+                  [(ngModel)]="addressInfoData.province"
+                  (ngModelChange)="onSelectDropdown($event)"
+                  required
+                >
+                </shared-province-dropdown>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label">อำเภอ / เขต</label>
+              <div class="form-input">
+                <shared-district-dropdown
+                  name="district"
+                  placeholder="เลือก"
+                  id="district"
+                  [(ngModel)]="addressInfoData.district"
+                  [province]="addressInfoData.province"
+                  [disabled]="!addressInfoData.province"
+                  [autoReset]="true"
+                  required
+                >
+                </shared-district-dropdown>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 col-sm-12  _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label">ตำบล / แขวง</label>
+              <div class="form-input">
+                <shared-sub-district-dropdown
+                  name="subDistrict"
+                  placeholder="เลือก"
+                  id="province"
+                  [(ngModel)]="addressInfoData.subDistrict"
+                  [province]="addressInfoData.province"
+                  [district]="addressInfoData.district"
+                  [disabled]="!addressInfoData.district"
+                  [autoReset]="true"
+                  required
+                >
+                </shared-sub-district-dropdown>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-12 _g-card-form ">
+      <div class="col-xl-5 col-lg-12 col-md-6 col-sm-12">
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label">รหัสไปรษณีย์</label>
+              <div class="form-input">
+                <shared-postal-code-dropdown
+                  placeholder="โปรดระบุ"
+                  id="zipCode"
+                  name="zipCode"
+                  [(ngModel)]="addressInfoData.zipCode"
+                  [disabled]="!addressInfoData.subDistrict"
+                  [province]="addressInfoData.province"
+                  [district]="addressInfoData.district"
+                  [subDistrict]="addressInfoData.subDistrict"
+                  [autoReset]="true"
+                  required
+                >
+                </shared-postal-code-dropdown>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-xl-6 col-lg-6 col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label ">ประเทศ</label>
+              <div class="form-input">
+                <shared-country-dropdown
+                  placeholder="เลือก"
+                  id="country"
+                  name="country"
+                  [(ngModel)]="addressInfoData.country"
+                  required
+                >
+                </shared-country-dropdown>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

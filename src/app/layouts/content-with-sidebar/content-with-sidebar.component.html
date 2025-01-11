@@ -1,0 +1,58 @@
+<pn-loading name="global"></pn-loading>
+
+<!-- *NAVBAR* starts -->
+<app-navbar></app-navbar>
+<!-- *NAVBAR* ends -->
+
+<div
+  class="wrapper"
+  [ngClass]="{'show-overlay': !isNavbarSeachTextEmpty}"
+  (click)="onWrapperClick();"
+  (window:resize)="onResize($event)"
+>
+
+  <!-- *SIDE* Menu starts -->
+  <div
+    appSidebar
+    id="app-sidebar"
+    *ngIf="menuPosition === 'Side' || displayOverlayMenu"
+    class="app-sidebar"
+    [ngClass]="{
+      'main-menu': menuPosition === 'Side' || displayOverlayMenu,
+      'menu-fixed': menuPosition === 'Side' || displayOverlayMenu
+    }"
+    (mouseenter)="sidebarMouseenter($event)"
+    (mouseleave)="sidebarMouseleave($event)"
+    data-active-color="white"
+    [attr.data-background-color]="config?.layout.variant === 'Transparent' ? 'black': bgColor"
+    [attr.data-image]="bgImage"
+  >
+    <!-- 'menu-native-scroll': !perfectScrollbarEnable -->
+    <app-sidebar></app-sidebar>
+
+  </div>
+  <!-- *SIDE* Menu ends -->
+
+  <div class="main-panel">
+    <div class="main-content">
+      <div class="content-overlay"></div>
+      <div class="content-wrapper _content">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+    <!-- Scroll to top button -->
+    <button
+      class="btn btn-primary scroll-top btn-icon"
+      type="button"
+      *ngIf="isScrollTopVisible"
+      (click)="scrollToTop()"
+    ><i class="fa fa-arrow-up"></i></button>
+  </div>
+
+  <div
+    class="sidenav-overlay"
+    (click)="onOutsideClick($event);"
+    [ngClass]="{'d-none': displayOverlayMenu && hideSidebar && !overlayContent , 'd-block': displayOverlayMenu && !hideSidebar && overlayContent && innerWidth < 1199}"
+  ></div>
+  <div class="drag-target"></div>
+</div>

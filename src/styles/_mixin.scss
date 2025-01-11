@@ -1,0 +1,43 @@
+%transition-sidebar {
+  transition: all .2s cubic-bezier(0, 0, 1, 1);
+  // transition: height .3s cubic-bezier(0, 0, 1, 1);
+}
+
+%icon-gradient {
+  background: -webkit-linear-gradient(135deg, $gradient-tossakan-blue, $gradient-tossakan-green);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@mixin attr-x($attr, $attr-count: 10, $attr-steps: 10, $unit: "%") {
+  $attr-list: null;
+  @for $i from 1 through $attr-count {
+    $attr-value: $attr-steps * $i;
+
+    .#{$attr}-#{$attr-value} {
+      #{$attr}: #{$attr-value}#{$unit};
+    }
+
+    $attr-list: append($attr-list, unquote(".#{$attr}-#{$attr-value}"), comma);
+  }
+
+  #{$attr-list} {
+    //append style to all classes
+  }
+}
+
+@mixin font-size-class {
+  @each $i in $font-sizes {
+    .font-#{nth($i, 1)} {
+      font-size: nth($i, 2);
+    }
+  }
+}
+
+@mixin font-color-class {
+  @each $i in $colors {
+    .text-#{nth($i, 1)} {
+      color: nth($i, 2) !important;
+    }
+  }
+}

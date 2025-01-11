@@ -1,0 +1,95 @@
+<form
+  #form="ngForm"
+  [class.submitted]="form.submitted"
+  (ngSubmit)="onSave(form)"
+>
+  <!--  HEADER-->
+  <div class="_g-header">
+    <h1 class="_g-title-header">สร้าง Agent</h1>
+    <div class="_g-header justify-content-end">
+      <button
+        type="submit"
+        class="btn btn-primary  _g-space-btn mb-1"
+      ><span>สร้าง</span>
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary  mr-1 mb-1"
+        (click)="goBack()"
+      ><span>กลับ</span>
+      </button>
+    </div>
+  </div>
+
+  <!--  FORM-->
+  <div class="card _g-card-content-tab">
+    <div class="card-body">
+      <div class="col-xl-4 col-md-4 col-sm-12 _g-text-title px-0 d-flex align-items-center">
+        <p>ส่วนแบ่ง</p>
+        <div class="col-6 ml-1">
+          <div class="form-group position-relative has-icon-right">
+            <input
+              id="commissionPercentage"
+              name="commissionPercentage"
+              type="text"
+              class="form-control"
+              placeholder="ระบุ"
+              [(ngModel)]="agentData.commissionPercentage"
+              [ngModelOptions]="{standalone: true}"
+            >
+            <div class="form-control-position">
+              %
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr/>
+
+      <!--      SECTION PROFILE-->
+      <div class="card-header pl-0">
+        <div class="d-flex">
+          <span class="_g-text-header-title">ข้อมูลโปรไฟล์</span>
+        </div>
+      </div>
+
+      <profile-form
+        [isEmailError]="isEmailError"
+        [isIcLicenseError]="isIcLicenseError"
+        [agentData]="agentData"
+        [agentUserData]="agentUserData"
+        [bankData]="bankData"
+        [agentTeamData]="teamData"
+      >
+      </profile-form>
+      <hr>
+
+      <div class="card-header pl-0">
+        <div class="d-flex">
+          <span class="_g-text-header-title">ที่อยู่ปัจจุบัน</span>
+        </div>
+      </div>
+
+      <current-address-form
+        [agentAddressData]="agentAddressData"
+      >
+      </current-address-form>
+
+    </div>
+  </div>
+
+
+  <!--  FOOTER-->
+  <div class="_g-header justify-content-end">
+    <button
+      type="submit"
+      class="btn btn-primary  _g-space-btn mb-1"
+    ><span>สร้าง</span>
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary  mr-1 mb-1"
+      (click)="goBack()"
+    ><span>กลับ</span>
+    </button>
+  </div>
+</form>

@@ -1,0 +1,26 @@
+@import "variables-custom";
+
+._bg-grey {
+  background-color: #fafafa !important;
+  span {
+    color: black;
+  }
+  h3 {
+    color: black;
+    font-weight: $weight-medium;
+  }
+}
+
+
+._text-size {
+  font-weight: $weight-medium;
+}
+
+._display-btn {
+  display: flex;
+}
+
+._border-summary {
+  border-top: black 1px solid;
+}
+

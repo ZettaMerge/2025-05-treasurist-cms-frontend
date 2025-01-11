@@ -1,0 +1,107 @@
+<div id="customer-profile">
+  <div class="_g-header d-flex align-items-center justify-content-between">
+    <h1 class="_g-title-header">Customer Profile</h1>
+    <div class="_g-header justify-content-end d-flex align-items-center">
+      <button (click)="onSyncAccount()" type="button" class="btn btn-outline-primary _btn-action" *ngIf="activeTabId === Tab.profile">
+        <span class="icon"><i class="ft ft-refresh-ccw"></i></span>
+        <span>Sync Account</span>
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="goBack()">กลับ
+      </button>
+    </div>
+  </div>
+
+
+  <!--  Tabs-->
+  <div class="card _g-card-content-tab">
+    <div class="card-body">
+      <pn-tabs [tabs]="tabs" [(activeTabId)]="activeTabId">
+      </pn-tabs>
+
+      <ng-container *ngIf="activeTabId === Tab.portFolio">
+        <fe-customer-protfolio [data]="customerData" [customerId]="customerId">
+        </fe-customer-protfolio>
+      </ng-container>
+
+      <ng-container *ngIf="activeTabId === Tab.profile">
+        <fe-customer-info
+         *ngIf="!legalEntity" 
+         [data]="customerData"
+         (onEmitAccountId)="getProfileId($event)"
+         >
+        </fe-customer-info>
+        <fe-customer-profile-info-lege-entity *ngIf="legalEntity" [data]="customerData">
+        </fe-customer-profile-info-lege-entity>
+      </ng-container>
+
+      <div *ngFor="let plan of planAccountList">
+        <div *ngIf="activeTabId === plan.id">
+          <ng-container *ngIf="activeTabId === plan.id">
+            <fe-customer-plan *ngIf="activeTabId === plan.id" [data]="customerData" [planName]="plan.name">
+            </fe-customer-plan>
+          </ng-container>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!--  end Tabs-->
+
+  <!--ไฟล์ยืนยันการเปิดบัญชี หน้า info-->
+  <div *ngIf="activeTabId === Tab.profile">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center">
+          <span class="_g-text-header-title">บัญชีธนาคาร</span>
+        </div>
+        <div class="row">
+          <div class="col-12 d-flex px-0 py-1">
+            <div class="col-4 _g-text-title">
+              <span>ธนาคาร</span>
+              <p>{{accountData?.bankName || '-'}}</p>
+            </div>
+            <div class="col-4 _g-text-title">
+              <span>สาขา</span>
+              <p>{{accountData?.bankBranchName}}</p>
+            </div>
+            <div class="col-4 _g-text-title">
+              <span>เลขที่บัญชี</span>
+              <p>{{accountData?.bankNo || '-'}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="activeTabId === Tab.profile">
+    <shared-view-file-confirm-account-opening [data]="customerData" [customer]="true">
+    </shared-view-file-confirm-account-opening>
+
+  </div>
+
+  <!--ไฟล์ยืนยันการเปิดบัญชีหน้า plan-->
+  <!--  <div *ngFor="let plan of planAccountList">-->
+  <!--    <div *ngIf="activeTabId === plan.id">-->
+  <!--      <fe-customer-plan-file-->
+  <!--        *ngIf="activeTabId === plan.id"-->
+  <!--        [data]="customerData"-->
+  <!--        [customer]="true"-->
+  <!--      >-->
+  <!--      </fe-customer-plan-file>-->
+  <!--    </div>-->
+  <!--  </div>-->
+
+  <div class="_g-header justify-content-end">
+    <div class="d-flex">
+      <button type="button" class="btn btn-secondary  mr-1 mb-1" (click)="goBack()">กลับ
+      </button>
+    </div>
+  </div>
+</div>
+
+<!--MODAL-->
+<lib-modal #modal modalSize="md" [showHeader]="false">
+  <fe-sync-account *ngIf="modal.isOpen" [data]="profileData" (cancel)="modal.close()" (getData)="onGetDataSync($event)">
+  </fe-sync-account>
+</lib-modal>

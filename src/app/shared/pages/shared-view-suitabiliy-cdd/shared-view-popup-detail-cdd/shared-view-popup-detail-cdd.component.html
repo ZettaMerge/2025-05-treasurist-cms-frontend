@@ -1,0 +1,53 @@
+<div class="card-content">
+  <div class="_card-header  pb-0">
+    <h5 class="text-primary">รายละเอียด</h5>
+    <span class="text-muted">Lested Review by: Firstname Lastname</span>
+  </div>
+  <div class="card-body">
+    <div class="col-12">
+      <div class="row">
+        <div class="col-3">
+          <div class="form-group _form">
+            <label class="col-form-label">แก้ไข CDD Score</label>
+            <div class="d-flex">
+              <div class="flex-1">
+                <pn-segmented-control
+                  name="cdd"
+                  [list]="riskList"
+                >
+                </pn-segmented-control>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-9">
+          <div class="form-group">
+            <label class="col-form-label">ระบุเหตุผล (CDD Score = 3)</label>
+            <div class="form-input">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="โปรดระบุ"
+                id="cddScore"
+                name="cddScore"
+                disabled
+              >
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="_modal-footer">
+  <span class="text-muted">Review Date: 25/01/2021 | Expire Date: 25/01/2021</span>
+  <button
+    type="button"
+    class="btn btn-clear  mr-1 mb-1"
+    (click)="onCancel()"
+  ><span>ปิด</span>
+  </button>
+</div>

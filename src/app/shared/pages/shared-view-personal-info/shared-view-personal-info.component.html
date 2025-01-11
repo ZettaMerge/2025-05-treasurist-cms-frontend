@@ -1,0 +1,126 @@
+<div class="card-body pl-0 pt-0">
+  <div class="row">
+    <div class="col-12 d-flex px-0 py-1">
+      <div class="col-5">
+        <div class="row">
+          <div class="col-6 _g-text-title">
+            <span>คำนำหน้าชื่อ</span>
+            <p>{{data.title === 'MRS' ? 'นาง' : data.title === 'MR' ? 'นาย' : data.title === 'MISS' ? 'นางสาว'
+              : data.title === 'MS' ? 'นางสาว' : data.title === 'OTHER' ? data?.titleOther : '-'}}</p>
+          </div>
+          <div class="col-6 _g-text-title">
+            <span>ชื่อ-นามสกุลจริง (ไทย)</span>
+            <p>{{data.thFirstname}} {{data.thLastname}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-7">
+        <div class="row">
+          <div class="col-4 _g-text-title">
+            <span>ชื่อ-นามสกุลจริง (อังกฤษ)</span>
+            <p>{{data.enFirstname}} {{data.enLastname}}</p>
+          </div>
+          <div class="col-4 _g-text-title">
+            <span>วัน/เดือน/ปีเกิด</span>
+            <p>{{data?.birthdate | aDate}}</p>
+
+          </div>
+          <div class="col-4 _g-text-title">
+            <span>สัญชาติ</span>
+            <p>{{nationality === 'Thai' ? 'ไทย' : nationality || '-'}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 d-flex px-0 py-1">
+      <div class="col-5">
+        <div class="row">
+          <div class="col-6 _g-text-title">
+            <span>ID Type</span>
+            <p>{{data?.identificationCardType === 'CITIZEN_CARD' ? 'บัตรประชาชน' : 'Passport'}}</p>
+          </div>
+          <div class="col-6 _g-text-title">
+            <span>เลขบัตรประชาชน / Passport</span>
+            <p>{{data?.cardNumber || '-'}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-7">
+        <div class="row">
+          <div class="col-4 _g-text-title">
+            <span>วันหมดอายุบัตร (ค.ศ.)</span>
+            <p>{{data?.cardExpiredDate | dateYear }}</p>
+          </div>
+          <div class="col-4 _g-text-title">
+            <span>IC License</span>
+            <p>{{data?.icLicense || '-'}}</p>
+
+          </div>
+          <div class="col-4 _g-text-title">
+            <span>Team</span>
+            <p>{{data?.teamName || '-'}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 _g-card-form  px-0">
+      <div class="col-xl-5 col-lg-6 col-md-6 col-sm-12">
+        <div class="row">
+          <div class="col-xl-6  col-sm-12  _g-text-title">
+            <span>สถานภาพ</span>
+            <p>{{data?.maritalStatus === 'Single' ? 'โสด' : 'สมรส'}}</p>
+          </div>
+          <div class="col-xl-6  col-sm-12  _g-text-title">
+            <span>ชื่อ-นามสกุล ผู้สมรส (ไทย)</span>
+            <p
+              *ngIf="data?.spouseThFirstname || data?.spouseThLastname">{{data?.spouseThFirstname}} {{data?.spouseThLastname}}</p>
+            <p *ngIf="!data?.spouseThFirstname && !data?.spouseThLastname">{{'-'}}</p>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-xl-7 col-lg-6 col-md-6 col-sm-12">
+        <div class="row">
+
+          <div class="col-xl-4 col-sm-12 _g-text-title">
+            <span>ชื่อ-นามสกุล ผู้สมรส (อังกฤษ)</span>
+            <p
+              *ngIf="data?.spouseEnFirstname || data?.spouseEnLastName">{{data?.spouseEnFirstname}} {{data?.spouseEnLastName}}</p>
+            <p *ngIf="!data?.spouseEnFirstname && !data?.spouseEnLastName">{{'-'}}</p>
+          </div>
+          <div class="col-xl-4 col-sm-12 _g-text-title">
+            <span>วันที่เปิดบัญชี</span>
+            <p>{{data?.applicationDate | aDate}}</p>
+            <!--            <span>วันที่เปิดบัญชี</span>-->
+            <!--            <p>{{data?.}}</p>-->
+          </div>
+          <div class="col-xl-4 col-sm-12 _g-text-title">
+            <span>วิธีการเปิดบัญชี</span>
+            <p>{{openAccountType || '-'}}</p>
+            <!--            <span>วันที่เปิดบัญชี</span>-->
+            <!--            <p>{{data?.}}</p>-->
+          </div>
+          <!--          <div class="col-xl-4  col-sm-12 col-md-6 _g-text-title">-->
+          <!--            <span>NDID Request ID:</span>-->
+          <!--            <p>-</p>-->
+          <!--          </div>-->
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 _g-card-form  d-flex px-0">
+      <div class="col-xl-2  col-sm-12  _g-text-title">
+        <span>วิธีการยืนยันตัวตน</span>
+        <p>{{data?.accountVerifyType || '-'}}</p>
+      </div>
+      <div class="col-xl-6  col-sm-12  _g-text-title _custom-padding-left">
+        <span>NDID Request ID:</span>
+        <p>{{data.ndidRequestId || '-'}}</p>
+      </div>
+    </div>
+
+
+  </div>
+</div>

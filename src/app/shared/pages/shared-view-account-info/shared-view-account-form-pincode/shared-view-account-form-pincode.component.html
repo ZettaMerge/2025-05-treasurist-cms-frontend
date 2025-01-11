@@ -1,0 +1,58 @@
+<div class="card-content">
+  <div class="card-header pb-0">
+    <h5 class="card-title text-primary">{{isNew ? 'สร้าง Pincode':'แก้ไข Pincode'}}</h5>
+  </div>
+  <form
+    [formGroup]="pinCodeForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <div class="card-body py-0">
+
+      <div class="d-flex justify-content-start">
+        <p>กรอก Pincode</p>
+      </div>
+      <div class="row">
+
+        <div
+          *ngFor="let input of formInput;  index as i"
+          class="form-group col-sm-2"
+        >
+          <fieldset class="form-group _otp-input mr-0">
+            <input
+              #formRow
+              type="text"
+              id="otpInput"
+              formControlName="{{input}}"
+              class="_otp-text-input form-control text-primary"
+              maxlength="1"
+              (keyup)="keyUpEvent($event, i)"
+              required
+              placeholder="-"
+            >
+          </fieldset>
+        </div>
+      </div>
+      <div
+        class="d-flex justify-content-center ng-invalid-feedback text-danger align-items-center"
+        *ngIf="validateOtpInput()"
+      >
+        <p>จะต้องเป็นตัวเลข 0-9 เท่านั้น</p>
+      </div>
+    </div>
+
+    <div class="_modal-footer">
+      <button
+        type="button"
+        class="btn btn-clear  mr-2 mb-1"
+        (click)="onCancel()"
+      ><span>ยกเลิก</span>
+      </button>
+      <button
+        type="submit"
+        class="btn btn-primary mb-1"
+      ><span>บันทึก</span>
+      </button>
+    </div>
+  </form>
+
+</div>

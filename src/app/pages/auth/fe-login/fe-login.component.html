@@ -1,0 +1,91 @@
+<!--Login Page Starts-->
+<section id="login">
+  <div class="row auth-height full-height-vh m-0">
+    <div class="col-12 d-flex justify-content-center">
+      <div class="card overflow-hidden _auth">
+        <div class="card-content">
+          <form
+            #form="ngForm"
+            (ngSubmit)="onSubmit(form)"
+            [class.submitted]="form.submitted"
+          >
+            <div class="row justify-content-center px-5 py-4">
+              <h1>เข้าสู่ระบบ</h1>
+              <div class="col-12 _email">
+                <div class="_form-group-auth">
+                  <label class="col-form-label">อีเมล</label>
+                  <div class="form-input">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="กรอกอีเมล"
+                      required
+                      name="username"
+                      [(ngModel)]="data.username"
+                      (ngModelChange)="onTextChange()"
+                      vEmail
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="_form-group-auth">
+                  <label class="col-form-label">รหัสผ่าน</label>
+                  <div class="form-input position-relative has-icon-right">
+                    <input
+                      [type]="isFieldTextType ? 'text': 'password'"
+                      type="password"
+                      class="form-control"
+                      placeholder="กรอกรหัสผ่าน"
+                      required
+                      name="password"
+                      [(ngModel)]="data.password"
+                      (ngModelChange)="onTextChange()"
+                    >
+                    <div class="form-control-position">
+                      <i
+                        id="icon-view-password"
+                        class="pointer text-primary"
+                        [ngClass]="{'fa fa-eye-slash': !isFieldTextType,'fa fa-eye': isFieldTextType}"
+                        (click)="viewPassword()"
+                      ></i>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div
+                *ngIf="isErrorPermission"
+                class="col-12 mt-1 text-center"
+              >
+                <error-message-control [text]="'ไม่พบผู้ใช้งานนี้ระบบ กรุณาลองใหม่อีกครั้ง'">
+                </error-message-control>
+
+              </div>
+              <div
+                *ngIf="isError"
+                class="col-12 mt-1 text-center"
+              >
+                <error-message-control [text]="'อีเมลหรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง'">
+                </error-message-control>
+              </div>
+              <a
+                href="javascript:;"
+                class="text-link _forgot-password"
+                (click)="openForgotPassword()"
+              >ลืมรหัสผ่าน</a>
+              <div class="col-12 _button-wrapper">
+                <button
+                  type="submit"
+                  class="btn btn-lg btn-primary mr-1 mb-1 _button"
+                >เข้าสู่ระบบ
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--Login Page Ends-->

@@ -1,0 +1,74 @@
+<div class="card-body pt-0 pl-0">
+  <div class="row">
+    <div class="col-12 d-flex px-0">
+      <div class="col-12">
+        <div class="_display-general">
+          <div
+            class="col-xl-3 col-md-4 col-sm-12 _g-text-title px-0"
+          >
+            <div class="form-group">
+              <span>อีเมล</span>
+              <div class="form-input">
+                <input
+                  type="email"
+                  class="form-control"
+                  placeholder="โปรดระบุ"
+                  id="email"
+                  name="email"
+                  [(ngModel)]="data.email"
+                  vEmail
+                  [required]="!data.email"
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<lib-modal
+  #formEmailModal
+  [showHeader]="false"
+>
+  <shared-view-account-form-email
+    #email
+    *ngIf="formEmailModal.isOpen"
+    (cancel)="formEmailModal.close()"
+    (save)="save($event)"
+    [isNew]="isNew"
+  >
+  </shared-view-account-form-email>
+
+</lib-modal>
+
+<lib-modal
+  #formPassWordModal
+  [showHeader]="false"
+>
+  <shared-view-account-form-password
+    #passWord
+    *ngIf="formPassWordModal.isOpen"
+    (cancel)="formPassWordModal.close()"
+    (save)="save($event)"
+    [isNew]="isNew"
+  >
+  </shared-view-account-form-password>
+
+</lib-modal>
+
+<lib-modal
+  #formPincodeModal
+  [showHeader]="false"
+>
+  <shared-view-account-form-pincode
+    #pincode
+    *ngIf="formPincodeModal.isOpen"
+    (cancel)="formPincodeModal.close()"
+    (save)="save($event)"
+    [isNew]="isNew"
+  >
+  </shared-view-account-form-pincode>
+
+</lib-modal>

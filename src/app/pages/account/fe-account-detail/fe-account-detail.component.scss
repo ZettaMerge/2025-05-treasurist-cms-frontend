@@ -1,0 +1,47 @@
+@import "variables-custom";
+
+._display-risk {
+  display: flex;
+
+  > span:not(:last-child) {
+    margin-right: 0.5rem;
+  }
+}
+
+._line-left {
+  width: 10px;
+}
+
+._action-btn {
+  opacity: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  //margin-left: 0.75rem;
+  &._detail-btn {
+    font-size: large;
+    .ic {
+      color: $primary;
+    }
+  }
+}
+
+//style reject reason
+
+._disable-note {
+  color: $muted;
+  pointer-events: none;
+}
+._disable-note-wrapper {
+  cursor: not-allowed;
+}
+
+@media (max-width: $bp-sm) {
+  ._display-general {
+    display: inherit;
+
+    > div:not(:last-child) {
+      margin-bottom: 0.75rem;
+    }
+  }
+}

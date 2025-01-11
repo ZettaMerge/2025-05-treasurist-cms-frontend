@@ -1,0 +1,15 @@
+@import "variables-custom";
+
+.form-control-position {
+  height: 100%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+// .form-control-position._clear {
+//   position: absolute;
+//   &:hover {
+//     color: $primary;
+//   }
+// }

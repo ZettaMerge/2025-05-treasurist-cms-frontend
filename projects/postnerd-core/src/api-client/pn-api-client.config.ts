@@ -1,0 +1,25 @@
+import { ApiErrorHandler } from './pn-api-error.model';
+
+export interface PnApiClientConfig {
+  apiBaseUrl?: string;
+  pageHeaderResponseKeys?: {
+    pageCount: string;
+    totalCount: string;
+  };
+  dateRequestFormatter?: (date: Date) => string;
+  dateResponseReviver?: (key: string, value: string) => string | Date;
+  errorHandler?: (err) => ApiErrorHandler;
+  enableRefreshToken?: boolean;
+  errorUnauthorizedHandler?: (err) => ApiErrorHandler;
+}
+
+export const defaultConfig = {
+  apiBaseUrl: '',
+  pageHeaderResponseKeys: {
+    pageCount: 'X-PageCount',
+    totalCount: 'X-TotalCount',
+  },
+  useDateRequestInterceptor: true,
+  useNoCacheInterceptor: true,
+  enableRefreshToken: false,
+};

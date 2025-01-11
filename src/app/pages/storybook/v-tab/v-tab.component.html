@@ -1,0 +1,20 @@
+<p>วิธีการใช้ tab ต้อง <code>extends BaseFeatureTabComponent</code></p>
+<p>ตัวอย่าง code ดูได้ที่ไฟล์ <code>v-tab</code></p>
+
+<pn-tabs
+  [tabs]="tabs"
+  [(activeTabId)]="activeTabId"
+>
+</pn-tabs>
+
+<ng-container *ngIf="activeTabId === Tab.all">
+  <div>
+    <p>All Content</p>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="activeTabId === Tab.regulatoryMonitoring">
+  <div>
+    <p>Regulatory Monitoring Content</p>
+  </div>
+</ng-container>

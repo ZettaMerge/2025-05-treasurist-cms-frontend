@@ -1,0 +1,210 @@
+<div class="d-flex pt-2">
+  <div class="col-6 px-0 d-flex">
+    <div class="col-4 pl-0">
+      <div class="form-group">
+        <label class="col-form-label">รูปแบบการตัดบัญชี</label>
+        <pn-segmented-control
+          name="debitType"
+          [list]="debitTypeList"
+          [style]="'custom'"
+          [(ngModel)]="debitType"
+        >
+        </pn-segmented-control>
+      </div>
+    </div>
+    <div class="col-8 pl-0">
+      <div class="form-group">
+        <label class="col-form-label is-required">วันที่ทำรายการ</label>
+        <div class="form-input">
+          <pn-dynamic-dropdown
+            id="code"
+            name="code"
+            placeholder="เลือก"
+            [list]="debitType === 1 ? listsWeekDropdown : listsDateDropdown"
+            [(ngModel)]="selectDate"
+            (ngModelChange)="onChangeTransactionDate()"
+            required
+          >
+          </pn-dynamic-dropdown>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="col-6 px-0 d-flex">
+    <div class="col-12 pr-0">
+      <div class="form-group">
+        <label class="col-form-label is-required">วันที่เริ่มต้น</label>
+        <div class="form-input">
+          <pn-date-picker
+            placeholder="dd/mm/yyyy"
+            id="effectiveDateStart"
+            name="effectiveDateStart"
+            [(ngModel)]="effectiveDateStart"
+            (ngModelChange)="onChangeEffectiveDateStart()"
+            [daysDisabled]="[0,6]"
+            required
+          >
+          </pn-date-picker>
+        </div>
+        <error-message-control
+          *ngIf="isErrorEffectiveDateStart"
+          [text]="'วันที่เริ่มต้นต้องมากกว่าวันที่ปัจจุบัน'"
+        >
+        </error-message-control>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="pt-2">
+  <div class="col-6 px-0 d-flex">
+    <div class="col-4 pl-0">
+      <div class="form-group">
+        <label class="col-form-label">วันที่สิ้นสุด</label>
+        <div class="form-input">
+          <pn-segmented-control
+            name="dateEnd"
+            [list]="dateEndList"
+            [(ngModel)]="dateEnd"
+          >
+          </pn-segmented-control>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-8 pl-0"
+      *ngIf="dateEnd === 0"
+    >
+      <div class="form-input pt-2">
+        <label class="col-form-label"></label>
+        <pn-date-picker
+          placeholder="dd/mm/yyyy"
+          id="effectiveDateEnd"
+          name="effectiveDateEnd"
+          [(ngModel)]="effectiveDateEnd"
+          [required]="onEffectiveDateEnd()"
+          (ngModelChange)="onChangeEffectiveDateEnd()"
+          [daysDisabled]="[0,6]"
+        >
+        </pn-date-picker>
+        <error-message-control
+          *ngIf="isErrorEffectiveDateEnd"
+          [text]="'วันที่สิ้นสุดต้องมากกว่าวันที่เริ่มต้น'"
+        >
+        </error-message-control>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="d-flex pb-2 pt-2">
+  <div class="col-11 px-0  d-flex">
+    <div class="col-4 pl-0"><span>บลจ.</span></div>
+    <div class="col-4 pl-0"><span>เลือกกองทุน</span></div>
+    <div class="col-4 pl-0"><span>จำนวนที่ต้องการซื้อ</span></div>
+  </div>
+  <div class=" col-1 pl-0 d-flex"></div>
+</div>
+<hr>
+<div *ngFor="let dcaData of dcaFundArray; let i = index; let firstIndex = first;  let lastIndex = last;">
+  <div class="d-flex pb-2 pt-3">
+    <div class="col-11 px-0 d-flex">
+      <div class="col-4 pl-0">
+        <div class="form-group">
+          <div class="form-input">
+            <shared-asset-dropdown
+              id="dcaDataName-{{i}}"
+              name="dcaDataName-{{i}}"
+              placeholder="ค้นหา บลจ."
+              [(ngModel)]="dcaData.amcCode"
+              (ngModelChange)="onAssetChange($event, i)"
+              [autoReset]="true"
+              required
+            >
+            </shared-asset-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="col-4 pl-0">
+        <div class="form-group">
+          <div class="form-input">
+            <shared-fund-dropdown
+              placeholder="ค้นหากองทุน"
+              id="dcaDataFundCode-{{i}}"
+              name="fundPorFundCode-{{i}}"
+              [autoReset]="true"
+              [isActive]="true"
+              [amc]="dcaData.amcCode || undefined"
+              [(ngModel)]="dcaData.fund"
+              [autoReset]="!dcaData.amcCode"
+              (ngModelChange)="onFundChange($event, i)"
+              required
+            >
+            </shared-fund-dropdown>
+          </div>
+          <div
+            id="minimum-{{i}}"
+            name="minimum-{{i}}"
+            *ngIf="dcaData.fund"
+            class="pt-1"
+          >
+            <p class="mb-0 text-muted font-size-small">ขั้นต่ำลงทุน {{ dcaData.minimum | number: '1.2-2'}} บาท</p>
+          </div>
+          <error-message-control
+            id="isFundDouble-{{i}}"
+            name="isFundDouble-{{i}}"
+            *ngIf="dcaData.isFundDouble"
+            [text]="'กองทุนนี้ถูกเลือกไปแล้ว กรุณาเลือกใหม่'"
+          >
+          </error-message-control>
+        </div>
+      </div>
+      <div class="col-4 pl-0">
+        <div class="form-group">
+          <div class="form-group position-relative has-icon-right">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="0.00"
+              id="amount-{{i}}"
+              name="amount-{{i}}"
+              [(ngModel)]="dcaData.amount"
+              (ngModelChange)="fundAmountChange($event, dcaData.amount , dcaData.minimum, i)"
+              (blur)="onBlurEvent(i, dcaData)"
+              mask="separator.2"
+              thousandSeparator=","
+              onlyPositive
+              required
+            >
+            <div class="form-control-position">
+              <span>บาท</span>
+            </div>
+          </div>
+          <error-message-control
+            id="isErrorMinimum-{{i}}"
+            name="isErrorMinimum-{{i}}"
+            *ngIf="dcaData.isErrorMinimum"
+            [text]="'จำนวนเงินลงทุนน้อยกว่าเงินลงทุนขั้นต่ำที่กำหนด'"
+          >
+          </error-message-control>
+          <error-message-control
+            id="isErrorNumber-{{i}}"
+            name="isErrorNumber-{{i}}"
+            *ngIf="dcaData.isErrorNumber"
+            [text]="'กรุณาระบุเป็นตัวเลขเท่านั้น'"
+          >
+          </error-message-control>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-1 text-center pt-2 "><a
+        (click)="deleteFund(i)"
+        class="text-primary font-size-large"
+      ><i class="ic ic-delete"></i></a>
+    </div>
+  </div>
+  <hr>
+</div>
+<div class="d-flex align-items-center justify-content-end pt-2 pb-2">
+  <a (click)="addFund($event)"><i class="ic ic-plus-circle text-primary pr-1"></i>เพิ่มกองทุน</a>
+</div>

@@ -1,0 +1,137 @@
+<form
+  #form="ngForm"
+  [class.submitted]="form.submitted"
+  (ngSubmit)="onSave(form)"
+>
+
+  <div id="form-account-juristic">
+    <div class="_g-header">
+      <h1 class="_g-title-header">สร้างรายการลูกค้า Juristic</h1>
+      <div class="_g-header justify-content-end">
+        <button
+          type="submit"
+          class="btn btn-clear  mr-1 mb-1"
+        ><span>Save Draft</span>
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary  mr-1 mb-1"
+        ><span>สร้าง</span>
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary  mr-1 mb-1"
+          (click)="goBack()"
+        ><span>กลับ</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="card _g-card-content-tab">
+      <div class="card-body pt-0 ">
+
+        <div class="card-header pl-0">
+          <span class="_g-text-header-title">ข้อมูลบัญชี</span>
+          <div class="d-flex">
+            <span class="badge badge-info">Juristic</span>
+          </div>
+        </div>
+        <shared-view-account-info [isNew]="true">
+        </shared-view-account-info>
+        <hr/>
+
+
+        <!--ข้อมูลนิติบุคคล-->
+        <fe-open-account-form-juristic-info
+          [data]="openAccountData">
+        </fe-open-account-form-juristic-info>
+        <!--ข้อมูลนิติบุคคล end-->
+
+
+        <!--รายชื่อกรรมการของนิติบุคคล --->
+        <fe-open-account-form-juristic-list-director>
+
+        </fe-open-account-form-juristic-list-director>
+        <!--รายชื่อกรรมการของนิติบุคคล end  --->
+        <hr/>
+
+        <!--รายชื่อผู้ถือหุ้นที่ถือหุ้นตั้งแต่ 25% ขึ้นไป --->
+        <fe-open-account-form-juristic-list-puppet-holder>
+        </fe-open-account-form-juristic-list-puppet-holder>
+        <!--รายชื่อผู้ถือหุ้นที่ถือหุ้นตั้งแต่ 25% ขึ้นไป --->
+        <hr/>
+
+        <!--ข้อมูลผู้รับผลประโยนช์ที่แท้จริง--->
+        <fe-open-account-form-juristic-info-beneficiary></fe-open-account-form-juristic-info-beneficiary>
+        <hr class="mt-4"/>
+        <!--ข้อมูลผู้รับผลประโยนช์ที่แท้จริง--->
+
+        <!--ข้อมูลสำหรับทำธุรกรรมกองทุน--->
+        <fe-open-account-form-juristic-info-mutual-fund-transaction></fe-open-account-form-juristic-info-mutual-fund-transaction>
+        <hr class="mt-4"/>
+        <!--ข้อมูลสำหรับทำธุรกรรมกองทุน--->
+
+        <!--การเปิดบัญชีกองทุน--->
+        <fe-open-account-form-juristic-info-account-open></fe-open-account-form-juristic-info-account-open>
+        <hr class="mt-4"/>
+        <!--การเปิดบัญชีกองทุน--->
+
+        <!--Suitability & CDD-->
+        <div class="card-header pl-0">
+          <span class="_g-text-header-title">Suitability & CDD</span>
+        </div>
+        <div class="col-12 d-flex px-0">
+          <div class="col-5 px-0">
+            <a
+              class="text-link"
+              (click)="onOpenModal()"
+            >
+              <p class="m-0">ทำแบบทดสอบ</p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ไฟล์ยืนยันการเปิดบัญชี -->
+    <fe-open-account-list-file-confirm>
+
+    </fe-open-account-list-file-confirm>
+
+
+    <div class="_g-header justify-content-end">
+      <button
+        type="submit"
+        class="btn btn-clear  mr-1 mb-1"
+      ><span>Save Draft</span>
+      </button>
+      <button
+        type="submit"
+        class="btn btn-primary  mr-1 mb-1"
+      ><span>สร้าง</span>
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary  mr-1 mb-1"
+        (click)="goBack()"
+      ><span>กลับ</span>
+      </button>
+    </div>
+  </div>
+</form>
+
+<lib-modal
+  #riskModal
+  modalSize="lg"
+  [showHeader]="false"
+>
+  <!-- <lib-modal-title>แก้ไขทะเบียนรถลูกบ้าน</lib-modal-title> -->
+  <fe-open-account-form-risk-assessment
+    #formRiskAssessment
+    *ngIf="riskModal.isOpen"
+    (cancel)="riskModal.close()"
+    (save)="save($event)"
+  >
+  </fe-open-account-form-risk-assessment>
+
+</lib-modal>

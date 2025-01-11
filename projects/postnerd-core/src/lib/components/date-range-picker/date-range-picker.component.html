@@ -1,0 +1,44 @@
+<div class="form-group has-icon-right position-relative mb-0">
+  <div class="form-input">
+    <input
+      #dp="bsDaterangepicker"
+      bsDaterangepicker
+      type="text"
+      class="form-control _date-picker"
+      [bsConfig]="bsConfig"
+      [minDate]="min"
+      [maxDate]="max"
+      [ngModel]="dateRange"
+      (ngModelChange)="onValueChange($event)"
+      [placeholder]="placeholder"
+      [disabled]="disabled"
+      (onHidden)="onBlur($event)"
+      (onShown)="onOpenCalendar($event)"
+    >
+
+    <a
+      class="form-control-position"
+      (click)="dp.toggle()"
+      *ngIf="!dateRange"
+    >
+      <i class="ic ic-calendar"></i>
+    </a>
+
+    <a
+      class="form-control-position _clear"
+      *ngIf="dateRange && !disabled"
+      (click)="onClear()"
+    >
+      <span
+        class="ng-clear-wrapper ng-star-inserted"
+        title="Clear all"
+      >
+        <!-- <span
+          aria-hidden="true"
+          class="ng-clear"
+        >×</span> -->
+        <i class="ic ic-cross ng-clear"></i>
+      </span>
+    </a>
+  </div>
+</div>

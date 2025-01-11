@@ -1,0 +1,48 @@
+@import "variables-custom";
+
+._account-detail-wrapper {
+
+  ._text-space {
+    span {
+      margin-right: $grid-gutter-width;
+    }
+  }
+
+  hr {
+    margin-left:  -1.5rem;
+    margin-right: -1.5rem;
+  }
+
+}
+
+._name-staff-wrapper {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #E0E0E5;
+}
+
+.list-group-item {
+  position: relative;
+  display: block;
+  padding: 1.5rem 1.25rem;
+  background-color: #fff;
+
+  ._img-size {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+._p-color {
+  background: #f0f0f0;
+  border-radius: 4px;
+}
+
+._badge-border {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+._line-left {
+  width: 10px;
+}
+

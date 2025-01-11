@@ -1,0 +1,35 @@
+<div class="card-header pb-0">
+  <h5 class="card-title text-primary">ตรวจสอบรายละเอียด</h5>
+</div>
+<div class="card-body">
+  <div class="col-12">
+    <div class="row" *ngFor="let criminal of criminalDataList; let i = index">
+      <div class="pr-3">
+        <div class="checkbox _checkbox">
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            id="ciminal-{{i}}"
+            name="isAccount1"
+            [(ngModel)]="criminal.isAllow"
+            (ngModelChange)="onSelectCriminalChange($event, criminal, i)"
+          />
+          <label
+            class="form-check-label ml-4"
+            for="ciminal-{{i}}"
+          >{{criminal.title}}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="_modal-footer">
+  <button
+    type="button"
+    class="btn btn-clear  mr-1 mb-1"
+    (click)="onCancel()"
+  ><span>ปิด</span>
+  </button>
+</div>

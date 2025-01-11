@@ -1,0 +1,106 @@
+<form
+  #form="ngForm"
+  [class.submitted]="form.submitted"
+  (ngSubmit)="onSave(form)"
+>
+  <div id="user-form">
+    <div class="_g-header justify-content-between">
+      <h1 class="_g-title-header" *ngIf="canCreate && canView || canCreate && !canView">{{roleId ? 'แก้ไข': 'สร้าง'}} Role</h1>
+      <h1 class="_g-title-header" *ngIf="canView && !canCreate">Role</h1>
+      <div class="_g-header justify-content-end">
+        <button
+          *ngIf="canCreate"
+          type="submit"
+          class="btn btn-primary  _g-space-btn mb-1"
+        ><span>{{roleId ? 'บันทึก': 'สร้าง'}}</span>
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary  mb-1"
+          (click)="goBack()"
+        ><span>กลับ</span>
+        </button>
+      </div>
+    </div>
+
+    <!--  FILTER-->
+    <div class="card">
+      <div class="card-body">
+        <div class="_g-header-card">
+          <span class="_g-text-header-title">ข้อมูล Role</span>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <label class="col-form-label">ชื่อ Role</label>
+              <div class="d-flex">
+                <div class="flex-1">
+                  <div class="form-input">
+                    <input
+                      type="text"
+                      id="role-name"
+                      name="role-name"
+                      class="form-control"
+                      placeholder="ระบุชื่อ Role"
+                      [(ngModel)]="roleData.name"
+                      [disabled]="canView && !canCreate"
+                      required
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--  FILTER-->
+
+    <div class="card _g-card-content-tab">
+      <div class="card-body">
+        <pn-tabs
+          [tabs]="tabs"
+          [(activeTabId)]="activeTabId"
+        >
+        </pn-tabs>
+
+        <ng-container *ngIf="activeTabId === Tab.permissionMenu">
+          <fe-user-management-set-permission-form
+            (changePermission)="onChangePermission($event)"
+            [permissionDetail]="permissionList"
+            [roleId]="roleId"
+            [canView]="canView"
+            [canCreate]="canCreate"
+          >
+          </fe-user-management-set-permission-form>
+        </ng-container>
+
+        <ng-container *ngIf="activeTabId === Tab.permissionUser">
+          <fe-user-management-set-user-form
+            [roleId]="roleId"
+            [canView]="canView"
+            [canCreate]="canCreate"
+          >
+          </fe-user-management-set-user-form>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <div class="_g-header justify-content-end">
+    <button
+      *ngIf="canCreate"
+      type="submit"
+      class="btn btn-primary  _g-space-btn mb-1"
+
+    ><span>{{roleId ? 'บันทึก': 'สร้าง'}}</span>
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary mb-1"
+      (click)="goBack()"
+    ><span>กลับ</span>
+    </button>
+  </div>
+
+</form>

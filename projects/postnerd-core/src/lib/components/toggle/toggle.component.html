@@ -1,0 +1,27 @@
+<div class="_toggle-wrapper {{class}}">
+  <div
+    (click)="toggle()"
+    class="_label-left {{toggleLeftClass}}"
+  >
+    <ng-content select="pn-toggle-left"></ng-content>
+  </div>
+  <div class="custom-switch">
+    <input
+      type="checkbox"
+      class="custom-control-input"
+      [(ngModel)]="value"
+      [disabled]="disabled"
+      (ngModelChange)="onValueChange($event)"
+      [id]="toggleID"
+    >
+    <label
+      class="custom-control-label"
+      [for]="toggleID"
+    >
+      <ng-content
+        select="pn-toggle-right"
+        class="ml-1"
+      ></ng-content>
+    </label>
+  </div>
+</div>

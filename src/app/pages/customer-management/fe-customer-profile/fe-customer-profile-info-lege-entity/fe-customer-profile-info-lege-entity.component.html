@@ -1,0 +1,268 @@
+<!--Section Info Start-->
+<div class="card-header pl-0">
+  <span class="_g-text-header-title">ข้อมูลบัญชี</span>
+  <div class="_display-risk">
+    <span class="badge badge-white">Risk Level &nbsp;
+      <span class="m-0 badge-small-in-badge text-center badge-danger">{{data?.riskLevel}}</span>
+    </span>
+    <span class="badge badge-white">Fx &nbsp;
+
+      <span
+        class="m-0 badge-small-in-overlap-badge text-center"
+        [class.badge-dark-blue]="statusFx === true"
+        [class.badge-dark-grey]="statusFx === false"
+      >{{statusFx === true ? 'YES' : 'NO'}}
+        <span
+          class="m-0  badge-small-in-badge text-center"
+          [class.badge-dark-blue]="statusFx === false"
+          [class.badge-dark-grey]="statusFx === true"
+        >{{statusFx === false ? 'YES' : 'NO'}}</span>
+      </span>
+
+    </span>
+
+
+    <span class="badge badge-white">Commo &nbsp;
+      <span
+        class="m-0 badge-small-in-overlap-badge text-center"
+        [class.badge-dark-blue]="statusCommo === true"
+        [class.badge-dark-grey]="statusCommo === false"
+      >{{statusCommo === true ? 'YES' : 'NO'}}
+        <span
+          class="m-0 badge-small-in-badge text-center"
+          [class.badge-dark-blue]="statusCommo === false"
+          [class.badge-dark-grey]="statusCommo === true"
+        >{{statusCommo === false ? 'YES' : 'NO'}}</span>
+      </span>
+
+    </span>
+    <span class="badge badge-info">Juristic</span>
+  </div>
+</div>
+<shared-view-account-info
+  [data]="data"
+  [isNew]="false"
+></shared-view-account-info>
+<hr />
+<!--Section Info End-->
+
+<div class="card-header pl-0">
+  <span class="_g-text-header-title">ข้อมูลประกอบการเปิดบัญชีนิติบุคคล</span>
+</div>
+<shared-view-legal-entity-account-info [data]="data">
+</shared-view-legal-entity-account-info>
+
+<div class="card-header pl-0">
+  <span class="_g-text-header-title">รายชื่อกรรมการของนิติบุคคล</span>
+</div>
+<shared-view-legal-entity-account-list-juristic-person [data]="data">
+</shared-view-legal-entity-account-list-juristic-person>
+<!--รายชื่อกรรมการของนิติบุคคล END-->
+<hr />
+
+<!--รายชื่อผู้ถือหุ้นตั้งแต่ 25% ขึ้นไป START-->
+<div class="card-header pl-0">
+  <span class="_g-text-header-title">รายชื่อผู้ถือหุ้นที่ถือตั้งแต่ 25% ขึ้นไป</span>
+</div>
+<div class="_g-text-title">
+  <p class="mb-0 py-1 pl-3 _p-color">บุคคลธรรมดาที่เป็นผู้ถือหุ้นของนิติบุคคลเจ้าของบัญชี</p>
+</div>
+<div class="col-12 d-flex px-0 py-1 pl-2 pt-4">
+  <div class="col-4">
+    <div class="row">
+      <div class="col-12 _g-text-title">
+        <p>ชื่อ-นามสกุล ของผู้ถือหุ้น</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-8">
+    <div class="row">
+      <div class="col-4 text-center _g-text-title">
+        <p>สัญชาติ</p>
+      </div>
+      <div class="col-4 _g-text-title">
+        <p>เลขบัตรประชาชน/เลขที่พาสปอร์ต</p>
+      </div>
+      <div class="col-4 text-center _g-text-title">
+        <p>วันหมดอายุ</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="col-12 d-flex px-0 py-1 pl-2 border-top align-items-center justify-content-center"
+  *ngFor="let staff of staffData; let i = index;"
+>
+  <div class="col-4">
+    <div class="row">
+      <div class="col-12">
+        <span>{{staff.name}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="col-8">
+    <div class="row pt-2 pb-2">
+      <div class="col-4 text-center">
+        <span>{{staff.national}}</span>
+      </div>
+      <div class="col-4">
+        <span>{{staff.idNo}}</span>
+      </div>
+      <div class="col-4 text-center">
+        <span>{{staff.idNo}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="pt-2 _g-text-title">
+  <p class="mb-0 py-1 pl-3 _p-color">นิติบุคคลที่เป็นผู้ถือหุ้นของนิติบุคคลเจ้าของบัญชี</p>
+</div>
+<div class="col-12 d-flex px-0 py-1 pl-2 pt-4 border-bottom">
+  <div class="col-4">
+    <div class="row">
+      <div class="col-12 _g-text-title">
+        <p>ชื่อ-นามสกุล หรือ ชื่อนิติบุคคล ที่เป็นผู้ถือหุ้น</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-8">
+    <div class="row">
+      <div class="col-4 text-center _g-text-title">
+        <p>สัญชาติ</p>
+      </div>
+      <div class="col-4 _g-text-title">
+        <p>เลขบัตรประชาชน/เลขที่พาสปอร์ต/เลขประจำตัวผู้เสียภาษีอากร/เลขทะเบียนนิติบุคคล</p>
+      </div>
+      <div class="col-4 text-center _g-text-title">
+        <p>วันหมดอายุ</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  *ngFor="let staff of staffData; let i = index;"
+  class="col-12 d-flex px-0 py-1 pl-2 border-bottom align-items-center justify-content-center"
+>
+  <div class="col-4">
+    <div class="row">
+      <div class="col-12">
+        <span>{{staff.name}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="col-8">
+    <div class="row pt-2 pb-2">
+      <div class="col-4 text-center">
+        <span>{{staff.national}}</span>
+      </div>
+      <div class="col-4">
+        <span>{{staff.idNo}}</span>
+      </div>
+      <div class="col-4 text-center">
+        <span>{{staff.idNo}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="mt-4" />
+<!--รายชื่อผู้ถือหุ้นตั้งแต่ 25% ขึ้นไป END-->
+
+<!--ข้อมูลผู้รับผลประโยชน์ START-->
+<div class="card-header pl-0">
+  <span class="_g-text-header-title">ข้อมูลผู้รับผลประโยชน์ที่แท้จริง</span>
+</div>
+<shared-view-legal-entity-account-benefit-info [data]="data">
+
+</shared-view-legal-entity-account-benefit-info>
+<hr class="mt-2" />
+<!--ข้อมูลผู้รับผลประโยชน์ END-->
+
+
+<div class="card-header pl-0">
+  <span class="_g-text-header-title">ข้อมูลสำหรับทำธุรกรรมกองทุนรวม</span>
+</div>
+<shared-view-legal-entity-account-terms-sign-transaction [data]="data">
+
+</shared-view-legal-entity-account-terms-sign-transaction>
+<hr class="mt-2" />
+
+
+<!--Section การเปิดบัญชีกองทุนรวม Start-->
+<div class="card-header pl-0">
+  <span class="_g-text-header-title">การเปิดบัญชีกองทุนรวม</span>
+</div>
+<div class="col-12 d-flex px-0 py-1">
+  <div class="col-xl-9 col-lg-9 col-md-7 px-0">
+    <div class="pb-2">
+      <span>วัตถุประสงค์การลงทุน</span>
+    </div>
+    <div class="col-12 d-flex px-0 py-1">
+      <div class="d-flex">
+        <li class="d-inline-block mr-2 mb-2">
+          <div class="checkbox _g-checkbox-display-none">
+            <input
+              type="checkbox"
+              id="point-investment"
+              checked
+            >
+            <label for="point-investment"><span>การลงทุน</span></label>
+          </div>
+        </li>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-12 d-flex px-0 py-1">
+  <div class="col-xl-9 col-lg-9 col-md-7 px-0">
+    <div class="pt-2 pb-2">
+      <span>ที่อยู่ในการจัดส่งเอกสาร</span>
+    </div>
+    <div class="col-12 d-flex px-0 py-1">
+      <div class="d-flex">
+        <li class="d-inline-block mr-2 mb-2">
+          <div class="checkbox _g-checkbox-display-none">
+            <input
+              type="checkbox"
+              id="address-source"
+              checked
+            >
+            <label for="address-source"><span>ตามหนังสือจดทะเบียนนิติบุคคล/หนังสือจัดตั้ง</span></label>
+          </div>
+        </li>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-12 d-flex px-0 py-1">
+  <div class="col-xl-9 col-lg-9 col-md-7 px-0">
+    <div class="pt-2 pb-2">
+      <span>วิธีการรับเอกสาร</span>
+    </div>
+    <div class="col-12 d-flex px-0 py-1">
+      <div class="d-flex">
+        <li class="d-inline-block mr-2 mb-2">
+          <div class="checkbox _g-checkbox-display-none">
+            <input
+              type="checkbox"
+              id="doc-source"
+              checked
+            >
+            <label for="doc-source"><span>ตามอีเมล</span></label>
+          </div>
+        </li>
+      </div>
+    </div>
+  </div>
+</div>
+<hr class="mt-2"/>
+<!--Section การเปิดบัญชีกองทุนรวม End-->
+
+<!--Section Suitability & CDD Start-->
+<div class="card-header pl-0">
+  <span class="_g-text-header-title">Suitability & CDD</span>
+</div>
+<shared-view-suitabiliy-cdd [data]="data"></shared-view-suitabiliy-cdd>
+
+<!--Section Suitability & CDD End-->

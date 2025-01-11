@@ -1,0 +1,16 @@
+@import "variables-custom";
+
+._card-wrapper {
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  margin-right: 1.5rem;
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  p {
+    text-align: center;
+    font-size: large;
+  }
+}

@@ -1,0 +1,367 @@
+<div class="col-12 _g-card-form px-0">
+  <div class="col-2 px-0">
+    <div class="mb-2 pl-0">
+      <div class="checkbox">
+        <input
+          type="checkbox"
+          id="addressIdCard"
+          name="addressIdCard"
+          [(ngModel)]="agentData.isTeamLeader"
+          (ngModelChange)="onSelectTeamLeader($event)"
+          [disabled]="canView && !canCreate"
+        >
+        <label for="addressIdCard"><span>หัวหน้า Team</span></label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-12 _g-card-form px-0" *ngIf="!isAgentDetail">
+  <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 pl-0">
+    <div class="row" *ngIf="!isShowCreateTeam">
+      <div class="col-xl-8 col-md-8 col-sm-12 _g-text-title">
+        <div class="form-group">
+          <label class="col-form-label is-required">Team</label>
+          <div class="form-input">
+            <pn-dynamic-dropdown
+              [list]="teamList"
+              placeholder="โปรดระบุ"
+              id="team"
+              name="team"
+              required
+              [(ngModel)]="agentTeamData.name"
+              (ngModelChange)="onTeamChange($event)"
+            >
+            </pn-dynamic-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-md-4 col-sm-12 align-items-center d-flex pt-2">
+        <a class="text-link" (click)="onCreateTeam()">สร้าง Team ใหม่</a>
+      </div>
+    </div>
+    <div class="row" *ngIf="isShowCreateTeam">
+      <div class="col-xl-8 col-md-8 col-sm-12 _g-text-title">
+        <div class="form-group">
+          <label class="col-form-label">สร้าง Team ใหม่</label>
+          <div class="form-input">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="ระบุ Team ใหม่"
+              id="crate-team"
+              name="crate-team"
+              [(ngModel)]="teamData.name"
+              required
+            >
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-md-4 col-sm-12 align-items-center d-flex pt-3">
+        <button
+          type="button"
+          class="btn btn-primary  _g-space-btn mb-1"
+          (click)="onSaveCreateTeam()"
+        ><span>บันทึก</span>
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary  mr-1 mb-1"
+          (click)="onCancelCreateTeam()"
+        ><span>ยกเลิก</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 pr-0">
+    <div class="row">
+      <div class="col-xl-6 col-md-6 col-sm-12 _g-text-title">
+        <div class="form-group">
+          <label class="col-form-label is-required">IC License</label>
+          <div class="form-input">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="โปรดระบุ"
+              id="ic-license"
+              name="ic-license"
+              [class._valid-form-error]="isIcLicenseError"
+              [(ngModel)]="agentData.icLicense"
+              (ngModelChange)="onChangeEmail($event, 'icLicense')"
+              required
+            >
+            <error-message-control
+              class="text-bold-500"
+              *ngIf="isIcLicenseError"
+              [text]="'ไม่สามารถเพิ่มผู้ใช้งานได้เนื่องจาก IC License ซ้ำ กรุณาระบุใหม่'"
+            >
+            </error-message-control>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-6 col-md-6 col-sm-12 _g-text-title">
+        <div class="form-group">
+          <label class="col-form-label is-required">License Expire Date</label>
+          <div class="form-input">
+            <pn-date-picker
+              placeholder="dd/mm/yyyy"
+              id="license-expire"
+              name="license-expire"
+              [(ngModel)]="agentData.licenseExpireDate"
+              required
+            >
+            </pn-date-picker>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-12 _g-card-form px-0" *ngIf="isAgentDetail">
+  <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 pl-0">
+    <div class="row">
+      <div class="col-xl-4 col-md-4 col-sm-12 _g-text-title">
+        <div class="form-group">
+          <label class="col-form-label is-required">Team</label>
+          <div class="form-input">
+            <shared-team-dropdown
+              placeholder="โปรดระบุ"
+              id="team-2"
+              name="team-2"
+              [(ngModel)]="agentTeamData.name"
+              (ngModelChange)="onTeamChange($event)"
+              [disabled]="canView && !canCreate"
+              required
+            >
+            </shared-team-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-md-4 col-sm-12 _g-text-title">
+        <div class="form-group">
+          <label class="col-form-label">IC License</label>
+          <div class="form-input">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="โปรดระบุ"
+              id="ic-license-2"
+              name="ic-license-2"
+              [class._valid-form-error]="isIcLicenseError"
+              [(ngModel)]="agentData.icLicense"
+              (ngModelChange)="onChangeEmail($event, 'icLicense')"
+              [disabled]="canView && !canCreate"
+              required
+            >
+            <error-message-control
+              class="text-bold-500"
+              *ngIf="isIcLicenseError"
+              [text]="'ไม่สามารถเพิ่มผู้ใช้งานได้เนื่องจาก IC License ซ้ำ กรุณาระบุใหม่'"
+            >
+            </error-message-control>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-md-4 col-sm-12 _g-text-title">
+        <div class="form-group">
+          <label class="col-form-label is-required">License Expire Date</label>
+          <div class="form-input">
+            <pn-date-picker
+              placeholder="dd/mm/yyyy"
+              id="license-expire-2"
+              name="license-expire-2"
+              [(ngModel)]="agentData.licenseExpireDate"
+              [disabled]="canView && !canCreate"
+              required
+            >
+            </pn-date-picker>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-12 _g-card-form px-0">
+  <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 pl-0">
+    <div class="row">
+      <div class="col-xl-6 col-md-6 col-sm-12 _g-text-title">
+        <div class="form-group">
+          <label class="col-form-label is-required">ชื่อจริง</label>
+          <div class="form-input">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="โปรดระบุ"
+              id="firstName"
+              name="firstName"
+              [(ngModel)]="agentUserData.firstName"
+              [disabled]="canView && !canCreate"
+              required
+            >
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-6 col-md-6 col-sm-12 _g-text-title">
+        <div class="form-group">
+          <label class="col-form-label is-required">นามสกุล</label>
+          <div class="form-input">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="โปรดระบุ"
+              id="lastName"
+              name="lastName"
+              [(ngModel)]="agentUserData.lastName"
+              [disabled]="canView && !canCreate"
+              required
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 pr-0">
+    <div class="row">
+      <div class="col-xl-6 col-md-6 col-sm-12 _g-text-title">
+        <div class="form-group">
+          <label class="col-form-label is-required">วัน/เดือน/ปีเกิด</label>
+          <div class="form-input">
+            <pn-date-picker
+              placeholder="dd/mm/yyyy"
+              id="birthdate"
+              name="birthdate"
+              [(ngModel)]="agentData.birthdate"
+              [disabled]="canView && !canCreate"
+              required
+            >
+            </pn-date-picker>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-6 col-md-6 col-sm-12 _g-text-title">
+        <div class="form-group">
+          <label class="col-form-label is-required">Plain/Complex Flag</label>
+          <div class="form-input">
+            <pn-dynamic-dropdown
+              [list]="plainList"
+              placeholder="โปรดระบุ"
+              id="plain-complex"
+              name="plain-complex"
+              [(ngModel)]="plainComplexFlag"
+              (ngModelChange)="onChangePlianFlag($event)"
+              [disabled]="canView && !canCreate"
+              required
+            >
+            </pn-dynamic-dropdown>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-12 _g-card-form px-0">
+  <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 pl-0">
+    <div class="row">
+      <div class="col-xl-4 col-md-4 col-sm-12 _g-text-title">
+        <div class="form-group">
+          <label class="col-form-label">Inactive Date</label>
+          <div class="form-input">
+            <pn-date-picker
+              placeholder="dd/mm/yyyy"
+              id="active-date"
+              name="active-date"
+              [(ngModel)]="agentData.inactiveDate"
+              [disabled]="canView && !canCreate"
+            >
+            </pn-date-picker>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-md-4 col-sm-12 _g-text-title">
+        <div class="form-group">
+          <label class="col-form-label is-required">เบอร์โทรศัพท์</label>
+          <div class="form-input">
+            <input
+              type="tel"
+              class="form-control"
+              placeholder="โปรดระบุ"
+              id="phone-number"
+              name="phone-number"
+              [(ngModel)]="agentUserData.phoneNumber"
+              [disabled]="canView && !canCreate"
+              required
+            >
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-md-4 col-sm-12 _g-text-title">
+        <div class="form-group">
+          <label class="col-form-label is-required">อีเมล</label>
+          <div class="form-input">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="โปรดระบุ"
+              id="email"
+              name="email"
+              [class._valid-form-error]="isEmailError"
+              [(ngModel)]="agentUserData.email"
+              (ngModelChange)="onChangeEmail($event, 'email')"
+              [disabled]="canView && !canCreate"
+              vEmail
+              required
+            >
+          </div>
+          <error-message-control
+            class="text-bold-500"
+            *ngIf="isEmailError"
+            [text]="'ไม่สามารถเพิ่มผู้ใช้งานได้เนื่องจากอีเมลซ้ำ กรุณาระบุอีเมลใหม่'"
+          >
+          </error-message-control>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 pr-0">
+    <div class="row">
+      <div class="col-xl-6 col-md-6 col-sm-12 _g-text-title">
+        <div class="form-group">
+          <label class="col-form-label is-required">ธนาคาร</label>
+          <div class="form-input">
+            <shared-bank-dropdown
+              placeholder="โปรดระบุ"
+              id="bank"
+              name="bank"
+              [(ngModel)]="bankCode"
+              (ngModelChange)="bankOnchange($event)"
+              [disabled]="canView && !canCreate"
+              required
+            >
+            </shared-bank-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-6 col-md-6 col-sm-12 _g-text-title">
+        <div class="form-group">
+          <label class="col-form-label is-required">เลขบัญชีธนาคาร</label>
+          <div class="form-input">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="โปรดระบุ"
+              id="ิbank-account"
+              name="ิbank-account"
+              [(ngModel)]="agentData.bankAccountNo"
+              [disabled]="canView && !canCreate"
+              vDigit
+              required
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

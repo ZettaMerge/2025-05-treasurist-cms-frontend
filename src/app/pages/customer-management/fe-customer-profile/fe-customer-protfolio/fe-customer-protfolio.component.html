@@ -1,0 +1,162 @@
+<div class="_g-customer-profile-wrapper">
+  <div class="d-flex justify-content-between align-items-center">
+    <span *ngIf="!isTabViewPort" class="text-muted"><i class="ft ft-clock"></i> {{currentDate | aDate}}</span>
+    <a *ngIf="isTabViewPort" class="text-muted" (click)="goBackToport()"><i class="ic ic-chevron-left"></i>
+      กลับหน้ารวมพอร์ต</a>
+    <div *ngIf="isTabViewPort" class="col-8 d-flex align-items-center">
+      <div class="col-6 text-right"><span>เลือกแผนลงทุน</span></div>
+      <div class="col-6">
+        <pn-dynamic-dropdown
+          class="_dropdown-in-tab"
+          placeholder="แผนลงทุน"
+          [list]="listsDropdown"
+          [(ngModel)]="filterFundPlan"
+          (ngModelChange)="filterChange()"
+        >
+        </pn-dynamic-dropdown>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isTabViewPort">
+
+    <div class="d-flex pt-2 px-0">
+      <div class="pl-0 col-xl-4 col-lg-4 col-12">
+        <div class="card card-inverse _bg-grey">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media">
+                <div class="media-body text-left">
+                  <span>มูลค่าพอร์ตรวม</span>
+                  <h3 class="card-text" *ngIf="portFolioData.totalPortValue">{{portFolioData.totalPortValue | aDecimal}}
+                    บาท</h3>
+                  <h3 class="card-text" *ngIf="!portFolioData.totalPortValue">-</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-lg-4 col-12">
+        <div class="card card-inverse _bg-grey">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media">
+                <div class="media-body text-left">
+                  <span>ต้นทุนรวม</span>
+                  <h3 class="card-text" *ngIf="portFolioData.totalCost">{{portFolioData.totalCost | aDecimal}} บาท</h3>
+                  <h3 class="card-text" *ngIf="!portFolioData.totalCost">-</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pr-0 col-xl-4 col-lg-4 col-12">
+        <div class="card card-inverse _bg-grey">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media">
+                <div class="media-body text-left">
+                  <span>กำไร ขาดทุนรวม</span>
+                  <h3 class="card-text"
+                      *ngIf="portFolioData.totalProfit"
+                      [class.text-danger]="portFolioData.totalProfit < 0"
+                      [class.text-success]="portFolioData.totalProfit > 0"
+                  >{{portFolioData.totalProfit > 0 ? '+' : ''}}{{portFolioData.totalProfit | aDecimal}} บาท
+                    ({{portFolioData.totalProfitPercent > 0 ? '+' : ''}}{{portFolioData.totalProfitPercent}}%)</h3>
+                  <h3 class="card-text" *ngIf="!portFolioData.totalProfit">-</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <span class="_g-text-header-title">รายการแผนลงทุน</span>
+    <div class="_g-detail">
+      <div class="col-12 d-flex px-0 py-1">
+        <div class="col-6">
+          <div class="row">
+            <div class="col-5">
+              <span>แผนลงทุน</span>
+            </div>
+            <div class="col-5">
+              <span>ชื่อแผนลงทุน</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="row">
+            <div class="col-4">
+              <span>Account ID</span>
+            </div>
+            <div class="col-4">
+              <span>มูลค่าพอร์ต</span>
+            </div>
+            <div class="col-4">
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="col-12" *ngIf="portFolioData.fundPlans && portFolioData.fundPlans.length === 0">
+        <pn-data-not-found
+          [isShowActionTemplate]="false"
+          [message]="'ระบบไม่สามารถแสดงรายการได้ เนื่องจากไม่พบรายการข้อมูล'"
+        >
+        </pn-data-not-found>
+      </div>
+      <div *ngIf="portFolioData.fundPlans && portFolioData.fundPlans.length > 0">
+        <div *ngFor="let portFolio of portFolioData.fundPlans; let i = index;">
+          <div class="col-12 d-flex px-0 py-1 align-items-center justify-content-center">
+            <div class="col-6">
+              <div class="row">
+                <div class="col-5">
+                <span>{{portFolio.planType === 'CUSTOMIZED_PLAN' ? 'Investor Plan' : portFolio.planType === 'AGENT_PLAN' ? 'Agent Plan' : portFolio.planType === 'RISK_BASED_PLAN' ? 'Treasurist Plan' : '-'}}
+                </span>
+                </div>
+                <div class="col-5">
+                  <span>{{portFolio.name}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="row pt-2 pb-2">
+                <div class="col-4">
+                  <span>{{portFolio.fcnAccountId}}</span>
+                </div>
+                <div class="col-4">
+                   <span
+                   >{{portFolio.value | aDecimal}}</span>
+                  <p
+                    *ngIf="portFolio.value > 0"
+                    [class.text-success]="portFolio.profit > 0"
+                    [class.text-danger]="portFolio.profit < 0"
+                    class="mb-0">
+                    ({{portFolio.profitPercent > 0 ? '+' : ''}}{{portFolio.profit | aDecimal}})</p>
+
+                </div>
+                <div class="col-4">
+                  <a class="text-link"
+                     (click)="goToDetail(portFolio)">ดูรายละเอียด</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <fe-customer-portfolio-detail
+    *ngIf="isTabViewPort"
+    [fundPlanId]="fundPlanId"
+    [fcnAccountId]="fcnAccountId"
+    [fundCode]="fundCode"
+  >
+
+  </fe-customer-portfolio-detail>
+</div>

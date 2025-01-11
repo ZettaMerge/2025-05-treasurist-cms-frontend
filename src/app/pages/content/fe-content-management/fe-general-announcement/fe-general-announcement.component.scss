@@ -1,0 +1,12 @@
+@import "variables-custom";
+
+
+.badge-small-in-badge:not(.badge-pill):not(.badge-round){
+  border-radius: 0.25rem;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 6px;
+  padding-right: 6px;
+  line-height: 23px;
+  font-size: 14px;
+}

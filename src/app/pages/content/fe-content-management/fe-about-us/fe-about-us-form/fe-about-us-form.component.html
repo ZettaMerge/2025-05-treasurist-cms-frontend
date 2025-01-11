@@ -1,0 +1,61 @@
+<div id="create-about-us">
+  <form
+    #form="ngForm"
+    [class.submitted]="form.submitted"
+    (ngSubmit)="onSave(form)"
+  >
+
+    <div class="_g-header">
+      <h1 class="_g-title-header">{{canCreate ? 'แก้ไข ' : ''}}About Us</h1>
+      <div class="_g-header justify-content-end">
+        <button *ngIf="canCreate"
+          type="submit"
+          class="btn btn-primary _g-space-btn"
+        ><span>บันทึก</span>
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="goBack()"
+        ><span>กลับ</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <div class="col-12 px-0">
+          <div class="form-group">
+            <label class="col-form-label">รายละเอียด</label>
+            <div class="form-input">
+              <shared-editor
+                id="description"
+                name="description"
+                placeholder="โปรดระบุ"
+                [class._g-disable]="canView && !canCreate"
+                [(ngModel)]="aboutUsData.detail"
+                [ngModelOptions]="{standalone: true}"
+                required
+              ></shared-editor>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="_g-header justify-content-end">
+      <button *ngIf="canCreate"
+        type="submit"
+        class="btn btn-primary _g-space-btn"
+      ><span>บันทึก</span>
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="goBack()"
+      ><span>กลับ</span>
+      </button>
+    </div>
+  </form>
+
+</div>

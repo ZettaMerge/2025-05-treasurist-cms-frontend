@@ -1,0 +1,58 @@
+@import "variables-custom";
+
+@import "mixin";
+
+@import "override/helper";
+
+@import "override/font";
+@import "override/button";
+@import "override/button-group";
+@import "override/textinput";
+@import "override/radio";
+@import "override/sidebar";
+@import "override/nav";
+@import "override/background";
+@import "override/text";
+@import "override/card";
+@import "override/checkbox";
+@import "override/datepicker";
+@import "override/timepicker";
+@import "override/modal";
+@import "override/switch";
+@import "override/ngx-datatable";
+@import "override/select";
+@import "override/toast";
+@import "override/accordion";
+@import "override/ngx-file-drop";
+@import "override/carousel";
+@import "override/badge";
+@import "override/tabs";
+@import "override/dropdown";
+@import "override/text-editor";
+
+html {
+  font-size: 14px;
+  color: $text-primary;
+}
+
+body {
+  background-color: $background-primary !important;
+  letter-spacing: 0.3px !important;
+}
+
+.content-wrapper {
+  padding: 30px 30px;
+}
+
+i.icon-gradient {
+  &:before {
+    @extend %icon-gradient;
+  }
+}
+
+.helper {
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 90%;
+  margin-bottom: 0;
+}

@@ -1,0 +1,15 @@
+@import "variables-custom";
+
+._display-risk {
+  display: flex;
+  > span:not(:last-child) {
+    margin-right: 0.5rem;
+  }
+}
+
+._display-general {
+  display: flex;
+}
+
+
+

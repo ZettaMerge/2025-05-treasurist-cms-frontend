@@ -1,0 +1,129 @@
+<div class="_g-header justify-content-between">
+  <h1 class="_g-title-header">News</h1>
+</div>
+<!--SECTION FILTER-->
+<div class="card">
+  <div class="card-body">
+    <div class="d-flex">
+      <div class="col-6">
+        <div class="form-group">
+          <label class="col-form-label">ค้นหา</label>
+          <div class="form-input">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="หัวข้อ"
+              [(ngModel)]="filter.title"
+              (ngModelChange)="searchTextChange($event)"
+            >
+          </div>
+        </div>
+      </div>
+      <div class="col-6 d-flex">
+        <div class="form-group _g-space-btn">
+          <label class="col-form-label">สถานะ</label>
+          <pn-segmented-control
+            name="statusApproval"
+            [list]="statuses"
+            [(ngModel)]="filter.status"
+            (ngModelChange)="filterChange()"
+          >
+          </pn-segmented-control>
+        </div>
+        <div class="form-group">
+          <label class="col-form-label">Feature News <i class="fa fa-bookmark text-primary"></i></label>
+          <pn-segmented-control
+            name="pinned"
+            id="pinned"
+            [list]="pinList"
+            [(ngModel)]="filter.pinned"
+            (ngModelChange)="filterChange()"
+          >
+          </pn-segmented-control>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--SECTION LIST-->
+<div class="card">
+  <div class="card-body">
+
+    <div>
+      <div class="d-flex justify-content-between">
+        <div class="col-6 px-0">
+          <pn-grid-per-page
+            [page]="page"
+            (setPerPage)="grid.setPerPage($event)"
+          ></pn-grid-per-page>
+        </div>
+        <div class="mr-2" *ngIf="canCreate">
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="goToCreate()"
+          >สร้างรายการใหม่
+          </button>
+        </div>
+      </div>
+      <div
+        class="col-12"
+        *ngIf="rows && rows?.length === 0"
+      >
+        <pn-data-not-found>
+        </pn-data-not-found>
+      </div>
+      <div
+        [hidden]="rows && rows?.length === 0"
+        class="_g-table-container"
+      >
+        <pn-lib-grid
+          #grid
+          [sort]="{prop: 'updatedDate', asc: false}"
+          [bodyHeight]="'auto'"
+          [dataSub]="dataSub"
+          [rows]="rows"
+          [columns]="columns"
+          [rowHeight]="65"
+          [externalPaging]="true"
+          [(page)]="page"
+          (pageChange)="pageChange()"
+          (sortChange)="onSortChange($event)"
+          (edit)="goEdit($event)"
+          (detailInfo)="detail($event)"
+          (delete)="onDelete($event)"
+        ></pn-lib-grid>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--TEMPLATE-->
+<ng-template
+  #titleTpl
+  let-row="row"
+>
+  <shared-datatable-image-with-name-banner
+    [imageUrl]="row?.coverImage"
+    [nameTh]="row?.title"
+    [isSquare]="true"
+    [pinned]="row?.isPinned"
+    [classTextNameThCustom]="'d-inline-block text-truncate width-100'"
+  >
+  </shared-datatable-image-with-name-banner>
+</ng-template>
+
+<ng-template
+  #statusTpl
+  let-value="value"
+  let-row="row"
+>
+  <span
+    class="badge"
+    [class.badge-success]="value === 'Publish'"
+    [class.badge-secondary]="value === 'Close'"
+  >{{value === 'Publish' ? 'Publish': 'Close'}}</span>
+</ng-template>
+

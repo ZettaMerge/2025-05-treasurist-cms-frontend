@@ -1,0 +1,14 @@
+@import "variables-custom";
+
+.card-header {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+._modal-footer {
+  min-height: 65px;
+  // border-top: 1px solid #f0f0f0;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

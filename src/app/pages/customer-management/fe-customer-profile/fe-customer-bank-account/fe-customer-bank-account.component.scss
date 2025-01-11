@@ -1,0 +1,70 @@
+@import "variables-custom";
+
+._customer-bank-wrapper {
+  padding: 1.5rem 0;
+
+  ._title {
+    ._text-head-title {
+      font-size: $size-medium;
+      //font-weight: bold;
+    }
+  }
+
+  ._file-content {
+    //padding-bottom: 1rem;
+
+    ._file-title {
+      //font-weight: bold;
+      padding-top: 1.75rem;
+      padding-left: 2.5rem;
+      padding-bottom: 1rem;
+    }
+
+    ._file-data {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 70px;
+      padding-left: 2.5rem;
+      //padding-right: 1.5rem;
+
+    }
+
+  }
+
+}
+
+._customer-redemtion-wrapper {
+  padding: 1.5rem 0;
+
+  ._title {
+    ._text-head-title {
+      //font-weight: bold;
+      font-size: $size-medium;
+    }
+  }
+
+  ._file-content {
+    //padding-bottom: 1rem;
+
+    ._file-title {
+      //font-weight: bold;
+      padding-top: 1.75rem;
+      padding-left: 2.5rem;
+      padding-bottom: 1rem;
+    }
+
+    ._file-data {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 70px;
+      padding-left: 2.5rem;
+      //padding-right: 1.5rem;
+
+    }
+
+  }
+
+}
+

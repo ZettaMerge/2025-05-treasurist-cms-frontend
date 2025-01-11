@@ -1,0 +1,228 @@
+<div>
+  <div class="d-flex pb-2">
+    <div class="col-11 plx-0  d-flex">
+      <!-- <div
+        class="col-3 pl-0"
+        *ngIf="isShowBuy"
+      ><span>บลจ</span></div> -->
+      <div class="col-4 pl-0"><span>เลือกกองทุน</span></div>
+      <div class="col-5 pl-0"><span>จำนวนที่ต้องการขาย</span></div>
+
+      <div class="col-3 pl-0"><span>วันที่ส่งคำสั่ง</span></div>
+    </div>
+    <div class="col-1 pl-0 d-flex"></div>
+  </div>
+  <hr>
+  <div *ngFor="let sellFundData of sellFundArray; let i = index; let firstIndex = first;  let lastIndex = last;">
+    <div class="d-flex pb-2 pt-3">
+      <div class="col-11 px-0 d-flex">
+        <!-- <div
+          class="col-3 pl-0"
+          *ngIf="isShowBuy"
+        >
+          <div class="form-group">
+            <div class="form-input">
+              <shared-asset-dropdown
+                id="fund-{{i}}"
+                name="fund-{{i}}"
+                placeholder="ค้นหาบลจ"
+                [(ngModel)]="sellFundData.amcCode"
+                (ngModelChange)="onAssetChange($event , i)"
+                [autoReset]="true"
+                required
+              >
+              </shared-asset-dropdown>
+            </div>
+          </div>
+        </div> -->
+        <div class="col-4 pl-0">
+          <div class="form-group">
+            <div class="form-input">
+              <shared-fund-dropdown
+                placeholder="ค้นหากองทุน"
+                id="fundName-{{i}}"
+                name="fundName-{{i}}"
+                [autoReset]="true"
+                [fcnAccountId]="fcnAccountId || undefined"
+                [(ngModel)]="sellFundData.fund"
+                [disabled]="!fcnAccountId"
+                (ngModelChange)="onFundChange($event, i)"
+                [required]="!sellFundData.fund"
+              >
+              </shared-fund-dropdown>
+            </div>
+            <div
+              id="minimumVal-{{i}}"
+              name="minimumVal-{{i}}"
+              *ngIf="sellFundData.fund"
+              class="pt-1"
+            >
+              <p class="mb-0 text-muted font-size-small">มูลค่าในพอร์ต {{ !sellFundData.valHolder ? 0 : sellFundData.valHolder | number: '.2'}} บาท</p>
+              <span class="mb-0 text-muted font-size-small">จำนวนหน่วยในพอร์ต {{ !sellFundData.unitHolder ? 0 : sellFundData.unitHolder | number: '.4'}} หน่วย</span>
+            </div>
+            <error-message-control
+              id="isFundDouble-{{i}}"
+              name="isFundDouble-{{i}}"
+              *ngIf="sellFundData.isFundDouble"
+              [text]="'กองทุนนี้ถูกเลือกไปแล้ว กรุณาเลือกใหม่'"
+            >
+            </error-message-control>
+          </div>
+        </div>
+        <div class="col-5 pl-0 d-flex">
+          <div class="col-4 px-0">
+            <div class="form-group">
+              <div class="form-input">
+                <input
+                  *ngIf="sellFundData.typeSell?.id === 1"
+                  type="text"
+                  class="form-control"
+                  placeholder="0.00"
+                  id="fundAmountSell-{{i}}"
+                  name="fundAmountSell-{{i}}"
+                  [(ngModel)]="sellFundData.amount"
+                  (ngModelChange)="fundAmountSellChange($event , i , sellFundData)"
+                  (blur)="onBlurEvent($event , i, sellFundData)"
+                  (focus)="onFocusAmount(i)"
+                  [disabled]="sellFundData.isSellAll === true"
+                  required
+                  mask="separator.2"
+                  thousandSeparator=","
+                  onlyPositive
+                >
+                <input
+                  *ngIf="sellFundData.typeSell?.id === 2"
+                  type="text"
+                  class="form-control"
+                  placeholder="0.0000"
+                  id="unit-{{i}}"
+                  name="unit-{{i}}"
+                  [(ngModel)]="sellFundData.amount"
+                  (ngModelChange)="fundAmountSellChange($event , i , sellFundData)"
+                  (blur)="onBlurEvent($event , i, sellFundData)"
+                  (focus)="onFocusAmount(i)"
+                  [disabled]="sellFundData.isSellAll === true"
+                  required
+                  mask="separator.4"
+                  thousandSeparator=","
+                  onlyPositive
+                >
+              </div>
+              <div
+                id="minimum-{{i}}"
+                name="minimum-{{i}}"
+                class="pt-1"
+                *ngIf="sellFundData.fund"
+              >
+                <p class="mb-0 text-muted font-size-small">ขั้นต่ำในการขาย {{ !sellFundData.lowSellVal ? 0 : sellFundData.lowSellVal | number: '1.2-2'}} บาท หรือ {{ !sellFundData.lowSellUnit ? 0 : sellFundData.lowSellUnit | number: '1.4-4'}} หน่วย</p>
+                <span class="mb-0 text-muted font-size-small">ขั้นต่ำในการถือ {{ !sellFundData.lowBalVal ? 0 : sellFundData.lowBalVal | number: '1.2-2'}} บาท หรือ {{ !sellFundData.lowBalUnit ? 0 : sellFundData.lowBalUnit | number: '1.4-4'}} หน่วย</span>
+              </div>
+              <error-message-control
+                id="isErrorMinimum-{{i}}"
+                name="isErrorMinimum-{{i}}"
+                *ngIf="sellFundData.isErrorMinimum"
+                [text]="'มูลค่าการขายต่ำกว่ามูลค่าขั้นต่ำในการขาย'"
+              >
+              </error-message-control>
+              <error-message-control
+                id="isErrorMinimumHolding-{{i}}"
+                name="isErrorMinimumHolding-{{i}}"
+                *ngIf="sellFundData.isErrorMinimumHolding"
+                [text]="'มูลค่าหรือจำนวนหน่วยคงเหลือต่ำกว่าขั้นต่ำในการถือ'"
+              >
+              </error-message-control>
+              <error-message-control
+                id="isErrorSaleValue-{{i}}"
+                name="isErrorSaleValue-{{i}}"
+                *ngIf="sellFundData.isErrorSaleValue"
+                [text]="'มูลค่าการขายมากกว่ามูลค่าในพอร์ตที่ทำรายการได้'"
+              >
+              </error-message-control>
+              <error-message-control
+                id="isErrorNumber-{{i}}"
+                name="isErrorNumber-{{i}}"
+                *ngIf="sellFundData.isErrorNumber"
+                [text]="'กรุณาระบุเป็นตัวเลขเท่านั้น'"
+              >
+              </error-message-control>
+            </div>
+          </div>
+          <div class="col-4 pr-0">
+            <div class="form-group position-relative">
+              <pn-dynamic-dropdown
+                id="typeSell-{{i}}"
+                name="typeSell-{{i}}"
+                [list]="lists"
+                [(ngModel)]="sellFundData.typeSell"
+                (ngModelChange)="onTypeSellChange(i , sellFundData)"
+                [disabled]="sellFundData.isSellAll === true"
+              >
+
+              </pn-dynamic-dropdown>
+            </div>
+          </div>
+          <div class="col-4 pr-0">
+            <div class="d-flex pt-1 pl-2">
+              <ul class="list-unstyled mb-0">
+                <li class="d-inline-block mr-2">
+                  <div class="radio">
+                    <input
+                      type="radio"
+                      name="all-{{i}}"
+                      id="all-{{i}}"
+                      [checked]="sellFundData.isSellAll"
+                      (click)="onClickSellAll($event , sellFundData , i)"
+                    >
+                    <label for="all-{{i}}">ทั้งหมด</label>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-3 pl-0">
+          <div class="form-group mb-0">
+            <div class="form-input">
+              <pn-date-picker
+                placeholder="dd/mm/yyyy"
+                id="date-{{i}}"
+                name="date-{{i}}"
+                [(ngModel)]="sellFundData.effectiveDate"
+                [disabledDates]="disabledDates"
+                [min]="minDate"
+                [max]="maxDate"
+                [daysDisabled]="[6,0]"
+                (ngModelChange)="onChangeDate(i)"
+                required
+              >
+              </pn-date-picker>
+              <div
+                id="cutOff-{{i}}"
+                name="cutOff-{{i}}"
+                *ngIf="sellFundData.cutOff"
+                class="pt-1"
+              >
+                <span class="text-muted font-size-small">(ปิดรับคำสั่ง {{sellFundData.cutOff | aTime}} น. ของวัน)</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col-1 text-center pt-2">
+        <a
+          (click)="deleteFund(i)"
+          class="text-primary font-size-large"
+        ><i class="ic ic-delete"></i>
+        </a>
+      </div>
+
+    </div>
+    <hr>
+  </div>
+  <div class="d-flex align-items-center justify-content-end pt-2">
+    <a (click)="addFund($event)"><i class="ic ic-plus-circle text-primary pr-1"></i>เพิ่มกองทุน</a>
+  </div>
+</div>

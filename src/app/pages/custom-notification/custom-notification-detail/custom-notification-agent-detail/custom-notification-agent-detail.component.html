@@ -1,0 +1,37 @@
+<div>
+  <div
+    class="col-12"
+    *ngIf="rows && rows?.length === 0"
+  >
+    <pn-data-not-found>
+    </pn-data-not-found>
+  </div>
+  <div
+    [hidden]="rows && rows?.length === 0"
+    class="_g-table-container"
+  >
+    <pn-lib-grid
+      #grid
+      [sort]="{prop: 'agentName', asc: false}"
+      [bodyHeight]="'auto'"
+      [dataSub]="dataSub"
+      [rows]="rows"
+      [columns]="columns"
+      [rowHeight]="65"
+      [externalPaging]="true"
+      [(page)]="page"
+      (pageChange)="pageChange()"
+      (sortChange)="onSortChange($event)"
+      (detailInfo)="detailInfo($event)"
+    ></pn-lib-grid>
+  </div>
+</div>
+
+<ng-template
+  #nameTpl
+  let-value="value"
+  let-row="row"
+>
+  <span *ngIf="row?.user?.firstName && row?.user?.lastName">{{row?.user?.firstName}} {{row?.user?.lastName}}</span>
+  <span *ngIf="!row?.user?.firstName && !row?.user?.lastName">-</span>
+</ng-template>

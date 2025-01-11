@@ -1,0 +1,268 @@
+<!--Section Info Start-->
+<div class="card-header pl-0">
+  <span class="_g-text-header-title">ข้อมูลบัญชี</span>
+  <div class="_display-risk">
+    <span class="badge badge-white">Risk Level &nbsp;
+      <span class="m-0 badge-small-in-badge text-center badge-danger">{{data?.riskLevel}}</span>
+    </span>
+    <span class="badge badge-white">Fx &nbsp;
+      <span
+        class="m-0 badge-small-in-overlap-badge text-center"
+        [class.badge-dark-blue]="accountData?.riskLevelDTO?.fx === true"
+        [class.badge-dark-grey]="accountData?.riskLevelDTO?.fx  === false"
+      >{{accountData?.riskLevelDTO?.fx === true ? 'YES' : 'NO'}}
+      </span>
+
+    </span>
+
+
+    <span class="badge badge-white">Commo &nbsp;
+      <span
+        class="m-0 badge-small-in-overlap-badge text-center"
+        [class.badge-dark-blue]="accountData?.riskLevelDTO?.comMo  === true"
+        [class.badge-dark-grey]="accountData?.riskLevelDTO?.comMo === false"
+      >{{accountData?.riskLevelDTO?.comMo === true ? 'YES' : 'NO'}}
+      </span>
+
+    </span>
+    <span
+      class="badge"
+      [class.badge-light]="data?.vulnerableFlag !== true"
+      [class.badge-danger]="data?.vulnerableFlag === true"
+    >{{data?.vulnerableFlag === true ? 'Vulnerable' : 'General' }}</span>
+  </div>
+</div>
+
+
+<!--Email-->
+<div class="col-12 d-flex px-0 py-1">
+  <div class="col-7 px-0">
+    <div class="row">
+      <div class="col-4 _g-text-title">
+        <span>Account ID</span>
+        <p>{{planName}}</p>
+        <!--        <p>{{data?.username}}</p>-->
+      </div>
+      <div class="col-4 _g-text-title">
+        <span>IC License</span>
+        <p>{{accountData?.icLicense || '-'}}</p>
+      </div>
+      <div class="col-4 _g-text-title">
+        <span>วันที่เปิดบัญชี</span>
+        <p>{{accountData?.applicationDate | aDate}}</p>
+        <!--        <p>{{data?.username}}</p>-->
+      </div>
+    </div>
+  </div>
+  <div class="col-5 px-0">
+    <div class="row">
+      <div class="col-6 _g-text-title">
+        <span>Omnibus Form</span>
+        <p>{{'-'}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--ที่อยู่ในการจัดส่งเอกสาร-->
+<div class="col-12 px-0">
+  <div class="_g-card-sub-header">
+    <span class="_g-text-header-sub-title">ที่อยู่ในการจัดส่งเอกสาร</span>
+  </div>
+  <div class="col-12 d-flex px-0 py-1">
+    <li class="d-inline-block mr-2">
+      <div class="checkbox _g-checkbox-display-none">
+        <input
+          type="checkbox"
+          id="mail-address"
+          name="mail-address"
+          checked
+        >
+        <label for="mail-address">
+          <span>{{accountData?.mailAddressFlag === 'IdDocument' ? 'ตามบัตรประชาชน' :
+            accountData?.mailAddressFlag === 'Current' ? 'ตามที่อยู่ปัจจุบัน' :
+              accountData?.mailAddressFlag === 'Work' ? 'ตามที่อยู่ที่ทำงาน' : 'อื่นๆ'}}</span></label>
+      </div>
+    </li>
+  </div>
+</div>
+
+<div class="col-12 px-0">
+  <shared-address
+    *ngIf="data?.mailAddressFlag === null"
+    [data]="accountData?.mailingAddress">
+  </shared-address>
+</div>
+
+
+<!--วิธีการจัดส่งเอกสาร-->
+<div id="get-doc col-12">
+  <div class="_g-card-sub-header">
+    <span class="_g-text-header-sub-title">วิธีการจัดส่งเอกสาร</span>
+  </div>
+  <div class="col-12 d-flex px-0 py-1">
+    <div class="col-12 px-0">
+      <li class="d-inline-block mr-2 mb-2">
+        <div class="checkbox _g-checkbox-display-none">
+          <input
+            type="checkbox"
+            id="get-mail"
+            name="get-mail"
+            checked
+          >
+          <label
+            for="get-mail"
+            *ngIf="accountData?.mailMethod === 'Email'"
+          ><span>ตามอีเมล</span></label>
+        </div>
+      </li>
+    </div>
+  </div>
+</div>
+
+<!--วัตถุประสงค์ในการลงทุน-->
+<div class="col-12 px-0">
+  <div class="_g-card-sub-header pt-0">
+    <span class="_g-text-header-sub-title">วัตถุประสงค์ในการลงทุน</span>
+  </div>
+  <div class="col-12 d-flex px-0 py-1">
+    <div class="col-12 px-0 d-flex">
+      <div *ngFor="let invest of inVestData; let i = index">
+        <li class="d-inline-block mr-2 mb-2">
+          <div class="checkbox _g-checkbox-display-none">
+            <input
+              type="checkbox"
+              id="invest-{{invest.name}}"
+              name="invest-{{invest.name}}"
+              checked
+            >
+            <label for="invest-{{invest.name}}">
+                  <span>
+                  {{invest.name === 'Investment' ? 'เพื่อการลงทุน' : invest.name === 'RetirementInvestment' ? 'เพื่อการเกษียณ' : invest.name === 'ForTaxBenefits' ? 'ลดหย่อนภาษี'
+                    : invest.name === 'PleaseSpecify' ? 'อื่นๆ :' : ''
+                    }}
+                  </span><span *ngIf="invest.name === 'PleaseSpecify'">{{data?.investmentObjectiveOther}}</span>
+            </label>
+          </div>
+        </li>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--บัญชีธนาคารสำหรับหักเงินเพื่อซื้อหลักทรัพย์-->
+<div>
+  <div class="card-header pl-0">
+    <span class="_g-text-header-title">บัญชีธนาคารสำหรับหักเงินเพื่อซื้อหลักทรัพย์</span>
+  </div>
+  <div class="row">
+    <div class="col-12 px-0 d-flex pb-2">
+      <div class="col-1 _g-text-title">
+        <span>บัญชีหลัก</span>
+        <li class="d-inline-block mr-2 mb-2">
+          <div class="checkbox _g-checkbox-display-none">
+            <input
+              type="checkbox"
+              id="check1"
+              name="check1"
+              checked
+            >
+            <label class="border-0 bg-transparent" for="check1"></label>
+          </div>
+        </li>
+      </div>
+      <div class="col-3 _g-text-title">
+        <span>ธนาคาร</span>
+        <p>{{bankSubscriptionData?.thBankName || '-'}}</p>
+      </div>
+      <div class="col-3 _g-text-title">
+        <span>สาขา</span>
+        <p>{{bankSubscriptionData?.branchCode}} {{bankSubscriptionData?.thBranchName}}</p>
+      </div>
+      <div class="col-3 _g-text-title">
+        <span>เลขบัญชี</span>
+        <p>{{bankSubscriptionData?.bankNo}}</p>
+      </div>
+      <div class="col-2 _g-text-title">
+        <span>FinNet Customer No</span>
+        <p>{{bankSubscriptionData?.finnetCustomerNo || '-'}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--บัญชีธนาคารสำหรับเงินค่าขายหลักทรัพย์ ดอกเบี้ย เงินปันผล-->
+<div>
+  <div class="card-header pl-0">
+    <span class="_g-text-header-title">บัญชีธนาคารสำหรับเงินค่าขายหลักทรัพย์ ดอกเบี้ย เงินปันผล</span>
+  </div>
+
+  <div class="row">
+    <div class="col-12 px-0 d-flex pb-2">
+      <div class="col-1 _g-text-title">
+        <span>บัญชีหลัก</span>
+        <li class="d-inline-block mr-2 mb-2">
+          <div class="checkbox _g-checkbox-display-none">
+            <input
+              type="checkbox"
+              id="check1"
+              name="check1"
+              checked
+            >
+            <label class="border-0 bg-transparent" for="check1"></label>
+          </div>
+        </li>
+      </div>
+      <div class="col-3 _g-text-title">
+        <span>ธนาคาร</span>
+        <p>{{bankRedemptionData?.thBankName || '-'}}</p>
+      </div>
+      <div class="col-3 _g-text-title">
+        <span>สาขา</span>
+        <p>{{bankRedemptionData?.branchCode}} {{bankRedemptionData?.thBranchName}}</p>
+      </div>
+      <div class="col-3 _g-text-title">
+        <span>เลขบัญชี</span>
+        <p>{{bankRedemptionData?.bankNo}}</p>
+      </div>
+      <div class="col-2 _g-text-title">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Unitholder-->
+<div>
+  <div class="card-header pl-0">
+    <span class="_g-text-header-title">Unitholder</span>
+  </div>
+  <div class="col-12 d-flex px-0 pb-2">
+    <div class="col-2 pl-0 text-bold-500">AMC</div>
+    <div class="col-2 text-bold-500">Unitholder ID</div>
+    <div class="col-1 text-bold-500">Type</div>
+    <div class="col-1 text-bold-500">Status</div>
+    <div class="col-1 text-bold-500">Acc.for</div>
+    <div class="col-1 text-bold-500">Bank</div>
+    <div class="col-2 text-bold-500">Branch</div>
+    <div class="col-2 pr-0 text-bold-500">Acc No.</div>
+  </div>
+  <hr>
+  <div *ngIf="unitHolderData">
+    <div class="px-0" *ngFor="let unit of unitHolderData">
+      <div class="_acc-redeem col-12 d-flex px-0 pb-2 pt-2">
+        <div class="col-2 pl-0">{{unit.amcCode || '-'}}</div>
+        <div class="col-2 ">{{unit.unitholderId || '-'}}</div>
+        <div class="col-1 ">{{unit.type || '-'}}</div>
+        <div class="col-1 "><span
+          class="badge badge-success">{{unit.status === 'ALLOTTED' ? 'ACTIVE' : unit.status}}</span></div>
+        <div class="col-1 ">{{unit.accFor || '-'}}</div>
+        <div class="col-1 ">{{unit.bankName || '-'}}</div>
+        <div class="col-2 ">{{unit.bankBranchName || '-'}}</div>
+        <div class="col-2 pr-0">{{unit.bankAccount || '-'}}</div>
+      </div>
+      <hr>
+    </div>
+  </div>
+
+
+</div>

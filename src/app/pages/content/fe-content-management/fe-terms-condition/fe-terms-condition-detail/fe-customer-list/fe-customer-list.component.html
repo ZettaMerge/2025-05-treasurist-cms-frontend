@@ -1,0 +1,57 @@
+<div id="customer-list" class="pt-2">
+  <div class="col-12" *ngIf="rows && rows.length === 0">
+    <pn-data-not-found
+      [isShowActionTemplate]="false"
+    >
+    </pn-data-not-found>
+  </div>
+  <div [hidden]="rows && rows.length === 0">
+    <div class="_g-pager-with-tab d-flex justify-content-between">
+      <div class="col-6 pl-0">
+        <pn-grid-per-page
+          [page]="page"
+          (setPerPage)="grid.setPerPage($event)"
+        ></pn-grid-per-page>
+      </div>
+    </div>
+    <div class="_g-table-container">
+      <pn-lib-grid
+        #grid
+        [bodyHeight]="'auto'"
+        [dataSub]="dataSub"
+        [rows]="rows"
+        [columns]="columns"
+        [rowHeight]="65"
+        [externalPaging]="true"
+        [(page)]="page"
+        (pageChange)="pageChange()"
+        (sortChange)="sortChange()"
+      ></pn-lib-grid>
+    </div>
+  </div>
+</div>
+
+<ng-template
+  #nameTpl
+  let-value="value"
+  let-row="row"
+>
+  <shared-datatable-with-name
+    [id]="row.accountId"
+    [firstName]="row.firstName"
+    [lastName]="row.lastName"
+  >
+  </shared-datatable-with-name>
+</ng-template>
+
+<ng-template
+  #customerTpl
+  let-value="value"
+  let-row="row"
+>
+  <span
+    class="badge"
+    [class.badge-danger]="value === 'Vulnerable'"
+    [class.badge-secondary]="value === 'General'"
+  >{{value}}</span>
+</ng-template>

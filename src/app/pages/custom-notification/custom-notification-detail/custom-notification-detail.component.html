@@ -1,0 +1,160 @@
+<div class="_g-header">
+  <h1 class="_g-title-header">Custom Notification</h1>
+  <div class="_g-header d-flex justify-content-end">
+    <button
+      *ngIf="canCreate"
+      type="button"
+      id="open-modal"
+      name="open-modal"
+      class="btn btn-primary mb-1 _g-space-btn"
+      (click)="onOpenFormModal()"
+    ><span>ส่งอีกครั้ง</span>
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary mb-1"
+      (click)="goBack()"
+    ><span>กลับ</span>
+    </button>
+  </div>
+</div>
+<div class="d-flex justify-content-between"
+     [class.mb-3]="customNotificationsData.referentFrom || customNotificationsData.referTo"
+     [class.mb-2]="!customNotificationsData.referentFrom && !customNotificationsData.referTo"
+>
+  <div class="col-6 px-0">
+    <span class="text-muted">วันที่ส่ง {{customNotificationsData.publishedDate | aDateTime}}</span>
+  </div>
+  <div class="col-6 px-0">
+    <div *ngIf="customNotificationsData.referentFrom">
+      <div class="col-12 d-flex justify-content-end px-0">
+        <div class="d-flex"><span class="text-muted">Reference from:</span>
+          <a class="text-link ml-2" (click)="onGoReferentOrReferFrom(customNotificationsData.referentFrom.id)">{{customNotificationsData?.referentFrom?.title}}</a>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="customNotificationsData.referTo">
+      <div class="col-12 d-flex justify-content-end px-0" *ngFor="let refer of customNotificationsData.referTo">
+        <div class="d-flex"><span class="text-muted">Refer to:</span>
+          <a class="text-link ml-2" (click)="onGoReferentOrReferFrom(refer.id)">{{refer.title}}</a>
+        </div>
+      </div>
+    </div>
+
+
+    <!--    <div><span class="text-muted">Refer to:</span> <a class="text-link ml-2">Reference from</a></div>-->
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <div class="_g-header">
+      <span class="_g-text-header-title">รายละเอียด</span>
+    </div>
+
+    <div class="col-12 d-flex px-0 py-1 ">
+      <div class="col-6 px-0 _g-text-title">
+        <span>หัวข้อ</span>
+        <p>{{customNotificationsData.title || '-'}}</p>
+      </div>
+      <div class="col-6 d-flex justify-content-end px-0 _g-text-title">
+        <div class="d-flex flex-column">
+          <span>ประเภท</span>
+          <span
+            class="badge"
+            [class.badge-success]="customNotificationsData.type  === 'SEC'"
+            [class.badge-info]="customNotificationsData.type  === 'AMC'"
+            [class.badge-primary]="customNotificationsData.type  === 'TSR'"
+          >{{customNotificationsData.type === 'SEC' ? 'ประกาศจาก ก.ล.ต.' : customNotificationsData.type === 'AMC' ? 'ประกาศจาก บลจ.' : customNotificationsData.type === 'TSR' ? 'ประกาศจาก เทรเชอริสต์' : '-'}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 px-0 py-1 _g-text-title">
+      <span>รายละเอียด</span>
+      <p [innerHTML]="customNotificationsData.detail "></p>
+    </div>
+    <div class="col-12 px-0 pb-2 _g-text-title">
+      <span>ไฟล์แนบ</span>
+      <div class="d-flex" *ngIf="customNotificationsData.documentFiles">
+        <div *ngFor="let file of customNotificationsData.documentFiles; let i = index;">
+          <a class="text-link mr-3" href="{{file.url}}" target="_blank">{{file.name}}</a>
+        </div>
+      </div>
+      <div class="d-flex" *ngIf="!customNotificationsData.documentFiles">
+        <span>-</span>
+      </div>
+    </div>
+    <div class="col-12 px-0 py-1 _g-text-title">
+      <span>กลุ่มเป้าหมาย</span>
+    </div>
+    <div class="col-12 px-0 _g-card-content-tab">
+      <pn-tabs
+        [tabs]="tabs"
+        [(activeTabId)]="activeTabId"
+      >
+      </pn-tabs>
+
+      <ng-container *ngIf="activeTabId === Tab.customer">
+        <custom-notification-customer-detail
+          [customNotificationId]="customNotificationId"
+        ></custom-notification-customer-detail>
+      </ng-container>
+
+      <ng-container *ngIf="activeTabId === Tab.agent">
+        <custom-notification-agent-detail
+          [customNotificationId]="customNotificationId"
+        >
+
+        </custom-notification-agent-detail>
+      </ng-container>
+    </div>
+    <!--    <div class="col-12 px-0">-->
+    <!--      <li class="d-inline-block mr-2 mb-2" *ngIf="customNotificationsData.isPublishCustomer">-->
+    <!--        <div class="checkbox _g-checkbox-display-none">-->
+    <!--          <input-->
+    <!--            type="checkbox"-->
+    <!--            id="customer"-->
+    <!--            name="customer"-->
+    <!--            checked-->
+    <!--          >-->
+    <!--          <label for="customer"><span>ลูกค้าทั้งหมด</span></label>-->
+    <!--        </div>-->
+    <!--      </li>-->
+    <!--      <li class="d-inline-block mr-2 mb-2" *ngIf="customNotificationsData.isPublishAgent">-->
+    <!--        <div class="checkbox _g-checkbox-display-none">-->
+    <!--          <input-->
+    <!--            type="checkbox"-->
+    <!--            id="agent"-->
+    <!--            name="agent"-->
+    <!--            checked-->
+    <!--          >-->
+    <!--          <label for="agent"><span>Agent ทั้งหมด</span></label>-->
+    <!--        </div>-->
+    <!--      </li>-->
+    <!--    </div>-->
+  </div>
+</div>
+
+<div class="_g-header d-flex justify-content-end">
+  <button
+    type="button"
+    class="btn btn-secondary mb-1"
+    (click)="goBack()"
+  ><span>กลับ</span>
+  </button>
+</div>
+
+<!-- modal-->
+<lib-modal
+  #customNotiFormModal
+  modalSize="xl"
+  [showHeader]="false"
+>
+  <custom-notification-form
+    *ngIf="customNotiFormModal.isOpen"
+    (cancel)="customNotiFormModal.close()"
+    (save)="onSaveCustomNoti($event)"
+    [customNotiPublishId]="customNotificationId"
+  >
+  </custom-notification-form>
+</lib-modal>

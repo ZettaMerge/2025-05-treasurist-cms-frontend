@@ -1,0 +1,11 @@
+@import "variables-custom";
+
+._display-btn {
+  display: flex;
+}
+
+._scroll {
+  height: 500px;
+  overflow-y: visible;
+  overflow-x: hidden;
+}

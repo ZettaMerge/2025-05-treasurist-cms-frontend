@@ -1,0 +1,21 @@
+<ul
+  class="nav nav-pills tabs"
+  role="tablist"
+>
+  <li
+    class="nav-item"
+    [class.active]="tab.id === activeTabId"
+    *ngFor="let tab of tabs"
+  >
+    <a
+      class="nav-link"
+      href="javascript:;"
+      (click)="changeTab(tab)"
+      [ngClass]="{ active: tab.id === activeTab }"
+      data-toggle="tab"
+      role="tab"
+    >
+      <span class="align-items-center">{{ tab.name }}</span>
+    </a>
+  </li>
+</ul>

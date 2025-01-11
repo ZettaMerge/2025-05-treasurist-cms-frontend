@@ -1,0 +1,264 @@
+<section id="form-career-general">
+  <div class="card-header pl-0">
+    <span class="_g-text-header-title">ยืนยันสถานะภาพ</span>
+  </div>
+  <div class="card-body pt-0 px-0">
+
+    <div *ngFor="let vulnerable of vulnerableDataList; let i = index">
+      <div class="_card-header pt-2">
+        <span class="_g-text-header-sub-title">{{vulnerable.title}}</span>
+      </div>
+      <div class="col-12 d-flex px-0">
+        <div class="col-xl-6 col-md-9">
+          <div class="row">
+            <div class="col-xl-3 col-md-2 pl-0">
+              <div class="checkbox"
+                   [class._check-box-valid-form]="isValidVulnerableNo1 || isValidVulnerableNo2 || isValidVulnerableNo3"
+              >
+                <input
+                  type="checkbox"
+                  id="isVulnerableNo-{{i}}"
+                  name="isVulnerableNo-{{i}}"
+                  [ngModelOptions]="{standalone: true}"
+                  [(ngModel)]="vulnerable.isNotAllow"
+                  (ngModelChange)="onChangeVulnerable($event, i, 'vulnerableNo')"
+                >
+                <label for="isVulnerableNo-{{i}}"><span>ไม่ใช่</span></label>
+              </div>
+            </div>
+            <div class="col-xl-3 col-md-2 pl-0">
+              <div class="checkbox"
+                   [class._check-box-valid-form]="isValidVulnerableNo1 || isValidVulnerableNo2 || isValidVulnerableNo3"
+              >
+                <input
+                  type="checkbox"
+                  id="vulnerableYes-{{i}}"
+                  name="vulnerableYes-{{i}}"
+                  [ngModelOptions]="{standalone: true}"
+                  [(ngModel)]="vulnerable.isAllow"
+                  (ngModelChange)="onChangeVulnerable($event, i, 'vulnerableYes')"
+                >
+                <label for="vulnerableYes-{{i}}"><span>ใช่</span></label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <error-message-control
+      class="text-bold-500"
+      *ngIf="isValidVulnerableNo1 || isValidVulnerableNo2 || isValidVulnerableNo3"
+      [text]="'โปรดระบุข้อมูลให้ครบถ้วน'">
+    </error-message-control>
+
+
+    <div class="_card-header">
+      <span class="_g-text-header-sub-title">เป็นผู้มีสถานะภาพทางการเมืองหรือเป็นสมาชิกในครอบครัว หรือเป็นผู้ใกล้ชิดกับบุคคลผู้มีสถานะภาพทางการเมือง</span>
+    </div>
+    <div class="col-12 d-flex px-0">
+      <div class="col-xl-6 col-md-9">
+        <div class="row">
+          <div class="col-xl-3 col-md-2 pl-0">
+            <div class="checkbox"
+                 [class._check-box-valid-form]="isValidRelationPosition"
+            >
+              <input
+                type="checkbox"
+                id="relationPoliticalNo"
+                name="relationPoliticalNo"
+                [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="isRelationPoliticalNo"
+                (ngModelChange)="onChangeRelationPolitical($event, 'relationPoliticalNo')"
+              >
+              <label for="relationPoliticalNo"><span>ไม่ใช่</span></label>
+            </div>
+          </div>
+          <div class="col-xl-3  col-md-2 pl-0">
+            <div class="checkbox"
+                 [class._check-box-valid-form]="isValidRelationPosition"
+            >
+              <input
+                type="checkbox"
+                id="relationPoliticalYes"
+                name="relationPoliticalYes"
+                [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="isRelationPoliticalYes"
+                (ngModelChange)="onChangeRelationPolitical($event, 'relationPoliticalYes')"
+              >
+              <label for="relationPoliticalYes"><span>ใช่</span></label>
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-form-label px-2">Position</label>
+            <div class="form-group m-0">
+              <div class="form-input">
+                <input
+                  type="text"
+                  class="form-control is-small"
+                  placeholder="โปรดระบุ"
+                  [ngModelOptions]="{standalone: true}"
+                  [(ngModel)]="data.politicalRelatePersonPosition"
+                  [disabled]="!isRelationPoliticalYes"
+                  required
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <error-message-control
+          class="text-bold-500"
+          *ngIf="isValidRelationPosition"
+          [text]="'โปรดระบุข้อมูลให้ครบถ้วน'">
+        </error-message-control>
+      </div>
+    </div>
+
+    <div class="_card-header">
+      <span class="_g-text-header-sub-title">(ประวัติอาชญากรรม) มีคุณสมบัติตรงกับข้อใดต่อไปนี้ 1 ข้อหรือมากกว่า</span>
+    </div>
+    <div class="col-12 d-flex px-0">
+      <div class="col-xl-6 col-md-9">
+        <div class="row">
+          <div class="col-3 pl-0">
+            <div class="checkbox"
+                 [class._check-box-valid-form]="isValidCriminal"
+            >
+              <input
+                type="checkbox"
+                id="criminalNo"
+                name="criminalNo"
+                [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="isCriminalNo"
+                (ngModelChange)="onChangeCriminal($event, 'criminalNo')"
+              >
+              <label for="criminalNo"><span>ไม่ใช่</span></label>
+            </div>
+
+          </div>
+          <div class="col-3 pl-0">
+            <div class="checkbox"
+                 [class._check-box-valid-form]="isValidCriminal"
+            >
+              <input
+                type="checkbox"
+                id="criminalYes"
+                name="criminalYes"
+                [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="isCriminalYes"
+                (ngModelChange)="onChangeCriminal($event, 'criminalYes')"
+              >
+              <label for="criminalYes"><span>ใช่</span></label>
+            </div>
+          </div>
+        </div>
+        <error-message-control
+          class="text-bold-500"
+          *ngIf="isValidCriminal"
+          [text]="'โปรดระบุข้อมูลให้ครบถ้วน'">
+        </error-message-control>
+      </div>
+    </div>
+    <div class="col-12 px-0 pt-2" *ngIf="isCriminalYes">
+      <div class="row pt-2" *ngFor="let criminal of criminalDataList; let i = index">
+        <div class="pl-2 pr-3">
+          <div class="checkbox _checkbox"
+               [class._check-box-valid-form]="isValidCriminalYes"
+          >
+            <input
+              type="checkbox"
+              class="custom-control-input"
+              id="ciminal-{{i}}"
+              name="ciminal-{{i}}"
+              [(ngModel)]="criminal.isAllow"
+              (ngModelChange)="onSelectCriminalChange($event, criminal, i)"
+            />
+            <label
+              class="form-check-label ml-4 border-0 bg-transparent"
+              for="ciminal-{{i}}"
+            >{{criminal.title}}</label>
+          </div>
+        </div>
+      </div>
+      <error-message-control
+        class="text-bold-500"
+        *ngIf="isValidCriminalYes"
+        [text]="'โปรดระบุข้อมูลให้ครบถ้วน'">
+      </error-message-control>
+    </div>
+
+    <div class="_card-header">
+      <span class="_g-text-header-sub-title">(พลเมืองอเมริกัน) มีคุณสมบัติตรงกับข้อใดต่อไปนี้ 1 ข้อหรือมากกว่า</span>
+    </div>
+    <div class="col-12 d-flex px-0">
+      <div class="col-xl-6 col-md-9">
+        <div class="row">
+          <div class="col-3 pl-0">
+            <div class="checkbox"
+                 [class._check-box-valid-form]="isValidFatca"
+            >
+              <input
+                type="checkbox"
+                id="ameRicanNo"
+                name="ameRicanNo"
+                [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="isAmericanNo"
+                (ngModelChange)="onChangeAmerican($event, 'ameRicanNo')"
+              >
+              <label for="ameRicanNo"><span>ไม่ใช่</span></label>
+            </div>
+
+          </div>
+          <div class="col-3 pl-0">
+            <div class="checkbox"
+                 [class._check-box-valid-form]="isValidFatca"
+            >
+              <input
+                type="checkbox"
+                id="ameRicanYes"
+                name="ameRicanYes"
+                [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="isAmericanYes"
+                (ngModelChange)="onChangeAmerican($event, 'ameRicanYes')"
+              >
+              <label for="ameRicanYes"><span>ใช่</span></label>
+            </div>
+          </div>
+        </div>
+        <error-message-control
+          class="text-bold-500"
+          *ngIf="isValidFatca"
+          [text]="'โปรดระบุข้อมูลให้ครบถ้วน'">
+        </error-message-control>
+      </div>
+    </div>
+    <div class="col-12 px-0 pt-2" *ngIf="isAmericanYes">
+      <div class="row" *ngFor="let americanPeople of americanDataList; let i = index">
+        <div class="pl-2 pr-3 pt-2">
+          <div class="checkbox _checkbox"
+               [class._check-box-valid-form]="isValidFatcaYes"
+          >
+            <input
+              type="checkbox"
+              class="custom-control-input"
+              id="american-{{i}}"
+              name="american-{{i}}"
+              [(ngModel)]="americanPeople.isAllow"
+              (ngModelChange)="onSelectAmericanChange($event, americanPeople, i)"
+            />
+            <label
+              class="form-check-label ml-4 border-0 bg-transparent"
+              for="american-{{i}}"
+            >{{americanPeople.title}}</label>
+          </div>
+        </div>
+      </div>
+      <error-message-control
+        class="text-bold-500"
+        *ngIf="isValidFatcaYes"
+        [text]="'โปรดระบุข้อมูลให้ครบถ้วน'">
+      </error-message-control>
+    </div>
+  </div>
+</section>
+

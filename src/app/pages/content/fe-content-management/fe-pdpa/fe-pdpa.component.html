@@ -1,0 +1,59 @@
+<div id="pdpa">
+  <div class="_g-header">
+    <h1 class="_g-title-header">PDPA</h1>
+    <div class="_g-header justify-content-end">
+      <button
+        type="button"
+        class="btn btn-secondary  mr-1 mb-1"
+        (click)="goBack()"
+      ><span>กลับ</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-xl-5 col-lg-5 col-md-12">
+          <div class="form-group">
+            <label class="col-form-label">เวอร์ชัน</label>
+            <div class="d-flex">
+              <div class="flex-1 form-input">
+                <shared-pdpa-version-dropdown
+                  placeholder="เวอร์ชัน"
+                  [(ngModel)]="filter.version"
+                  (ngModelChange)="filterChange()"
+                >
+                </shared-pdpa-version-dropdown>
+              </div>
+              <div class="_btn-clear">
+                <button
+                  type="button"
+                  class="btn btn-clear btn-lg"
+                  (click)="clearFilter()"
+                >ล้าง
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <div class="card  _g-card-content-tab">
+    <div class="card-body">
+      <pn-tabs
+        [tabs]="tabs"
+        [(activeTabId)]="activeTabId"
+      >
+      </pn-tabs>
+
+      <ng-container *ngIf="activeTabId === Tab.listVersion">
+        <fe-pdpa-list></fe-pdpa-list>
+      </ng-container>
+      <ng-container *ngIf="activeTabId === Tab.lisCustomer">
+        <fe-pdpa-customer-accept-list></fe-pdpa-customer-accept-list>
+      </ng-container>
+    </div>
+  </div>

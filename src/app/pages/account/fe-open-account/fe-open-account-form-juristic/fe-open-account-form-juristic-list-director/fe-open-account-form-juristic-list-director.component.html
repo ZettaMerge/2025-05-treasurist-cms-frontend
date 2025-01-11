@@ -1,0 +1,140 @@
+<!-- <div class="card-body py-0"> -->
+  <div class="card-header pl-0">
+    <span class="_g-text-header-title">รายชื่อกรรมการของนิติบุคคล</span>
+  </div>
+  <div class="row">
+    <div class="col-12 d-flex pl-4">
+      <div class="border-bottom col-12  px-0 pb-2 row">
+        <div class="col-5">
+          <div class="row">
+            <div class="col-7">
+              <span>ชื่อ-นามสกุล</span>
+            </div>
+            <div class="col-5 d-flex justify-content-center">
+              <span>สัญชาติ</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-7">
+          <div class="row">
+            <div class="col-5">
+              <span>เลขบัตรประชาชน/เลขที่พาสปอร์ต</span>
+            </div>
+            <div class="col-3 d-flex justify-content-center">
+              <span>อำนาจลงนาม</span>
+            </div>
+            <div class="col-3 d-flex justify-content-center">
+              <span>เป็นผู้บริหารสูงสุด</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="col-12 d-flex pl-4 pt-2"
+      *ngFor="let director of dataDirector; let index = index;"
+    >
+      <div class="border-bottom col-12 px-0 row">
+        <div class="col-5 pl-2">
+          <div class="row">
+            <div class="col-7">
+              <div class="form-group">
+                <div class="form-input">
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    class="form-control"
+                    placeholder="โปรดระบุ"
+                    [(ngModel)]="director.name"
+                    required
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-5">
+              <div class="form-group">
+                <div class="form-input">
+                  <shared-nationality-dropdown
+                    id="nationality-{{index}}"
+                    name="nationality-{{index}}"
+                    placeholder="โปรดระบุ"
+                    [(ngModel)]="director.nationality"
+                    required
+                  >
+                  </shared-nationality-dropdown>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-7">
+          <div class="row">
+            <div class="col-5">
+              <div class="form-group">
+                <div class="form-input">
+                  <input
+                    id="idCard"
+                    name="idCard"
+                    type="text"
+                    class="form-control"
+                    placeholder="โปรดระบุ"
+                    required
+                    [(ngModel)]="director.idCard"
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="form-group">
+                <div class="form-input">
+                  <pn-dynamic-dropdown
+                    name="signingAuthority"
+                    [list]="signingAuthorityList"
+                    id="signingAuthority"
+                    required
+                    [(ngModel)]="director.signingAuthority"
+                  >
+                  </pn-dynamic-dropdown>
+                </div>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="form-group">
+
+                <div class="form-input">
+                  <pn-dynamic-dropdown
+                    name="ceo"
+                    [list]="signingAuthorityList"
+                    id="ceo"
+                    required
+                    [(ngModel)]="director.ceo"
+                  >
+                  </pn-dynamic-dropdown>
+                </div>
+              </div>
+            </div>
+            <div class="align-items-center d-flex pl-3">
+              <a
+                ngbTooltip="ลบ"
+                container="body"
+                class="text-primary mb-2"
+                (click)="onClickDelete(index)"
+              ><i class="ic ic-delete font-size-xlarge"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 d-flex justify-content-end py-3">
+      <a
+        class="align-items-center d-flex"
+        (click)="addDirector()"
+      ><i class="ic ic-plus-circle text-primary font-size-xlarge"></i>&nbsp;&nbsp; <span>เพิ่มกรรมการนิติบุคคล</span></a>
+    </div>
+  </div>
+<!-- </div> -->

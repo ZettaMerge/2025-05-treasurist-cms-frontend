@@ -1,0 +1,69 @@
+<div class="_g-card-detail">
+  <div class="d-flex justify-content-between align-items-center">
+    <span class="_g-text-header-title">ข้อมูลทั่วไป</span>
+    <span
+      class="badge"
+      [class.badge-success]="subscriptionData?.status === 'ALLOTTED' || redemptionData?.status === 'ALLOTTED'"
+      [class.badge-danger]="subscriptionData?.status === 'REJECTED' || redemptionData?.status === 'REJECTED'"
+      [class.badge-info]="subscriptionData?.status === 'APPROVED' || redemptionData?.status === 'APPROVED'"
+      [class.badge-dark]="subscriptionData?.status === 'CANCELLED' || redemptionData?.status === 'CANCELLED'"
+      [class.badge-primary]="subscriptionData?.status === 'WAITING' || redemptionData?.status === 'WAITING'"
+      [class.badge-secondary]="subscriptionData?.status === 'EXPIRED' || redemptionData?.status === 'EXPIRED'"
+      [class.badge-purple]="subscriptionData?.status === 'SUBMITTED' || redemptionData?.status === 'SUBMITTED'"
+    >{{subscriptionData?.status ? subscriptionData?.status: redemptionData?.status}}</span>
+  </div>
+  <div class="row">
+    <div class="col-12 d-flex px-0 py-1">
+      <div class="col-5">
+        <div class="row">
+          <div class="col-6 _g-text-title">
+            <span>Transaction ID</span>
+            <p>{{subscriptionData?.transactionId ? subscriptionData?.transactionId: redemptionData?.transactionId ? redemptionData?.transactionId:'-'}}</p>
+          </div>
+          <div class="col-6 _g-text-title">
+            <span>Account ID</span>
+            <p>{{subscriptionData?.fcnAccountId ? subscriptionData?.fcnAccountId : redemptionData?.fcnAccountId ? redemptionData?.fcnAccountId: '-'}}</p>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-7">
+        <div class="row">
+          <div class="col-4 _g-text-title">
+            <span>ชื่อ-นามสกุล</span>
+            <p *ngIf="subscriptionData?.thUserFirstname">{{subscriptionData?.thUserFirstname}} {{subscriptionData?.thUserLastname}}</p>
+            <p *ngIf="redemptionData?.thUserFirstname  && !subscriptionData?.thUserFirstname">{{redemptionData?.thUserFirstname}} {{redemptionData?.thUserLastname}}</p>
+            <p *ngIf="!subscriptionData?.thUserFirstname && !redemptionData?.thUserFirstname">-</p>
+          </div>
+          <div class="col-4 _g-text-title">
+            <span>ประเภทคำสั่ง</span>
+            <p [ngClass]="{'text-accent': type === 'SWO' || type === 'RED'|| type === 'SOC'  , 'success': type === 'SWI' || type === 'SUB'|| type === 'DCA' ||  type === 'SIC' || type === 'BSU'}">{{type}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<hr />
+
+<!-- buy-->
+<div *ngIf="type === 'SUB' || type === 'DCA' || type === 'BSU'">
+  <shared-view-transaction-buy [subscriptionData]="subscriptionData"></shared-view-transaction-buy>
+</div>
+<!-- buy-->
+
+<!-- SELL-->
+<div *ngIf="type === 'RED'">
+  <shared-view-transaction-sell [redemptionData]="redemptionData"></shared-view-transaction-sell>
+</div>
+<!-- SELL-->
+
+<!-- switch-in และ switch-out -->
+<div *ngIf="type === 'SWI' || type === 'SWO'|| type === 'SOC' ||  type === 'SIC'">
+  <shared-view-transaction-switch
+    [subscriptionData]="subscriptionData"
+    [redemptionData]="redemptionData"
+    [type]="type"
+  ></shared-view-transaction-switch>
+</div>
+<!-- switch-in และ switch-out -->

@@ -1,0 +1,238 @@
+<section id="form-address-general">
+  <div class="row">
+    <div class="col-12 _g-card-form px-0">
+      <div class="col-xl-5 col-lg-6 col-md-6 col-sm-12">
+        <div class="row">
+          <div class="col-xl-6 col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label">เลขที่</label>
+              <div class="form-input">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="โปรดระบุ"
+                  id="houseNo"
+                  name="houseNo"
+                  [(ngModel)]="data.no"
+                  required
+                >
+              </div>
+            </div>
+
+          </div>
+          <div class="col-xl-6 col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label ">หมู่ที่</label>
+              <div class="form-input">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="โปรดระบุ"
+                  id="villageNo"
+                  name="villageNo"
+                  [(ngModel)]="data.moo"
+                  required
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-7 col-lg-6 col-md-6 col-sm-12">
+        <div class="row">
+          <div class="col-xl-4 col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label">อาคาร / หมู่บ้าน</label>
+              <div class="form-input">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="โปรดระบุ"
+                  id="building"
+                  name="building"
+                  [(ngModel)]="data.building"
+                  required
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label">เลขที่ห้อง</label>
+              <div class="form-input">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="โปรดระบุ"
+                  id="roomNumber"
+                  name="roomNumber"
+                  [(ngModel)]="data.roomNo"
+                  required
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 col-sm-12  _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label">ชั้น</label>
+              <div class="form-input">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="โปรดระบุ"
+                  id="floor"
+                  name="floor"
+                  [(ngModel)]="data.floor"
+                  required
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 _g-card-form px-0">
+      <div class="col-xl-5 col-lg-6 col-md-6 col-sm-12">
+        <div class="row">
+          <div class="col-xl-6 col-sm-12  _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label">ชอย</label>
+              <div class="form-input">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="โปรดระบุ"
+                  id="lane"
+                  name="lane"
+                  [(ngModel)]="data.soi"
+                  required
+                >
+              </div>
+            </div>
+
+          </div>
+          <div class="col-xl-6 col-sm-12  _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label ">ถนน</label>
+              <div class="form-input">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="โปรดระบุ"
+                  id="road"
+                  name="road"
+                  [(ngModel)]="data.road"
+                  required
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-7 col-lg-6 col-md-6 col-sm-12 ">
+        <div class="row">
+          <div class="col-xl-4 col-sm-12  _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label">จังหวัด</label>
+              <div class="form-input">
+                <shared-province-dropdown
+                  name="province"
+                  placeholder="เลือก"
+                  [(ngModel)]="data.province"
+                  (ngModelChange)="onSelectDropdown($event);onSubDistrictChange($event)"
+                  required
+                >
+                </shared-province-dropdown>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label">อำเภอ / เขต</label>
+              <div class="form-input">
+                <shared-district-dropdown
+                  name="district"
+                  placeholder="เลือก"
+                  id="district"
+                  [(ngModel)]="data.district"
+                  [province]="data.province"
+                  [disabled]="!data.province"
+                  [autoReset]="true"
+                  (ngModelChange)="onSubDistrictChange($event)"
+                  required
+                >
+                </shared-district-dropdown>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 col-sm-12  _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label">ตำบล / แขวง</label>
+              <div class="form-input">
+                <shared-sub-district-dropdown
+                  name="subDistrict"
+                  placeholder="เลือก"
+                  id="province"
+                  [(ngModel)]="data.subDistrict"
+                  [province]="data.province"
+                  [district]="data.district"
+                  [disabled]="!data.district"
+                  [autoReset]="true"
+                  (ngModelChange)="onSubDistrictChange($event)"
+                  required
+                >
+                </shared-sub-district-dropdown>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-12 _g-card-form px-0">
+      <div class="col-xl-5 col-lg-12 col-md-6 col-sm-12">
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label">รหัสไปรษณีย์</label>
+              <div class="form-input">
+                <shared-postal-code-dropdown
+                  name="zipCode"
+                  placeholder="เลือก"
+                  id="zipCode"
+                  [(ngModel)]="data.postalCode"
+                  [province]="data.province"
+                  [district]="data.district"
+                  [subDistrict]="data.subDistrict"
+                  [disabled]="!data.subDistrict"
+                  [autoReset]="true"
+                  required
+                >
+                </shared-postal-code-dropdown>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label ">ประเทศ</label>
+              <div class="form-input">
+                <shared-country-dropdown
+                  placeholder="ประเทศ"
+                  id="country"
+                  name="country"
+                  [(ngModel)]="country"
+                  (ngModelChange)="onSelectDropdown($event)"
+                  [disabled]="country"
+                  required
+                >
+                </shared-country-dropdown>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

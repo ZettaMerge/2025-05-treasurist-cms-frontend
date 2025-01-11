@@ -1,0 +1,46 @@
+<pn-loading name="global"></pn-loading>
+
+<!-- *NAVBAR* starts -->
+<nav class="navbar navbar-expand-lg navbar-light header-navbar navbar-brand-center fixed-top">
+  <div class="container-fluid navbar-wrapper justify-content-center">
+    <div class="navbar-header d-flex">
+      <div class="navbar-brand">
+        <div class="navbar-header">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <div class="logo mr-2">
+                <a
+                  class="logo-text"
+                  [routerLink]="['/']"
+                >
+                  <div class="logo-img">
+                    <img
+                      class="logo-img"
+                      alt="Treasurist logo"
+                      [src]="logoUrl"
+                    >
+                  </div>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<!-- *NAVBAR* ends -->
+
+<div class="wrapper">
+  <div class="main-panel">
+    <!-- BEGIN : Main Content-->
+    <div class="main-content">
+      <div class="content-overlay"></div>
+      <div class="content-wrapper _content-auth">
+        <div class="container">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

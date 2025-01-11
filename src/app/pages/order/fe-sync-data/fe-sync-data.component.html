@@ -1,0 +1,175 @@
+<div id="transaction">
+    <div class="_g-header">
+        <h1 class="_g-title-header">Sync Transaction</h1>
+        <button *ngIf="canExport" class="btn btn-export" (click)="exportReport()">
+            <span><i class="ft ft-upload"></i>Export</span>
+        </button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form #form="ngForm" (ngSubmit)="onSyncTransaction(form)" [class.submitted]="form.submitted">
+                <div class="row _transaction-filter">
+                    <div class="col-xl-12">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label class="col-form-label is-required">ชื่อ-นามสกุล</label>
+                                    <div class="form-input">
+                                        <pn-dynamic-dropdown placeholder="ค้นหา" id="firstName" name="firstName"
+                                            [list]="listsCustomerDropdown" [(ngModel)]="customerData"
+                                            [ngModelOptions]="{standalone: true}"
+                                            (ngModelChange)="onChangeNameCustomer($event, customerData)"
+                                            [required]="isValidateCustomer">
+                                        </pn-dynamic-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label class="col-form-label is-required">แผนลงทุน</label>
+                                    <pn-dynamic-dropdown id="fundPlan" name="fundPlan" placeholder="เลือก"
+                                        [list]="listsFundPlanDropdown" [(ngModel)]="fundPlan" [disabled]="!customerData"
+                                        [ngModelOptions]="{standalone: true}" (ngModelChange)="onChangeFundPlan($event)"
+                                        [required]="isValidateFundPlan">
+                                    </pn-dynamic-dropdown>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label class="col-form-label is-required">ช่วงวันที่ทำรายการ</label>
+                                    <pn-date-range-picker
+                                        placeholder="dd/mm/yyyy - dd/mm/yyyy" [(ngModel)]="filter.dateRange"
+                                        [ngModelOptions]="{standalone: true}" (ngModelChange)="filterChange($event)"
+                                        [required]="isValidateEffectDate">
+
+                                    </pn-date-range-picker>
+                                    <!-- <p class="_validate-error" *ngIf="isValidateEffectDate">โปรดระบุข้อมูลให้ครบถ้วน</p> -->
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="d-flex">
+                                    <div class="_btn-sync">
+                                        <button type="submit" class="btn btn-outline-primary btn-lg">
+                                            <span class="icon"><i class="ft ft-refresh-ccw"></i></span>
+                                            <span>Sync Transaction</span>
+                                        </button>
+                                    </div>
+                                    <div class="_g-btn-clear">
+                                        <button type="button" class="btn btn-clear btn-lg mr-1 mb-1"
+                                            (click)="clearFilter()">ล้าง
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="col-12" *ngIf="rows && rows?.length === 0">
+                <pn-data-not-found>
+                </pn-data-not-found>
+            </div>
+            <div [hidden]="rows && rows?.length === 0">
+                <div>
+                    <pn-grid-per-page [page]="page" (setPerPage)="grid.setPerPage($event)"></pn-grid-per-page>
+                </div>
+                <div class="_g-table-container">
+                    <pn-lib-grid #grid [bodyHeight]="'auto'" [sort]="sort" [dataSub]="dataSub" [rows]="rows"
+                        [columns]="columns" [rowHeight]="65" [externalPaging]="true" [(page)]="page"
+                        (pageChange)="pageChange()" (sortChange)="onSortChange($event)" (edit)="edit($event)"
+                        (detailInfo)="transactionDetail($event)"></pn-lib-grid>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="col-12">
+                <p class="text-muted _g-text-header-title">หมายเหตุ</p>
+            </div>
+            <div class="col-12 d-flex">
+                <div class="col-6 px-0">
+                    <p class="text-muted">RED = Redemption</p>
+                    <p class="text-muted">SUB = Subscription</p>
+                    <p class="text-muted">DCA = Subscription ที่เกิดจาก DCA</p>
+                    <p class="text-muted">BSU = Basket Subscription</p>
+                </div>
+                <div class="col-6 px-0">
+                    <p class="text-muted">SWO = Redemption ที่เกิดจาก Switching within AMC</p>
+                    <p class="text-muted">SWI = Subscription ที่เกิดจาก Switching within AMC</p>
+                    <p class="text-muted">SOC = Redemption ที่เกิดจาก Switching cross AMCs</p>
+                    <p class="text-muted">SIC = Subscription ที่เกิดจาก Switching cross AMCs</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Template-->
+<ng-template #nameTpl let-value="value" let-row="row">
+    <shared-datatable-with-name [id]="row.fcnAccountId" [firstName]="row.thUserFirstname"
+        [lastName]="row.thUserLastname">
+    </shared-datatable-with-name>
+</ng-template>
+
+<ng-template #transactionIdTpl let-value="value">
+    {{value ? value: '-'}}
+</ng-template>
+
+
+
+<ng-template #statusTpl let-value="value" let-row="row">
+    <span *ngIf="value" class="badge" [class.badge-success]="value === 'ALLOTTED'"
+        [class.badge-danger]="value === 'REJECTED'" [class.badge-info]="value === 'APPROVE' || value === 'APPROVED'"
+        [class.badge-dark]="value === 'CANCELLED'" [class.badge-primary]="value === 'WAITING'"
+        [class.badge-secondary]="value === 'EXPIRED'" [class.badge-purple]="value === 'SUBMITTED'">{{value}}</span>
+    <span *ngIf="!value">-</span>
+</ng-template>
+
+<ng-template #countTpl let-value="value" let-row="row">
+    <span *ngIf="!row?.allottedAmount && !row?.amount ">-</span>
+    <span *ngIf="row?.allottedAmount">{{row.allottedAmount | number: '1.2-2'}}</span>
+    <span *ngIf="!row?.allottedAmount">{{row.amount | number: '1.2-2'}}</span>
+</ng-template>
+
+<ng-template #unitTpl let-value="value" let-row="row">
+    <span *ngIf="!row?.allottedUnit && !row?.unit ">-</span>
+    <span *ngIf="row?.allottedUnit">{{row.allottedUnit | number: '1.4-4'}}</span>
+    <span *ngIf="!row?.allottedUnit">{{row.unit | number: '1.4-4'}}</span>
+</ng-template>
+
+
+<ng-template #namePort let-value="value" let-row="row">
+    <!-- <span class="m-0">{{value}}</span>&nbsp; -->
+    <shared-datatable-with-name-fund [fundCode]="row.fundCode" [riskLevel]="row.fundRiskLevel"
+        [riskLevel]="row.fundRiskLevel">
+    </shared-datatable-with-name-fund>
+
+</ng-template>
+
+<ng-template #orderTypeTpl let-value="value" let-row="row">
+    {{ value ? value: '-'}}
+
+</ng-template>
+
+<ng-template #paymentTypeTpl let-value="value" let-row="row">
+    {{value ? value: '-'}}
+</ng-template>
+
+<!-- popup -->
+
+<lib-modal #modal modalSize="md" [showHeader]="false">
+    <fe-sync-data-modal *ngIf="modal.isOpen" [id]="fundPlan" [effectiveDate]="filter.dateRange" (cancel)="modal.close()"
+        (getData)="onGetDataSync($event)">
+    </fe-sync-data-modal>
+</lib-modal>

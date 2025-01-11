@@ -1,0 +1,61 @@
+<ng-select
+  [name]="name"
+  [items]="optionList"
+  [bindLabel]="textAttr"
+  [placeholder]="placeholder"
+  [(ngModel)]="value"
+  (ngModelChange)="onSelect($event)"
+  [disabled]="disabled"
+  [required]="required"
+  [class.is-invalid]="isError"
+  [class.is-valid]="isValid"
+  [appendTo]="'body'"
+  [dropdownPosition]="'bottom'"
+  [selectOnTab]="true"
+  [multiple]="multiple"
+  [clearable]="clearable"
+  (clear)="reset()"
+  [searchable]="searchable"
+>
+  <ng-template
+    ng-label-tmp
+    let-item="item"
+  >
+    {{ displayOption(item) }}
+  </ng-template>
+  <ng-template
+    ng-multi-label-tmp
+    let-items="items"
+    let-clear="clear"
+  >
+    <span *ngIf="_showAll && items[0].name === showAllText;else valueLabel">{{showAllText}}</span>
+    <ng-template #valueLabel>
+      <div
+        class="ng-value"
+        *ngFor="let item of items | slice:0:items.length > 2 ? 1 : 2"
+      >
+        <span class="ng-value-label">{{ displayOption(item) }}</span>
+        <span
+          class="ng-value-icon right"
+          (click)="clear(item)"
+          aria-hidden="true"
+        >×</span>
+      </div>
+      <div
+        class="ng-value"
+        *ngIf="items.length > 2"
+      >
+        <span class="ng-value-label">{{items.length - 1}} more...</span>
+      </div>
+    </ng-template>
+
+  </ng-template>
+  <ng-template
+    ng-option-tmp
+    let-item="item"
+    let-index="index"
+    let-search="searchTerm"
+  >
+    {{ displayOption(item) }}
+  </ng-template>
+</ng-select>

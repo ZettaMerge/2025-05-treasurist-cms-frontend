@@ -1,0 +1,247 @@
+@font-face {
+  font-family: "icomoon";
+  src: url("../assets/fonts/icomoon/icomoon.eot?mpm82w");
+  src: url("../assets/fonts/icomoon/icomoon.eot?mpm82w#iefix") format("embedded-opentype"),
+    /*url("../assets/fonts/icomoon/icomoon.woff2?mpm82w") format("woff2"),*/
+    url("../assets/fonts/icomoon/icomoon.ttf?mpm82w") format("truetype"),
+    url("../assets/fonts/icomoon/icomoon.woff?mpm82w") format("woff"),
+    url("../assets/fonts/icomoon/icomoon.svg?mpm82w#icomoon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="ic-"],
+[class*=" ic-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: "icomoon" !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ic-account-box-multiple:before {
+  content: "\e900";
+}
+.ic-account-circle:before {
+  content: "\e901";
+}
+.ic-bell:before {
+  content: "\e902";
+}
+.ic-briefcase-account:before {
+  content: "\e903";
+}
+.ic-calendar:before {
+  content: "\e904";
+}
+.ic-card-account-details:before {
+  content: "\e905";
+}
+.ic-cash-multiple:before {
+  content: "\e906";
+}
+.ic-check:before {
+  content: "\e907";
+}
+.ic-chevron-down:before {
+  content: "\e908";
+}
+.ic-chevron-left:before {
+  content: "\e909";
+}
+.ic-chevron-right:before {
+  content: "\e90a";
+}
+.ic-chevron-up:before {
+  content: "\e90b";
+}
+.ic-close:before {
+  content: "\e90c";
+}
+.ic-content-paste:before {
+  content: "\e90d";
+}
+.ic-delete:before {
+  content: "\e90e";
+}
+.ic-download:before {
+  content: "\e90f";
+}
+.ic-eye-circle:before {
+  content: "\e910";
+}
+.ic-file-chart:before {
+  content: "\e911";
+}
+.ic-finance:before {
+  content: "\e912";
+}
+.ic-group-2 .path1:before {
+  content: "\e913";
+  color: rgb(240, 240, 240);
+}
+.ic-group-2 .path2:before {
+  content: "\e914";
+  margin-left: -1em;
+  color: rgb(149, 149, 149);
+}
+.ic-group .path1:before {
+  content: "\e915";
+  color: rgb(240, 240, 240);
+}
+.ic-group .path2:before {
+  content: "\e916";
+  margin-left: -1em;
+  color: rgb(149, 149, 149);
+}
+.ic-image:before {
+  content: "\e917";
+}
+.ic-logout:before {
+  content: "\e918";
+}
+.ic-note-edit:before {
+  content: "\e919";
+}
+.ic-note:before {
+  content: "\e91a";
+}
+.ic-order:before {
+  content: "\e91b";
+}
+.ic-plus-circle:before {
+  content: "\e91c";
+}
+.ic-plus:before {
+  content: "\e91d";
+}
+.ic-rectangle:before {
+  content: "\e91e";
+}
+.ic-sort-down:before {
+  content: "\e91f";
+}
+.ic-sort:before {
+  content: "\e920";
+}
+.ic-sort-up:before {
+  content: "\e921";
+}
+.ic-supervisor:before {
+  content: "\e922";
+}
+
+
+/*.ic-group-2 .path1:before {*/
+/*  content: "\e900";*/
+/*  color: rgb(240, 240, 240);*/
+/*}*/
+/*.ic-group-2 .path2:before {*/
+/*  content: "\e901";*/
+/*  margin-left: -1em;*/
+/*  color: rgb(149, 149, 149);*/
+/*}*/
+/*.ic-group .path1:before {*/
+/*  content: "\e902";*/
+/*  color: rgb(240, 240, 240);*/
+/*}*/
+/*.ic-group .path2:before {*/
+/*  content: "\e903";*/
+/*  margin-left: -1em;*/
+/*  color: rgb(149, 149, 149);*/
+/*}*/
+/*.ic-chevron-down:before {*/
+/*  content: "\e904";*/
+/*}*/
+/*.ic-chevron-up:before {*/
+/*  content: "\e905";*/
+/*}*/
+/*.ic-chevron-left:before {*/
+/*  content: "\e906";*/
+/*}*/
+/*.ic-chevron-right:before {*/
+/*  content: "\e907";*/
+/*}*/
+/*.ic-account-box-multiple:before {*/
+/*  content: "\e908";*/
+/*}*/
+/*.ic-account-circle:before {*/
+/*  content: "\e909";*/
+/*}*/
+/*.ic-supervisor:before {*/
+/*  content: "\e90a";*/
+/*}*/
+/*.ic-bell:before {*/
+/*  content: "\e90b";*/
+/*}*/
+/*.ic-briefcase-account:before {*/
+/*  content: "\e90c";*/
+/*}*/
+/*.ic-card-account-details:before {*/
+/*  content: "\e90d";*/
+/*}*/
+/*.ic-cash-multiple:before {*/
+/*  content: "\e90e";*/
+/*}*/
+/*.ic-content-paste:before {*/
+/*  content: "\e90f";*/
+/*}*/
+/*.ic-delete:before {*/
+/*  content: "\e910";*/
+/*}*/
+/*.ic-eye-circle:before {*/
+/*  content: "\e911";*/
+/*}*/
+/*.ic-file-chart:before {*/
+/*  content: "\e912";*/
+/*}*/
+/*.ic-finance:before {*/
+/*  content: "\e913";*/
+/*}*/
+/*.ic-note-edit:before {*/
+/*  content: "\e914";*/
+/*}*/
+/*.ic-order:before {*/
+/*  content: "\e915";*/
+/*}*/
+/*.ic-logout:before {*/
+/*  content: "\e917";*/
+/*}*/
+/*.ic-rectangle:before {*/
+/*  content: "\e918";*/
+/*}*/
+/*.ic-message-alert:before {*/
+/*  content: "\e919";*/
+/*}*/
+/*.ic-plus:before {*/
+/*  content: "\e91a";*/
+/*}*/
+/*.ic-download:before {*/
+/*  content: "\e91b";*/
+/*}*/
+/*.ic-calendar:before {*/
+/*  content: "\e91c";*/
+/*}*/
+/*.ic-check:before {*/
+/*  content: "\e91d";*/
+/*}*/
+/*.ic-close:before {*/
+/*  content: "\e91e";*/
+/*}*/
+/*.ic-note:before {*/
+/*  content: "\e91f";*/
+/*}*/
+/*.ic-plus-circle:before {*/
+/*  content: "\e920";*/
+/*}*/
+/*.ic-image:before {*/
+/*  content: "\e921";*/
+/*}*/

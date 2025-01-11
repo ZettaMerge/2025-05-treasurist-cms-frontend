@@ -1,0 +1,209 @@
+@import "../assets/sass/core/variables/app-variables.scss";
+@import "../assets/sass/core/colors/palette-variables";
+
+$primary-color: (
+  "lighten-4": #fcf7ed,
+  "lighten-3": #ffd576,
+  "lighten-2": #ffcd5c,
+  "lighten-1": #ffbd29,
+  "base": #db9800,
+  "darken-1": #a87500,
+  "darken-2": #765100,
+  "darken-3": #432e00,
+  "darken-4": #100b00,
+);
+
+$secondary-color: (
+  "lighten-4": #f9f9fa,
+  "lighten-3": #edeff2,
+  "lighten-2": #e2e4e9,
+  "lighten-1": #d7dae1,
+  "base": #ccd0d9,
+  "darken-1": #b0b2b8,
+  "darken-2": #8a8b90,
+  "darken-3": #8a8b90,
+  "darken-4": #8a8b90,
+);
+
+//#9d9d9d
+
+
+$dark-blue-2: #264581;
+$dark-blue: #001e44;
+$gradient-tossakan-blue: #001e44;
+$gradient-tossakan-green: #48825c;
+
+$primary: map-get($primary-color, base);
+$secondary: map-get($secondary-color, base);
+$success: #5fc639;
+$danger: map-get($danger-color, base);
+$accent: #c63939;
+$edit: #ffd300;
+$black: #000000;
+$muted: #9d9d9d;
+$text-muted: #9d9d9d !default;
+
+$visitor-status-pending: $secondary;
+$visitor-status-coming: #ffd300;
+$visitor-status-arrived: $success;
+$visitor-status-left: $text-muted;
+$visitor-status-cancelled: $text-muted;
+$visitor-status-expired: $accent;
+
+$primary-dark: map-get($primary-color, darken-4);
+$secondary-dark: map-get($secondary-color, darken-1);
+$primary-light: map-get($primary-color, lighten-2);
+$primary-lightest: #fef3e0;
+
+$disabled: #dddddd;
+$disabled-btn: #edeff0;
+
+$body-color: #333 !default;
+
+$text-primary: #333;
+
+$colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "danger": $danger,
+  "info": $info,
+  "accent": $accent,
+  "disabled": $disabled,
+  "disabled-btn": $disabled-btn,
+  "primary-dark": $primary-dark,
+  "primary-light": $primary-light,
+  "dark-blue": $dark-blue,
+  "edit": $edit,
+  "black": $black,
+  "dark-blue-light": $dark-blue-2,
+);
+
+// BACKGROUND
+$background-primary: #edeff0;
+
+// SIDEBAR
+$menu-dropdown-hover-bg: $primary-lightest;
+$menu-dropdown-hover-text: map-get($primary-color, base);
+$menu-dropdown-clicked-bg: map-get($primary-color, lighten-2);
+$menu-dropdown-clicked-text: map-get($primary-color, darken-1);
+$menu-dropdown-active-bg: $primary;
+
+$menu-dropdown-logout-hover-bg: map-get($danger-color, lighten-4);
+$menu-dropdown-logout-hover-text: map-get($danger-color, base);
+$menu-dropdown-logout-clicked-bg: map-get($danger-color, lighten-2);
+$menu-dropdown-logout-clicked-text: map-get($danger-color, darken-1);
+
+$menu-expanded-width: 250px;
+$menu-width: 60px;
+$menu-background: #fdf8ed;
+$menu-gradient: linear-gradient(135deg, #fdf8ed, #fdf8ed);
+$menu-text: #333;
+$menu-text-active: $primary;
+
+$property-image-width: 44px;
+$property-image-width-expand: 104px;
+
+// BUTTON
+$hover: map-get($secondary-color, base);
+
+// DATEPICKER
+$selected-date: map-get($primary-color, lighten-2);
+
+// BORDER COLOR
+$border: #e9ebf0;
+$border-light: #f0f0f0;
+$border-dark: #dddddd;
+$border-blue: #cad4e2;
+
+// BORDER RADIUS
+$border-radius: 0.5rem;
+$border-radius-lg: 0.75rem;
+$border-radius-sm: 0.25rem;
+
+// FONT-SIZE
+$size-xxsmall: 0.571rem; // 8px
+$size-xsmall: 0.72rem; // 10px
+$size-small: 0.857rem; // 12px
+$size-normal: 1rem; // 14px
+$size-medium: 1.143rem; // 16px
+$size-large: 1.285rem; // 18px
+$size-xlarge: 1.571rem; // 22px
+$size-xxlarge: 1.714rem; // 24px
+
+$font-sizes: (
+  "size-xxsmall": $size-xxsmall,
+  "size-xsmall": $size-xsmall,
+  "size-small": $size-small,
+  "size-normal": $size-normal,
+  "size-medium": $size-medium,
+  "size-large": $size-large,
+  "size-xlarge": $size-xlarge,
+  "size-xxlarge": $size-xxlarge,
+);
+
+// WEIGHT
+$weight-thin: 100;
+$weight-extralight: 200;
+$weight-light: 300;
+$weight-normal: 400;
+$weight-medium: 500;
+$weight-semibold: 600;
+$weight-bold: 700;
+$weight-extrabold: 800;
+$weight-black: 900;
+
+$font-family-base: "FontAwesome", "icomoon", "prompt", sans-serif;
+$font-secondary: "prompt";
+$font-thai: "prompt";
+
+// BREAKPOINT
+$bp-sm: 576px;
+$bp-md: 768px;
+$bp-lg: 992px;
+$bp-xl: 1200px;
+
+$gutter: 10px;
+$grid-gutter-width: 20px;
+
+$gradient-colors: (
+  gradient-mint: (
+    "start-color": #226cc5,
+    "end-color": #6cd975,
+  ),
+  gradient-pomegranate: (
+    "start-color": #465375,
+    "end-color": #f55252,
+  ),
+  gradient-blackberry: (
+    "start-color": #303c62,
+    "end-color": #b5c3db,
+  ),
+  gradient-king-yna: (
+    "start-color": #7441db,
+    "end-color": #f9877c,
+  ),
+  gradient-ibiza-sunset: (
+    "start-color": #b02940,
+    "end-color": #fcc173,
+  ),
+  gradient-flickr: (
+    "start-color": #f77e17,
+    "end-color": #2f8be6,
+  ),
+  gradient-purple-bliss: (
+    "start-color": #562db7,
+    "end-color": #60aff0,
+  ),
+  gradient-man-of-steel: (
+    "start-color": #2f3ea0,
+    "end-color": #ae342d,
+  ),
+  gradient-purple-love: (
+    "start-color": #7441db,
+    "end-color": #c89cff,
+  ),
+  gradient-starfall: (
+    "start-color": #d23b48,
+    "end-color": #2f8be6,
+  ),
+);

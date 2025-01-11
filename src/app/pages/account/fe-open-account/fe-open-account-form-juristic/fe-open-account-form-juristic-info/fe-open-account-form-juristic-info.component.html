@@ -1,0 +1,624 @@
+<!-- <div class="card-body pt-0"> -->
+<div class="card-header pl-0">
+  <span class="_g-text-header-title">ข้อมูลนิติบุคคล</span>
+</div>
+<div class="row">
+  <div class="col-12">
+    <div class="form-group">
+      <label class="col-form-label ">ชื่อนิติบุคคล (ภาษาไทย)</label>
+      <div class="form-input">
+        <input
+          id="nameTh"
+          name="nameTh"
+          type="text"
+          class="form-control"
+          placeholder="โปรดระบุ"
+          required
+          [(ngModel)]="dataJuristicInfo.nameTh"
+        >
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="form-group">
+      <label class="col-form-label ">ชื่อนิติบุคคล (อังกฤษ)</label>
+      <div class="form-input">
+        <input
+          id="nameEn"
+          name="nameEn"
+          type="text"
+          class="form-control"
+          placeholder="โปรดระบุ"
+          required
+          [(ngModel)]="dataJuristicInfo.nameEn"
+        >
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 _g-card-form px-0">
+    <div class="col-xl-5 col-lg-12 col-md-12 col-sm-12">
+      <div class="row">
+        <div class="col-xl-6 col-lg-6  col-md-6 col-sm-12 _g-text-title">
+          <div class="form-group">
+            <label class="col-form-label ">ประเทศที่จดทะเบียน</label>
+            <div class="form-input">
+              <input
+                id="registerCountry"
+                name="registerCountry"
+                type="text"
+                class="form-control"
+                placeholder="โปรดระบุ"
+                required
+                [(ngModel)]="dataJuristicInfo.registerCountry"
+              >
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6  col-lg-6  col-md-6  col-sm-12 _g-text-title">
+          <div class="form-group">
+            <label class="col-form-label ">เลขที่ใบสำคัญการจดทะเบียน</label>
+            <div class="form-input">
+              <input
+                id="certificateNumber"
+                name="certificateNumber"
+                type="text"
+                class="form-control"
+                placeholder="โปรดระบุ"
+                required
+                [(ngModel)]="dataJuristicInfo.registrationCertificateNumber"
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-7 col-lg-12 col-md-12 col-sm-12">
+      <div class="row">
+        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 _g-text-title">
+          <div class="form-group">
+            <label class="col-form-label">เลขประจำตัวผู้เสียภาษีอากร</label>
+            <div class="form-input">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="โปรดระบุ"
+                id="taxpayerIdentificationNumber"
+                name="taxpayerIdentificationNumber"
+                required
+                [(ngModel)]="dataJuristicInfo.taxpayerIdentificationNumber"
+              >
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12  _g-text-title">
+          <div class="form-group">
+            <label class="col-form-label">สาขา</label>
+            <div class="form-input">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="โปรดระบุ"
+                id="branch"
+                name="branch"
+                required
+                [(ngModel)]="dataJuristicInfo.branch"
+              >
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 _g-text-title">
+          <div class="form-group">
+            <label class="col-form-label">รายได้รวมต่อปี</label>
+            <div class="form-input">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="โปรดระบุ"
+                id="totalIncomePeryear"
+                name="totalIncomePeryear"
+                required
+                [(ngModel)]="dataJuristicInfo.totalIncome"
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 _g-card-form px-0">
+    <div class="col-xl-5 col-lg-12 col-md-12 col-sm-12">
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 _g-text-title">
+          <div class="form-group">
+            <label class="col-form-label ">Application Form</label>
+            <div class="form-input">
+              <input
+                id="applicationForm"
+                name="applicationForm"
+                type="text"
+                class="form-control"
+                placeholder="โปรดระบุ"
+                required
+                [(ngModel)]="dataJuristicInfo.applicationForm"
+              >
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 _g-text-title">
+          <div class="form-group">
+            <label class="col-form-label">วันที่จดทะเบียน</label>
+            <div class="form-input">
+              <pn-date-picker
+                placeholder="dd/mm/yyyy"
+                id="dateRegister"
+                name="dateRegister"
+                required
+                [(ngModel)]="dataJuristicInfo.registerDate"
+              >
+              </pn-date-picker>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="_g-card-sub-header pl-2">
+    <span class="_g-text-header-sub-title">ประเภทนิติบุคคล</span>
+  </div>
+  <div class="col-12">
+    <div class="row">
+      <div class=" col-12">
+        <li class="d-inline-block mr-2 mb-2">
+          <div class="checkbox">
+            <input
+              type="checkbox"
+              id="type-juristic-1"
+            >
+            <label for="type-juristic-1"><span>นิติบุคคลทั่วไป (ประเทศไทย) - ได้รับการยกเว้นภาษี</span></label>
+          </div>
+        </li>
+        <li class="d-inline-block mr-2 mb-2">
+          <div class="checkbox">
+            <input
+              type="checkbox"
+              id="type-juristic-2"
+            >
+            <label for="type-juristic-2"><span>นิติบุคคลทั่วไป (ประเทศไทย) - ไม่ได้รับการยกเว้นภาษี</span></label>
+          </div>
+        </li>
+      </div>
+
+      <div class=" col-12">
+        <li class="d-inline-block mr-2 mb-2">
+          <div class="checkbox">
+            <input
+              type="checkbox"
+              id="type-juristic-3"
+            >
+            <label for="type-juristic-3"><span>นิติบุคคลต่างประเทศ - ประกอบกิจการในไทย</span></label>
+          </div>
+        </li>
+        <li class="d-inline-block mr-2 mb-2">
+          <div class="checkbox">
+            <input
+              type="checkbox"
+              id="type-juristic-4"
+            >
+            <label for="type-juristic-4"><span>นิติบุคคลต่างประเทศ - มิได้ประกอบกิจการในไทย</span></label>
+          </div>
+        </li>
+      </div>
+
+      <div class=" col-12">
+        <li class="d-inline-block mr-2 mb-2">
+          <div class="checkbox">
+            <input
+              type="checkbox"
+              id="type-juristic-5"
+            >
+            <label for="type-juristic-5"><span>ห้างหุ้นส่วน (ประเทศไทย)</span></label>
+          </div>
+        </li>
+        <li class="d-inline-block mr-2 mb-2">
+          <div class="checkbox">
+            <input
+              type="checkbox"
+              id="type-juristic-6"
+            >
+            <label for="type-juristic-6"><span>ส่วนราชการ / รัฐวิสาหกิจ</span></label>
+          </div>
+        </li>
+        <li class="d-inline-block mr-2 mb-2">
+          <div class="checkbox">
+            <input
+              type="checkbox"
+              id="type-juristic-7"
+            >
+            <label for="type-juristic-7"><span>สหกรณ์ / มูลนิธิ / สมาคม / สโมสร / วัด / มัสยิด / ศาลเจ้า - ได้รับยการยกเว้นภาษี</span></label>
+          </div>
+        </li>
+      </div>
+
+      <div class=" col-12">
+        <li class="d-inline-block mr-2 mb-2">
+          <div class="checkbox">
+            <input
+              type="checkbox"
+              id="type-juristic-8"
+            >
+            <label for="type-juristic-8"><span>อื่น ๆ</span></label>
+          </div>
+        </li>
+
+        <li class="d-inline-block col-5 ">
+          <div class="form-group m-0">
+            <div class="form-input">
+              <input
+                type="text"
+                class="form-control is-small "
+                placeholder="โปรดระบุ"
+                disabled
+                id="businessTypeOther"
+                name="businessTypeOther"
+              >
+            </div>
+          </div>
+        </li>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-12 _g-card-form px-0">
+    <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
+      <div class="row">
+        <div class="col-xl-7 col-lg-6 col-md-6  col-sm-12 _g-text-title">
+          <div class="form-group">
+            <label class="col-form-label">ประเภทธุรกิจ</label>
+            <div class="form-input">
+              <shared-business-dropdown
+                placeholder="เลือก"
+                id="businessType"
+                name="businessType"
+                required
+                [(ngModel)]="dataJuristicInfo.businessType"
+              >
+              </shared-business-dropdown>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-xl-5 col-lg-6 col-md-6  col-sm-12 _g-text-title">
+          <div class="form-group mt-2">
+            <label class="col-form-label"></label>
+            <div class="form-input">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="หากเลือกอื่น ๆ โปรดระบุ"
+                id="nameBusiness"
+                name="nameBusiness"
+                required
+                disabled
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-6 col-lg-12 col-md-12  col-sm-12">
+      <div class="row">
+        <div class="col-xl-5 col-lg-6 col-md-6  col-sm-12 _g-text-title">
+          <div class="form-group">
+            <label class="col-form-label">มูลค่าทรัพย์สิน</label>
+            <div class="form-input">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="โปรดระบุ"
+                id="propertyValue"
+                name="propertyValue"
+                required
+                [(ngModel)]="dataJuristicInfo.propertyValue"
+              >
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-7 col-lg-6 col-md-6  col-sm-12 _g-text-title">
+          <div class="form-group">
+            <label class="col-form-label">ส่วนของผู้ถือหุ้น</label>
+            <div class="form-input">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="โปรดระบุ"
+                id="shareholder"
+                name="shareholder"
+                required
+                [(ngModel)]="dataJuristicInfo.shareholder"
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="_g-card-sub-header pl-2">
+    <span class="_g-text-header-sub-title">แหล่งที่มาของเงินทุน</span>
+  </div>
+  <div class="col-12">
+    <div class="row">
+      <div class=" col-12">
+        <li class="d-inline-block mr-2 mb-2">
+          <div class="checkbox">
+            <input
+              type="checkbox"
+              id="capital-1"
+            >
+            <label for="capital-1"><span>เงินจากการทำธุรกิจ</span></label>
+          </div>
+        </li>
+        <li class="d-inline-block mr-2 mb-2">
+          <div class="checkbox">
+            <input
+              type="checkbox"
+              id="capital-2"
+            >
+            <label for="capital-2"><span>ค่าหุ้น</span></label>
+          </div>
+        </li>
+
+        <li class="d-inline-block mr-2 mb-2">
+          <div class="checkbox">
+            <input
+              type="checkbox"
+              id="capital-3"
+            >
+            <label for="capital-3"><span>เงินบริจาค</span></label>
+          </div>
+        </li>
+
+        <li class="d-inline-block mr-2 mb-2">
+          <div class="checkbox">
+            <input
+              type="checkbox"
+              id="capital-4"
+            >
+            <label for="capital-4"><span>เงินกู้</span></label>
+          </div>
+        </li>
+
+        <li class="d-inline-block mr-2 mb-2">
+          <div class="checkbox">
+            <input
+              type="checkbox"
+              id="capital-5"
+            >
+            <label for="capital-5"><span>เงินจากการขายทรัพย์สิน</span></label>
+          </div>
+        </li>
+
+        <li class="d-inline-block mr-2 mb-2">
+          <div class="checkbox">
+            <input
+              type="checkbox"
+              id="capital-5"
+            >
+            <label for="capital-5"><span>อื่น ๆ</span></label>
+          </div>
+        </li>
+
+        <li class="d-inline-block col-3 ">
+          <div class="form-group m-0">
+            <div class="form-input">
+              <input
+                type="text"
+                class="form-control is-small "
+                placeholder="โปรดระบุ"
+                disabled
+                id="capitalOther"
+                name="capitalOther"
+              >
+            </div>
+          </div>
+        </li>
+      </div>
+    </div>
+  </div>
+
+  <div class="_g-card-sub-header pl-2">
+    <span class="_g-text-header-sub-title">ประเทศหรือเขตแดนที่เป็นแหล่งที่มาของเงินทุน</span>
+  </div>
+  <div class="col-12">
+    <div class="row">
+      <div class=" col-12">
+        <li class="d-inline-block mr-2 mb-2">
+          <div class="checkbox">
+            <input
+              type="checkbox"
+              id="country-capital-1"
+            >
+            <label for="country-capital-1"><span>เงินจากการทำธุรกิจ</span></label>
+          </div>
+        </li>
+
+        <li class="d-inline-block mr-2 mb-2">
+          <div class="checkbox">
+            <input
+              type="checkbox"
+              id="country-capital-2"
+            >
+            <label for="country-capital-2"><span>อื่น ๆ</span></label>
+          </div>
+        </li>
+
+        <li class="d-inline-block col-3 ">
+          <div class="form-group m-0">
+            <div class="form-input">
+              <input
+                type="text"
+                class="form-control is-small "
+                placeholder="โปรดระบุ"
+                disabled
+                id="countryCapitalOther"
+                name="countryCapitalOther"
+              >
+            </div>
+          </div>
+        </li>
+      </div>
+    </div>
+  </div>
+
+  <!--ที่อยู่ตามหนังสือจดทะเบียน-->
+  <div class="_g-card-sub-header pl-2">
+    <span class="_g-text-header-sub-title">ที่อยู่ตามหนังสือจดทะเบียน</span>
+  </div>
+  <fe-open-account-form-juristic-address></fe-open-account-form-juristic-address>
+  <!--ที่อยู่ตามหนังสือจดทะเบียน end-->
+  <div class="col-12">
+    <div class="form-group">
+      <label class="col-form-label">เงื่อนไขการลงนามนิติบุคคลตามหนังสือจดทะเบียน</label>
+      <div class="form-input">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="โปรดระบุ"
+          id="zipCode"
+          name="zipCode"
+          required
+          [(ngModel)]="dataJuristicInfo.termsOfSigning"
+        >
+      </div>
+    </div>
+  </div>
+
+  <!--ข้อมูลติดต่อ -->
+  <div class="_g-card-sub-header pl-2">
+    <span class="_g-text-header-sub-title">ข้อมูลติดต่อ</span>
+  </div>
+  <div class="row">
+    <div class="col-12 _g-card-form ">
+      <div class="col-xl-5 col-lg-12 col-md-12 col-sm-12">
+        <div class="row">
+          <div class="col-xl-6 col-lg-6  col-md-6 col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label ">ชื่อ</label>
+              <div class="form-input">
+                <input
+                  id="firstNameContact"
+                  name="firstNameContact"
+                  type="text"
+                  class="form-control"
+                  placeholder="โปรดระบุ"
+                  required
+                  [(ngModel)]="dataJuristicInfo.nameContact"
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6  col-md-6 col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label ">นามสกุล</label>
+              <div class="form-input">
+                <input
+                  id="lastNameContact"
+                  name="lastNameContact"
+                  type="text"
+                  class="form-control"
+                  placeholder="โปรดระบุ"
+                  required
+                  [(ngModel)]="dataJuristicInfo.nameContact"
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-7 col-lg-12 col-md-12 col-sm-12">
+        <div class="row">
+          <div class="col-xl-4  col-lg-6  col-md-6  col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label ">ตำแหน่ง</label>
+              <div class="form-input">
+                <input
+                  id="position"
+                  name="position"
+                  type="text"
+                  class="form-control"
+                  placeholder="โปรดระบุ"
+                  required
+                  [(ngModel)]="dataJuristicInfo.position"
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label">เบอร์โทรศัพท์</label>
+              <div class="form-input">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="โปรดระบุ"
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  required
+                  [(ngModel)]="dataJuristicInfo.phoneNumber"
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12  _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label">อีเมล</label>
+              <div class="form-input">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="โปรดระบุ"
+                  id="email"
+                  name="email"
+                  required
+                  [(ngModel)]="dataJuristicInfo.email"
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 _g-card-form ">
+      <div class="col-xl-5 col-lg-12 col-md-12 col-sm-12">
+        <div class="row">
+          <div class="col-xl-6 col-lg-6  col-md-6 col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label">โทรสาร</label>
+              <div class="form-input">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="dataJuristicInfo.fax"
+                  placeholder="โปรดระบุ"
+                  id="fax"
+                  name="fax"
+                  required
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--ข้อมูลติดต่อ end  --->
+
+</div>
+<!-- </div> -->

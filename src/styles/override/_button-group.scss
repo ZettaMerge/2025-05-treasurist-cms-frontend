@@ -1,0 +1,367 @@
+.btn-group {
+  // background-color: map-get($light, "base");
+  background-color: map-get($grey-color, "lighten-3");
+  padding: 4px;
+  border-radius: 1.5rem;
+  .btn,
+  .btn:not(:last-child):not(.dropdown-toggle),
+  & > .btn:not(:last-child):not(.dropdown-toggle),
+  & > .btn:not(:first-child) {
+    margin-bottom: 0;
+    padding: 0.4rem 0.75rem;
+    min-width: 75px;
+    border-radius: 1.5rem;
+
+    &:not(:disabled):not(.disabled).active {
+      border-radius: 1.5rem;
+    }
+
+    &:not(.active) {
+      background-color: transparent;
+      border-color: transparent;
+      color: map-get($grey-color, "base");
+      &:hover {
+        box-shadow: none;
+      }
+    }
+    &.active {
+      &.btn-primary {
+        background-color: $primary;
+        border-color: $primary;
+        color: $white;
+        &:hover {
+          background-color: map-get($primary-color, lighten-2);
+          border-color: map-get($primary-color, lighten-2);
+        }
+      }
+    }
+    &.btn-icon {
+      width: 45px;
+      min-width: 45px;
+      padding: 0.65rem 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  .btn + div {
+    background: map-get($grey-color, "lighten-2");
+    width: 1px;
+    margin: 5px 5px;
+  }
+}
+
+$control-count: 20;
+$transition-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+$transition-duration: 0.3s;
+$color-active: white;
+
+.segmented-control-wrapper {
+  padding: 3px;
+  height: 48px;
+  background-color: map-get($grey-color, "lighten-3");
+  border-radius: $border-radius-sm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .segmented-control {
+    width: 100%;
+    position: relative;
+    display: inline-block;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    overflow: hidden;
+    border-radius: $border-radius-sm;
+    // color: map-get($grey-color, "base");
+    color: #342e49;
+    box-sizing: border-box;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+    transition-duration: $transition-duration;
+    transition-timing-function: $transition-timing-function;
+
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+    > input {
+      position: absolute;
+      left: -10000px;
+      opacity: 0;
+
+      &[type="checkbox"] ~ label {
+        transition-duration: 0;
+        &:before {
+          opacity: 0;
+        }
+      }
+
+      @for $i from 1 through $control-count {
+        &:disabled:nth-child(#{$i}) ~ label:nth-of-type(#{$i}) {
+          opacity: 0.3;
+          cursor: not-allowed;
+        }
+
+        &:nth-child(#{$i}):checked {
+          ~ label:nth-of-type(#{$i}) {
+            &:after,
+            &:before {
+              opacity: 1;
+            }
+          }
+
+          @for $j from $i through $control-count {
+            ~ label:first-of-type:nth-last-of-type(#{$j}) {
+              &:after &:before,
+              & ~ label:after {
+              }
+              & ~ label:before {
+                left: percentage((($i - 1) / 10) / ($j / 10));
+              }
+            }
+          }
+        }
+      }
+    }
+
+    > label {
+      display: inline-block;
+      // padding: 0 0.71em;
+      cursor: pointer;
+      float: left;
+      // line-height: 3em;
+      font-style: inherit;
+      font-weight: inherit;
+      text-decoration: inherit;
+      // line-height: 34px;
+      line-height: 45px;
+      transition-property: none;
+      transition-duration: inherit;
+      transition-timing-function: inherit;
+      font-family: $font-family-base;
+      height: 40px;
+
+      &:before,
+      &:after {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+
+      &:after {
+        color: $color-active;
+        content: attr(data-value);
+        text-align: center;
+        padding: inherit;
+        z-index: 10;
+        font-style: inherit;
+        text-decoration: inherit;
+        font-weight: inherit;
+        opacity: 0;
+        transition-property: opacity, left;
+        transition-duration: inherit;
+        transition-timing-function: inherit;
+        font-family: $font-family-base;
+      }
+
+      &:after,
+      & {
+        text-align: center;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        box-sizing: border-box;
+      }
+
+      &:before {
+        content: "";
+        color: inherit;
+        background: $primary;
+        border-radius: $border-radius-sm;
+        transition-property: left;
+        transition-duration: inherit;
+        transition-timing-function: inherit;
+      }
+
+      @for $i from 1 through $control-count {
+        &:first-of-type:nth-last-of-type(#{$i}) {
+          &,
+          & ~ label {
+            &,
+            &:after,
+            &:before {
+              width: percentage(1 / $i);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.segmented-control-wrapper-icon {
+  padding: 3px;
+  background-color: map-get($grey-color, "lighten-3");
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  .segmented-control-icon {
+    width: 60%;
+    position: relative;
+    display: inline-block;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    overflow: hidden;
+    border-radius: 10px;
+    // color: map-get($grey-color, "base");
+    color: #342e49;
+    box-sizing: border-box;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+    transition-duration: $transition-duration;
+    transition-timing-function: $transition-timing-function;
+
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+    > input {
+      position: absolute;
+      left: -10000px;
+      opacity: 0;
+
+      &[type="checkbox"] ~ label {
+        transition-duration: 0;
+        &:before {
+          opacity: 0;
+        }
+      }
+
+      @for $i from 1 through $control-count {
+        &:disabled:nth-child(#{$i}) ~ label:nth-of-type(#{$i}) {
+          opacity: 0.3;
+          cursor: not-allowed;
+        }
+
+        &:nth-child(#{$i}):checked {
+          ~ label:nth-of-type(#{$i}) {
+            &:after,
+            &:before {
+              opacity: 1;
+            }
+          }
+
+          @for $j from $i through $control-count {
+            ~ label:first-of-type:nth-last-of-type(#{$j}) {
+              &:after,
+              &:before,
+              & ~ label:after,
+              & ~ label:before {
+                left: percentage((($i - 1) / 10) / ($j / 10));
+              }
+            }
+          }
+        }
+      }
+    }
+
+    > label {
+      display: inline-block;
+      padding-top: 0.4rem;
+      // padding: 0 0.71em;
+      cursor: pointer;
+      float: left;
+      // line-height: 3em;
+      font-style: inherit;
+      font-weight: inherit;
+      text-decoration: inherit;
+      // line-height: 34px;
+      line-height: 45px;
+      transition-property: none;
+      transition-duration: inherit;
+      transition-timing-function: inherit;
+      font-family: $font-family-base;
+
+      &:before,
+      &:after {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+
+      &:after {
+        color: $color-active;
+        content: attr(data-value);
+        text-align: center;
+        padding: inherit;
+        z-index: 10;
+        font-style: inherit;
+        text-decoration: inherit;
+        font-weight: inherit;
+        opacity: 0;
+        transition-property: opacity, left;
+        transition-duration: inherit;
+        transition-timing-function: inherit;
+        font-family: $font-family-base;
+      }
+
+      &:after,
+      & {
+        text-align: center;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        box-sizing: border-box;
+      }
+
+      &:before {
+        content: "";
+        color: inherit;
+        background: $primary-light;
+        border-radius: 0.8rem;
+        transition-property: left;
+        transition-duration: inherit;
+        transition-timing-function: inherit;
+      }
+
+      @for $i from 1 through $control-count {
+        &:first-of-type:nth-last-of-type(#{$i}) {
+          &,
+          & ~ label {
+            &,
+            &:after,
+            &:before {
+              width: percentage(1 / $i);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+#segmented-control._segmented-container {
+  background-color: #fafafa;
+  ._segmented-background {
+    background-color: $primary;
+  }
+  ._segmented-wrapper-items {
+    ._segmented-item {
+      label {
+        transition: all 0.3s ease;
+        &.is-active {
+          color: #fff;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,126 @@
+<div id="file-list">
+  <div class="_g-header">
+    <h1 class="_g-title-header">File</h1>
+    <div class="_g-header d-flex justify-content-end">
+      <button *ngIf="canCreate"
+        type="button"
+        class="btn btn-primary _g-space-btn mb-1"
+        (click)="add()"
+      >สร้างรายการใหม่
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary  mr-1 mb-1"
+        (click)="goBack()"
+      ><span>กลับ</span>
+      </button>
+    </div>
+  </div>
+
+
+  <!--  LIST-->
+  <div class="card">
+    <div class="card-body">
+      <div
+        class="col-12"
+        *ngIf="rows && rows?.length === 0"
+      >
+        <pn-data-not-found
+          [addButton]="'เพิ่ม'"
+          (add)="add()"
+          (clearFilter)="clearFilter()"
+        >
+        </pn-data-not-found>
+      </div>
+      <div [hidden]="rows && rows?.length === 0">
+        <div class="align-items-center d-flex justify-content-between">
+          <pn-grid-per-page
+            [page]="page"
+            (setPerPage)="grid.setPerPage($event)"
+          ></pn-grid-per-page>
+        </div>
+        <div class="_g-table-container">
+          <pn-lib-grid
+            #grid
+            [sort]="{ prop: 'title', asc: true }"
+            [bodyHeight]="'auto'"
+            [dataSub]="dataSub"
+            [rows]="rows"
+            [columns]="columns"
+            [rowHeight]="90"
+            [externalPaging]="true"
+            [(page)]="page"
+            (pageChange)="pageChange()"
+            (sortChange)="sortChange()"
+          ></pn-lib-grid>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template
+  #startDateTpl
+  let-value="value"
+  let-row="row"
+>
+  <span>{{row.startDate}}</span>
+  <p class="m-0">{{row.startTime}}</p>
+</ng-template>
+
+<ng-template
+  #endDateTpl
+  let-value="value"
+  let-row="row"
+>
+  <span>{{row.endDate}}</span>
+  <p class="m-0">{{row.endTime}}</p>
+</ng-template>
+
+<ng-template
+  #actionEditTpl
+  let-row="row"
+>
+  <div class="buttons d-flex justify-content-between align-items-center">
+    <a
+      ngbTooltip="Copy Link"
+      container="body"
+      class="_action-btn _delete-btn"
+      (click)="copyLink(row.url)"
+    >
+      <i class="ft ft-link-2 text-primary mr-2"></i>
+      <span class="font-size-normal text-primary">Copy Link</span>
+    </a>
+    <a *ngIf="canCreate"
+      ngbTooltip="ลบ"
+      container="body"
+      class="_action-btn _delete-btn"
+      (click)="delete(row)"
+    >
+      <i class="ic ic-delete"></i>
+    </a>
+    <a *ngIf="canCreate"
+      class="_action-btn _edit-btn"
+      ngbTooltip="แก้ไข"
+      container="body"
+      (click)="edit(row)"
+    >
+      <i class="ic ic-note-edit"></i>
+    </a>
+  </div>
+</ng-template>
+
+<lib-modal
+  #modal
+  modalSize="lg"
+  [showHeader]="false"
+>
+  <fe-general-file-form-modal
+    *ngIf="modal.isOpen"
+    (cancel)="modal.close()"
+    (save)="save()"
+    [isNew]="isNew"
+    [documentFileData]="item"
+  >
+  </fe-general-file-form-modal>
+</lib-modal>

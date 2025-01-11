@@ -1,0 +1,388 @@
+<div id="account-detail">
+  <div class="_g-header">
+    <h1 class="_g-title-header">Account/ATS Detail</h1>
+    <div class="_g-header justify-content-end">
+      <button *ngIf="accountData.accountStatus === 'Pending'" type="button" class="btn btn-clear  mr-1 mb-1"
+        (click)="goToNoteForm($event)"><span>Reject</span>
+      </button>
+
+      <button *ngIf="accountData.accountStatus === 'Pending'" type="button" class="btn btn-primary  mr-1 mb-1"
+        (click)="onClickApprove(accountData.id)"><span>Approve</span>
+      </button>
+      <button type="button" class="btn btn-secondary  mr-1 mb-1" (click)="goBack()"><span>กลับ</span>
+      </button>
+    </div>
+  </div>
+
+  <!--  DETAIL-->
+  <div class="card _g-card-content-tab">
+    <div class="card-body pt-0 pb-0">
+
+      <!--INFO START-->
+      <div class="card-header pl-0">
+        <span class="_g-text-header-title">ข้อมูลบัญชี</span>
+        <div class="_display-risk">
+          <span class="badge badge-white" *ngIf="accountData?.riskLevelDTO">Risk Level &nbsp;
+            <span *ngIf="accountData?.riskLevelDTO?.riskLevel" class="m-0 badge-small-in-badge text-center"
+              [class.badge-light-green]="accountData?.riskLevelDTO?.riskLevel  === 1"
+              [class.badge-yellow]="accountData?.riskLevelDTO?.riskLevel  === 2"
+              [class.badge-light-orange]="accountData?.riskLevelDTO?.riskLevel  === 3"
+              [class.badge-dark-orange]="accountData?.riskLevelDTO?.riskLevel  === 4"
+              [class.badge-danger]="accountData?.riskLevelDTO?.riskLevel  === 5">{{accountData?.riskLevelDTO?.riskLevel}}</span>
+          </span>
+          <span class="badge badge-white">Fx &nbsp;
+            <span class="m-0 badge-small-in-overlap-badge text-center"
+              [class.badge-dark-blue]="accountData?.riskLevelDTO?.fx  === true"
+              [class.badge-dark-grey]="accountData?.riskLevelDTO?.fx  === false">{{accountData?.riskLevelDTO?.fx ===
+              true ? 'YES' : 'NO'}}
+            </span>
+          </span>
+          <span class="badge badge-white">Commo &nbsp;
+            <span class="m-0 badge-small-in-overlap-badge text-center"
+              [class.badge-dark-blue]="accountData?.riskLevelDTO?.comMo  === true"
+              [class.badge-dark-grey]="accountData?.riskLevelDTO?.comMo  === false">{{accountData?.riskLevelDTO?.comMo
+              === true ? 'YES' : 'NO'}}
+            </span>
+            <span *ngIf="!accountData?.riskLevelDTO?.comMo">-</span>
+          </span>
+          <span class="badge" [class.badge-light]="accountData?.vulnerableFlag !== true"
+            [class.badge-danger]="accountData?.vulnerableFlag === true">{{accountData?.vulnerableFlag === true ?
+            'Vulnerable' : 'General'}}</span>
+          <div class="_line-left border-left"></div>
+          <span class="badge" [class.badge-warning]="accountData?.accountStatus === 'Pending'"
+            [class.badge-info]="accountData?.accountStatus === 'Approved'">{{accountData?.accountStatus === 'Approved' ?
+            'APPROVED' : 'PENDING'}}</span>
+          <div [ngClass]="{'_disable-note-wrapper' : accountData?.accountStatus === 'Approved'}">
+            <span ngbTooltip="Note/Comment" container="body"
+              [ngClass]="{'text-muted _disable-note': accountData?.accountStatus === 'Approved'}"
+              class="badge badge-white _action-btn _detail-btn cursor-pointer" (click)="goToRejectDetail($event)"><i
+                class="ft ft-file-text"></i></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 d-flex py-1 px-0">
+        <div class="_g-text-title px-0"
+          [class.col-7]="accountData.accountStatus === 'Approved' && accountData.isVerifyEmail === false"
+          [class.col-5]="accountData.accountStatus === 'Approved' && accountData.isVerifyEmail === true">
+          <span>อีเมลสำหรับเข้าสู่ระบบ</span>
+          <div class="d-flex">
+            <p>{{accountData.username}}</p>
+            <div class="d-flex" *ngIf="accountData.accountStatus === 'Approved' && accountData.isVerifyEmail === false">
+              <span class="ml-2 text-italic">รอยืนยันการสมัครสมาชิก</span>
+              <a class="text-link ml-2 mb-3 " [ngClass]="{'text-muted _disable-note': isResendEmailText}"
+                (click)="onClickReSendEmail(accountData.userId)">ส่งอีเมลแจ้งเตือนอีกครั้ง
+              </a>
+            </div>
+            <div class="d-flex" *ngIf="accountData.accountStatus === 'Approved' && accountData.isVerifyEmail === true">
+              <span class="ml-2 text-italic text-success"><i class="ft ft-check-circle"></i>
+                ยืนยันการสมัครสมาชิกแล้ว</span>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="accountData.accountStatus === 'Approved'" class="_g-text-title px-0"
+          [class.col-5]="accountData.accountStatus === 'Approved' && accountData.isVerifyEmail === false"
+          [class.col-7]="accountData.accountStatus === 'Approved' && accountData.isVerifyEmail === true">
+          <span>วันที่เปิดบัญชี</span>
+          <p>{{accountData?.applicationDate}}</p>
+        </div>
+      </div>
+
+      <hr />
+      <div class="card-header pl-0">
+        <span class="_g-text-header-title">ข้อมูลส่วนตัว</span>
+      </div>
+
+      <shared-view-personal-info [data]="accountData">
+      </shared-view-personal-info>
+    </div>
+    <hr />
+
+    <!--INFO END-->
+
+    <!--ADDRESS START-->
+    <div class="card-body pt-0 pb-0">
+      <div class="card-header pl-0">
+        <span class="_g-text-header-title">ข้อมูลติดต่อ</span>
+      </div>
+      <shared-view-contact-information [data]="accountData" [address]="idDocumentAddressData">
+
+      </shared-view-contact-information>
+    </div>
+    <hr class="mb-0" />
+    <!--ADDRESS END-->
+
+    <!--CAREER START-->
+    <div class="card-body pt-0 pb-0">
+      <div class="card-header pl-0">
+        <span class="_g-text-header-title">ข้อมูลอาชีพ</span>
+      </div>
+      <shared-view-career [data]="accountData">
+
+      </shared-view-career>
+    </div>
+    <hr class="mb-0" />
+    <!--CAREER END-->
+
+    <!--INCOME START-->
+    <div class="card-body pt-0 pb-0">
+      <div class="card-header pl-0">
+        <span class="_g-text-header-title">แหล่งที่มาของรายได้</span>
+      </div>
+      <shared-view-income [data]="accountData"></shared-view-income>
+    </div>
+    <hr class="mb-0" />
+    <!--INCOME END-->
+
+    <!--Section ยืนยันสถานภาพ Start-->
+    <div class="card-body pt-0">
+      <div class="card-header pl-0">
+        <span class="_g-text-header-title">ยืนยันสถานภาพ</span>
+      </div>
+      <div class="col-12 px-0">
+        <div class="row">
+          <div class="col-12 px-0" *ngFor="let vulnerable of vulnerableDataList; let i = index">
+            <div class="col-12 pt-2 pb-2">
+              <span>{{vulnerable.title}}</span>
+            </div>
+            <div class="col-12 d-flex px-0">
+              <div class="col-12 d-flex px-0">
+                <div class="col-12">
+                  <li *ngIf="vulnerable.isNotAllow" class="d-inline-block mr-2 mb-2">
+                    <div class="checkbox _g-checkbox-display-none">
+                      <input type="checkbox" id="isVulnerableNo-{{i}}" name="isVulnerableNo-{{i}}"
+                        [checked]="vulnerable.isNotAllow">
+                      <label for="isVulnerableNo-{{i}}"><span>ไม่ใช่</span></label>
+                    </div>
+                  </li>
+                  <li *ngIf="vulnerable.isAllow" class="d-inline-block mr-2 mb-2">
+                    <div class="checkbox _g-checkbox-display-none">
+                      <input type="checkbox" id="isVulnerableYes-{{i}}" name="isVulnerableYes-{{i}}"
+                        [checked]="vulnerable.isAllow">
+                      <label for="isVulnerableYes-{{i}}"><span>ใช่</span></label>
+                    </div>
+                  </li>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 px-0">
+            <div class="col-12 pt-2 pb-2">
+              <span>เป็นผู้มีสถานภาพทางการเมืองหรือเป็นสมาชิกในครอบครัวหรือเป็นผู้ใกล้ชิดกับบุคคลผู้มีสถานภาพทางการเมืองหรือไม่?</span>
+            </div>
+            <div class="col-12 d-flex px-0">
+              <div class="col-12">
+                <li class="d-inline-block mr-2 mb-2">
+                  <div class="checkbox _g-checkbox-display-none">
+                    <input type="checkbox" id="status-politic" checked>
+                    <label for="status-politic"><span>{{accountData?.relatedPoliticalPerson === false ? 'ไม่ใช่' :
+                        'ใช่'}}</span></label>
+                  </div>
+                </li>
+                <span>Position: {{accountData?.politicalRelatePersonPosition || '-'}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 px-0">
+            <div class="col-12 pt-2 pb-2 d-flex">
+              <span>(ประวัติอาชญากรรม) มีคุณสมบัติตรงกับข้อใดต่อไปนี้ 1 ข้อหรือมากกว่าหรือไม่?</span>
+            </div>
+            <div class="col-12 px-0">
+              <div class="col-12">
+                <li class="d-inline-block mr-2 mb-2">
+                  <div class="checkbox _g-checkbox-display-none">
+                    <input type="checkbox" id="status-criminal" checked>
+                    <label for="status-criminal"><span>{{accountData?.cddNo3 === false ? 'ไม่ใช่' :
+                        'ใช่'}}</span></label>
+                  </div>
+                </li>
+              </div>
+              <div class="col-12 px-0" *ngIf="accountData?.cddNo3 === true">
+                <div class="row pl-2" *ngFor="let criminal of criminalDataList; let i = index">
+                  <div class="pl-2 pr-4 pt-2" *ngIf="criminal.isAllow">
+                    <div class="checkbox _checkbox">
+                      <input type="checkbox" class="custom-control-input" id="ciminal-{{i}}" name="ciminal-{{i}}"
+                        checked />
+                      <label class="form-check-label ml-4 border-0 bg-transparent"
+                        for="ciminal-{{i}}">{{criminal.title}}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 px-0">
+            <div class="col-12 pt-2 pb-2 d-flex">
+              <span>(พลเมืองอเมริกัน) มีคุณสมบัติตรงกับข้อใดต่อไปนี้ 1 ข้อหรือมากกว่าหรือไม่?</span>
+            </div>
+            <div class="col-12 px-0">
+              <div class="col-12">
+                <li class="d-inline-block mr-2 mb-2">
+                  <div class="checkbox _g-checkbox-display-none">
+                    <input type="checkbox" id="status-citizen" checked>
+                    <label for="status-citizen"><span>{{accountData?.fatca === false ? 'ไม่ใช่' : 'ใช่'}}</span></label>
+                  </div>
+                </li>
+                <!--                <span>Date: 30/08/2021</span>-->
+              </div>
+              <!--              *ngIf="accountData?.fatca === true"-->
+              <div class="col-12 px-0" *ngIf="accountData?.fatca === true">
+                <div class="row pl-2" *ngFor="let americanPeople of americanDataList; let i = index">
+                  <div class="pl-2 pr-3 pt-2" *ngIf="americanPeople.isAllow">
+                    <div class="checkbox _checkbox">
+                      <input type="checkbox" class="custom-control-input" id="american-{{i}}" name="american-{{i}}"
+                        checked />
+                      <label class="form-check-label ml-4 border-0 bg-transparent"
+                        for="american-{{i}}">{{americanPeople.title}}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="mb-0" />
+    <!--Section ยืนยันสถานภาพ End-->
+
+    <!--Section ยSuitability & CDD Start-->
+    <div class="card-body pt-0 pb-0">
+      <div class="card-header pl-0">
+        <span class="_g-text-header-title">Suitability & CDD</span>
+      </div>
+      <div class="row">
+        <div class="col-12 d-flex px-0 pb-4">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-12 _g-text-title">
+                <span>Risk Level</span>
+                <div class="d-flex">
+                  <p class="mb-0">
+                    {{accountData?.riskLevelDTO?.riskLevel ? accountData?.riskLevelDTO?.riskLevel : '-'}} |
+                    {{accountData?.riskLevelDTO?.riskLevel === 1 ? 'ความเสี่ยงระดับต่ำ' :
+                    accountData?.riskLevelDTO?.riskLevel === 2 ? 'ความเสี่ยงระดับปานกลางค่อนข้างต่ำ'
+                    : accountData?.riskLevelDTO?.riskLevel === 3 ? 'ความเสี่ยงระดับปานกลาง' :
+                    accountData?.riskLevelDTO?.riskLevel === 4 ? 'ความเสี่ยงระดับปานกลางค่อนข้างสูง'
+                    : accountData?.riskLevelDTO?.riskLevel === 5 ? 'ความเสี่ยงะดับสูงสุด' : '-' }} |
+                    Evaluate Date: {{accountData?.riskLevelDTO?.evaluateDate | aDate}} |
+                    Expire Date: {{accountData?.riskLevelDTO?.expiredDate | aDate }}
+                  </p>
+                  <span class="ml-2 badge badge-white">Fx &nbsp;
+                    <span class="m-0 badge-small-in-overlap-badge text-center"
+                      [class.badge-dark-blue]="accountData?.riskLevelDTO?.fx  === true"
+                      [class.badge-dark-grey]="accountData?.riskLevelDTO?.fx  === false">{{accountData?.riskLevelDTO?.fx
+                      === true ? 'YES' : 'NO'}}
+                    </span>
+                  </span>
+                  <span class="ml-2 badge badge-white">Commo &nbsp;
+                    <span class="m-0 badge-small-in-overlap-badge text-center"
+                      [class.badge-dark-blue]="accountData?.riskLevelDTO?.comMo === true"
+                      [class.badge-dark-grey]="accountData?.riskLevelDTO?.comMo === false">{{accountData?.riskLevelDTO?.comMo
+                      === true ? 'YES' : 'NO'}}
+                    </span>
+                  </span>
+                  <a class="pl-2 text-link" (click)="onOpenRiskModal()">ดูรายละเอียด</a>
+                </div>
+              </div>
+              <div class="col-12 _g-text-title pt-2">
+                <span>CDD Score</span>
+                <div class="d-flex">
+                  <p class="mb-0">
+                    {{accountData?.cddScoreDTO?.score ? accountData?.cddScoreDTO?.score : '-'}} |
+                    {{accountData?.cddScoreDTO?.score === 1 ? 'ความเสี่ยงระดับต่ำ' : accountData?.cddScoreDTO?.score ===
+                    2 ? 'ความเสี่ยงระดับปานกลาง'
+                    : accountData?.cddScoreDTO?.score === 3 ? 'ความเสี่ยงระดับสูง' : '-' }} |
+                    Review Date: {{accountData?.cddDate | aDate}} |
+                    Expire Date: {{accountData?.cddScoreDTO?.expiredDate | aDate }}
+                  </p>
+                  <a class="pl-2 text-link" (click)="openCddScoreModal($event)">ดูรายละเอียด</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Section Suitability & CDD End-->
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center">
+        <span class="_g-text-header-title">บัญชีธนาคาร</span>
+      </div>
+      <div class="row">
+        <div class="col-12 d-flex px-0">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-4 _g-text-title">
+                <span>ธนาคาร</span>
+                <p>{{bankCode || '-'}}</p>
+              </div>
+              <div class="col-4 _g-text-title">
+                <span>สาขา</span>
+                <p>{{branchBankCode || '-'}}</p>
+              </div>
+              <div class="col-4 _g-text-title">
+                <span>เลขบัญชี</span>
+                <p>{{accountData.bankNo || '-'}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!--  ไฟล์ยืนยันการเปิก บช-->
+  <shared-view-file-confirm-account-opening [account]="true" [data]="accountData">
+
+  </shared-view-file-confirm-account-opening>
+</div>
+
+<div class="_g-header justify-content-end">
+  <div class="d-flex">
+    <button *ngIf="accountData.accountStatus === 'Pending'" type="button" class="btn btn-clear  mr-1 mb-1"
+      (click)="goToNoteForm($event)"><span>Reject</span>
+    </button>
+    <button *ngIf="accountData.accountStatus === 'Pending'" type="button" class="btn btn-primary  mr-1 mb-1"
+      (click)="onClickApprove(accountData.id)"><span>Approve</span>
+    </button>
+    <button type="button" class="btn btn-secondary  mr-1 mb-1" (click)="goBack()"><span>กลับ</span>
+    </button>
+  </div>
+</div>
+
+
+<lib-modal #formNoteModal [showHeader]="false" modalSize="lg">
+  <fe-account-ats-form-note #note *ngIf="formNoteModal.isOpen" (cancel)="close($event)" [accountId]="accountId"
+    (save)="save($event)">
+  </fe-account-ats-form-note>
+
+</lib-modal>
+
+<lib-modal #rejectDetailModal modalSize="lg" [showHeader]="false">
+  <fe-reject-detail *ngIf="rejectDetailModal.isOpen" [accountId]="accountId" (cancel)="rejectDetailModal.close()">
+  </fe-reject-detail>
+
+</lib-modal>
+
+<!-- suitTest-->
+<lib-modal #riskModal modalSize="lg" [showHeader]="false">
+  <fe-open-account-form-risk-assessment #formRiskAssessment *ngIf="riskModal.isOpen" [userId]="userId"
+    [type]="'suitTestDetail'" (cancel)="riskModal.close()">
+  </fe-open-account-form-risk-assessment>
+
+</lib-modal>
+
+<!--cddModal-->
+<lib-modal #cddModal modalSize="lg" [showHeader]="false">
+  <fe-account-detail-cdd-score #formCddScore *ngIf="cddModal.isOpen" [accountId]="accountId"
+    [cddDate]="accountData" [cddScoreData]="accountData.cddScoreDTO" (cancel)="cddModal.close()"
+    (save)="onGetCddScore()">
+  </fe-account-detail-cdd-score>
+
+</lib-modal>

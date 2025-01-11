@@ -1,0 +1,103 @@
+<div class="_g-customer-profile-wrapper">
+  <div class="d-flex justify-content-between align-items-center">
+    <span class="_g-text-header-title">กำหนดสิทธิ์การใช้งานเมนู</span>
+    <div class="checkbox">
+      <input
+        type="checkbox"
+        id="checkAll"
+        name="checkAll"
+        [(ngModel)]="checkAll"
+        (ngModelChange)="onCheckAll($event)"
+        [disabled]="canView && !canCreate"
+      >
+      <label for="checkAll"><span>เลือกทั้งหมด</span></label>
+    </div>
+  </div>
+
+  <div class="col-12 px-0">
+    <div class="col-12 d-flex pb-2 pt-4">
+      <div class="col-6 pl-0 text-bold-500">ชื่อเมนู</div>
+      <div class="col-2 text-bold-500">View</div>
+      <div class="col-2 text-bold-500">Add/Edit</div>
+      <div class="col-2 pr-0 text-bold-500">Import/Export</div>
+    </div>
+    <hr>
+    <div *ngFor="let permission of permissionList; let index = index">
+      <div class="_permission-list col-12 d-flex px-0 pb-2 pt-2">
+        <div class="col-6">
+          <span>{{permission.permission?.name}} {{permission.permission?.name === 'Fund Data' ? '(สิทธิ์ Import/Export = Manual Sync)' : ''}}</span>
+        </div>
+        <div class="col-2 pt-3">
+          <li class="d-inline-block mr-2 mb-2">
+            <div class="checkbox">
+              <input
+                type="checkbox"
+                id="choice-view-{{index}}"
+                name="choice-view-{{index}}"
+                [(ngModel)]="permission.canView"
+                (ngModelChange)="onChangePermission($event, index, permission)"
+                [disabled]="canView && !canCreate"
+              >
+              <label
+                class="border-0 bg-transparent"
+                for="choice-view-{{index}}"
+              ></label>
+            </div>
+          </li>
+        </div>
+        <div class="col-2 pt-3">
+          <li class="d-inline-block mr-2 mb-2">
+            <div class="checkbox">
+              <input
+                type="checkbox"
+                id="choice-create-{{index}}"
+                name="choice-create-{{index}}"
+                [(ngModel)]="permission.canCreate"
+                (ngModelChange)="onChangePermission($event, index, permission)"
+                [disabled]="
+                permission.permission?.name === 'Customer - Customer List' ||
+                permission.permission?.name === 'Agent - Customer Service' ||
+                permission.permission?.name === 'Commission - Agent Fee Report' ||
+                permission.permission?.name === 'Commission - TSR Incentive Rate' ||
+                permission.permission?.name === 'Order - Transaction' ||
+                permission.permission?.name === 'Order - Vulnerable Transaction' ||
+                permission.permission?.name === 'Audit Risk' ||
+                canView && !canCreate"
+              >
+              <label
+                class="border-0 bg-transparent"
+                for="choice-create-{{index}}"
+              ></label>
+            </div>
+          </li>
+        </div>
+        <div class="col-2 pt-3">
+          <li class="d-inline-block mr-2 mb-2">
+            <div class="checkbox">
+              <input
+                type="checkbox"
+                id="choice-export-{{index}}"
+                name="choice-export-{{index}}"
+                [(ngModel)]="permission.canExport"
+                (ngModelChange)="onChangePermission($event, index, permission)"
+                [disabled]="
+                permission.permission?.name !== 'Audit Risk' &&
+                 permission.permission?.name !== 'Commission - TSR Incentive Rate' &&
+                 permission.permission?.name !== 'Commission - Payment' &&
+                 permission.permission?.name !== 'Order - Vulnerable Transaction' &&
+                 permission.permission?.name !== 'Order - Order Placement' &&
+                 permission.permission?.name !== 'Order - Transaction' &&
+                 permission.permission?.name !== 'Fund Data' || canView && !canCreate"
+              >
+              <label
+                class="border-0 bg-transparent"
+                for="choice-export-{{index}}"
+              ></label>
+            </div>
+          </li>
+        </div>
+      </div>
+      <hr>
+    </div>
+  </div>
+</div>

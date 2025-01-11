@@ -1,0 +1,298 @@
+<form #form="ngForm" [class.submitted]="form.submitted" (ngSubmit)="onSave(form)">
+  <div id="form-account-general">
+    <div class="_g-header">
+      <h1 class="_g-title-header">{{openAccountId ? 'แก้ไข' : 'สร้าง'}}รายการลูกค้า General</h1>
+      <div class="_g-header justify-content-end">
+        <button type="button" class="btn btn-clear  _g-space-btn mb-1"
+          (click)="onSaveDraft($event)"><span>บันทึกแบบร่าง</span>
+        </button>
+        <button type="submit" class="btn btn-primary  _g-space-btn mb-1"><span>สร้าง</span>
+        </button>
+        <button type="button" class="btn btn-secondary  mr-1 mb-1" (click)="goBack()"><span>กลับ</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="card _g-card-content-tab">
+      <div class="card-body pt-0 pb-0">
+        <!--INFO START-->
+        <div class="card-header pl-0">
+          <span class="_g-text-header-title">ข้อมูลบัญชี</span>
+          <div class="d-flex">
+            <div class="_display-risk">
+              <span class="badge badge-white" *ngIf="openAccountData?.riskLevelDTO">Risk Level &nbsp;
+                <span *ngIf="openAccountData?.riskLevelDTO" class="m-0 badge-small-in-badge text-center"
+                  [class.badge-light-green]="openAccountData?.riskLevelDTO?.score === 1"
+                  [class.badge-yellow]="openAccountData?.riskLevelDTO?.score  === 2"
+                  [class.badge-light-orange]="openAccountData?.riskLevelDTO?.score  === 3"
+                  [class.badge-dark-orange]="openAccountData?.riskLevelDTO?.score  === 4"
+                  [class.badge-danger]="openAccountData?.riskLevelDTO?.score  === 5">{{openAccountData?.riskLevelDTO?.score
+                  }}</span>
+              </span>
+              <span class="badge badge-white" *ngIf="openAccountData?.riskLevelDTO">Fx &nbsp;
+                <span class="m-0 badge-small-in-overlap-badge text-center"
+                  [class.badge-dark-blue]="openAccountData?.riskLevelDTO?.fx === true"
+                  [class.badge-dark-grey]="openAccountData?.riskLevelDTO?.fx === false">{{openAccountData?.riskLevelDTO?.fx
+                  === true ? 'YES' : 'NO'}}
+                  <span class="m-0 badge-small-in-badge text-center"
+                    [class.badge-dark-blue]="openAccountData?.riskLevelDTO?.fx === false"
+                    [class.badge-dark-grey]="openAccountData?.riskLevelDTO?.fx === true">{{openAccountData?.riskLevelDTO?.fx
+                    === false ? 'YES' : 'NO'}}
+                  </span>
+                </span>
+              </span>
+              <span class="badge badge-white" *ngIf="openAccountData?.riskLevelDTO">Commo &nbsp;
+                <span class="m-0 badge-small-in-overlap-badge text-center"
+                  [class.badge-dark-blue]="openAccountData?.riskLevelDTO?.comMo === true"
+                  [class.badge-dark-grey]="openAccountData?.riskLevelDTO?.comMo  === false">{{openAccountData?.riskLevelDTO?.comMo
+                  === true ? 'YES' : 'NO'}}
+                  <span class="m-0 badge-small-in-badge text-center"
+                    [class.badge-dark-blue]="openAccountData?.riskLevelDTO?.comMo  === false"
+                    [class.badge-dark-grey]="openAccountData?.riskLevelDTO?.comMo  === true">{{openAccountData?.riskLevelDTO?.comMo
+                    === false ? 'YES' : 'NO'}}
+                  </span>
+                </span>
+              </span>
+              <span class="badge badge-light">General</span>
+              <div class="_line-left border-left"></div>
+              <span *ngIf="openAccountData?.accountStatus" class="badge"
+                [class.badge-light]="openAccountData?.accountStatus === 'Draft'"
+                [class.badge-danger]="openAccountData?.accountStatus === 'Rejected'">{{openAccountData?.accountStatus
+                === 'Rejected' ? 'REJECTED' : 'DRAFT'}}</span>
+              <span *ngIf="!openAccountData?.accountStatus" class="badge badge-light">DRAFT</span>
+              <div *ngIf="openAccountData?.accountStatus === 'Rejected'"
+                [ngClass]="{'_disable-note-wrapper' : openAccountData?.accountStatus !== 'Rejected'}">
+                <span ngbTooltip="Note/Comment" container="body"
+                  [ngClass]="{'text-muted _disable-note': openAccountData?.accountStatus === 'Draft'}"
+                  class="badge badge-white _action-btn _detail-btn cursor-pointer" (click)="goToRejectDetail($event)"><i
+                    class="ft ft-file-text"></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-4 col-md-4 col-sm-12 _g-text-title px-0">
+          <div class="form-group">
+            <label class="col-form-label is-required">อีเมลสำหรับเข้าสู่ระบบ</label>
+            <div class="form-input">
+              <input type="email" class="form-control" placeholder="โปรดระบุ" id="account" name="account"
+                [class._valid-form]="accountValid" [class._valid-form-error]="isError"
+                [(ngModel)]="openAccountData.username" (ngModelChange)="onEmailChange($event)" vEmail>
+            </div>
+            <error-message-control class="text-bold-500" *ngIf="accountValid" [text]="'โปรดระบุข้อมูลให้ครบถ้วน'">
+            </error-message-control>
+            <error-message-control class="text-bold-500" *ngIf="isError"
+              [text]="'อีเมลสำหรับเข้าสู่ระบบซํ้า กรุณากรอกใหม่'">
+            </error-message-control>
+          </div>
+        </div>
+        <!--        <shared-view-account-info-->
+        <!--          [isNew]="true"-->
+        <!--          [data]="openAccountData"-->
+        <!--        >-->
+
+        <!--        </shared-view-account-info>-->
+        <hr />
+
+        <!--INFO END-->
+        <fe-open-account-form-info [data]="openAccountData">
+        </fe-open-account-form-info>
+
+        <hr />
+
+        <!--contact START-->
+        <div class="card-header pl-0">
+          <span class="_g-text-header-title">ข้อมูลติดต่อ</span>
+        </div>
+        <div class="row">
+          <div class="col-xl-10 col-lg-12 col-md-6 col-sm-12 _g-card-form px-0">
+            <div class="col-xl-3 col-lg-6 col-sm-12  _g-text-title">
+              <div class="form-group">
+                <label class="col-form-label">เบอร์โทรศัพท์</label>
+                <div class="form-input">
+                  <input type="tel" class="form-control" placeholder="โปรดระบุ" id="phoneNumber" name="phoneNumber"
+                    [(ngModel)]="openAccountData.mobileNumber" required vDigit>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 _g-text-title">
+              <div class="form-group">
+                <label class="col-form-label">อีเมล</label>
+                <div class="form-input">
+                  <input type="text" class="form-control" placeholder="โปรดระบุ" id="email" name="email"
+                    [(ngModel)]="openAccountData.email" required>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="_g-text-header-sub-title py-2">
+          <span class="_g-text-header-sub-title">ที่อยู่ตามบัตรประชาชน</span>
+        </div>
+        <fe-open-account-form-address [data]="idDocumentAddressData">
+        </fe-open-account-form-address>
+
+        <div class="_g-card-sub-header">
+          <span class="_g-text-header-sub-title">ที่อยู่ปัจจุบัน</span>
+        </div>
+        <div class="card-body px-0 pt-0">
+          <div class="col-12 d-flex px-0">
+            <div class="col-sm-12 col-xl-5">
+              <div class="row">
+                <div class="mr-2 mb-2 pl-0">
+                  <div class="checkbox" [class._check-box-valid-form]="isCurrentAddress">
+                    <input type="checkbox" id="addressIdCard" name="addressIdCard" [(ngModel)]="isCurrentIdDocument"
+                      (ngModelChange)="onChangCheckBoxAddressIdCard($event)">
+                    <label for="addressIdCard"><span>ตามบัตรประชาชน</span></label>
+                  </div>
+                  <error-message-control class="text-bold-500" *ngIf="isCurrentAddress"
+                    [text]="'โปรดระบุข้อมูลให้ครบถ้วน'">
+                  </error-message-control>
+                </div>
+                <div class="mr-2 mb-2 pl-0">
+                  <div class="checkbox" [class._check-box-valid-form]="isCurrentAddress">
+                    <input type="checkbox" id="other" name="other" [(ngModel)]="isCurrentOther"
+                      (ngModelChange)="onChangCheckBoxAddressOther($event)">
+                    <label for="other"><span>อื่น ๆ</span></label>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <fe-form-account-form-current-address *ngIf="isCurrentOther" [data]="currentAddressData">
+          </fe-form-account-form-current-address>
+        </div>
+        <hr />
+        <!--contact end-->
+        <!--ข้อมูลอาชีพ-->
+        <fe-open-account-form-career [data]="openAccountData" [workAddressData]="workAddressData"
+          [mailingAddressData]="mailingAddressData" [isValidWorkAddress]="isValidWorkAddress"
+          [isValidMailAddress]="isValidMailAddress" [isValidMailMethod]="isValidMailMethod">
+
+        </fe-open-account-form-career>
+        <hr />
+
+        <!--แหล่งที่มารายได้-->
+        <fe-open-account-form-source-income [data]="openAccountData"
+          [isValidIncomeSourceCountry]="isValidIncomeSourceCountry" [isValidIncomeSource]="isValidIncomeSource"
+          [isValidInvestMent]="isValidInvestMent">
+
+        </fe-open-account-form-source-income>
+        <hr />
+
+        <!--ยืนยันสถานะภาพ-->
+        <fe-open-account-form-confirm-image-status [data]="openAccountData"
+          [isValidVulnerableNo1]="isValidVulnerableNo1" [isValidVulnerableNo2]="isValidVulnerableNo2"
+          [isValidVulnerableNo3]="isValidVulnerableNo3" [isValidRelationPosition]="isValidRelationPosition"
+          [isValidCriminal]="isValidCriminal" [isValidFatca]="isValidFatca" [isValidCriminalYes]="isValidCriminalYes"
+          [isValidFatcaYes]="isValidFatcaYes" (getUpdateFlag)="getUpdateFlag($event)">
+
+        </fe-open-account-form-confirm-image-status>
+        <hr />
+
+
+        <!--Suitability & CDD-->
+        <div class="card-header pl-0">
+          <div class="d-flex">
+            <span class="_g-text-header-title">Suitability & CDD</span>
+            <span *ngIf="!openAccountId" class="_g-text-header-title text-danger ml-2">ต้อง Save Draft
+              ก่อนจึงจะทำแบบทดสอบได้</span>
+          </div>
+
+        </div>
+        <div class="card-body pt-0 px-0">
+          <div class="col-12 d-flex px-0">
+            <div class="col-5 px-0 d-flex" [ngClass]="{'_disable-wrapper' : !openAccountId}">
+              <a [ngClass]="{'_disable': !openAccountId}" class="text-link" (click)="onOpenModal()">
+                <p class="m-0">ทำแบบทดสอบ</p>
+              </a>
+              &nbsp;<p class="text-danger text-bold-500 mb-0" *ngIf="isAssetment">คุณยังไม่ได้ทำแบบทดสอบ
+                กรุณาทำแบบทดสอบ</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!--    // บัญชีธนาคาร-->
+    <div class="card _g-card-content-tab">
+      <div class="card-body pt-0 pb-0">
+
+        <div class="card-header pl-0">
+          <div class="d-flex justify-content-between">
+            <span class="_g-text-header-title">บัญชีธนาคาร</span>
+          </div>
+        </div>
+        <div class="d-flex">
+          <div class="col-xl-4 col-md-4 col-sm-12 _g-text-title pl-0">
+            <div class="form-group">
+              <span>ธนาคาร</span>
+              <div class="form-input">
+                <shared-bank-dropdown placeholder="โปรดระบุ" id="bank" name="bank" [(ngModel)]="bankCode"
+                  (ngModelChange)="bankOnchange($event, 'bank')" required>
+                </shared-bank-dropdown>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 col-md-4 col-sm-12 _g-text-title">
+            <div class="form-group">
+              <span>สาขา</span>
+              <div class="form-input">
+                <shared-bank-branch-dropdown placeholder="โปรดระบุ" id="bankBranch" name="bankBranch"
+                  [bankCode]="bankCode?.bankCode || null" [autoReset]="true" [(ngModel)]="bankBranchCode"
+                  (ngModelChange)="bankOnchange($event, 'bankBranch')" required>
+                </shared-bank-branch-dropdown>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 col-md-4 col-sm-12 _g-text-title pr-0">
+            <div class="form-group">
+              <span>เลขบัญชี</span>
+              <div class="form-input">
+                <input type="text" class="form-control" placeholder="โปรดระบุ" id="bankAccount" name="bankAccount"
+                  [(ngModel)]="openAccountData.bankNo" required vDigit>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <fe-open-account-list-file-confirm [data]="openAccountData" [userId]="userId"
+      [isBankAccountFile]="isBankAccountFile" [isApplicationFormFile]="isApplicationFormFile"
+      [isIdCardFrontFile]="isIdCardFrontFile" [isSuitabilityFile]="isSuitabilityFile" [isFatcaFile]="isFatcaFile"
+      [isOthersFile]="isOthersFile" (updateFile)="getUpdateFile($event)">
+
+    </fe-open-account-list-file-confirm>
+
+  </div>
+
+  <div class="_g-header justify-content-end">
+    <button type="button" class="btn btn btn-clear  _g-space-btn mb-1"
+      (click)="onSaveDraft($event)"><span>บันทึกแบบร่าง</span>
+      <!--    ><span>Save Draft</span>-->
+    </button>
+    <button type="submit" class="btn btn-primary  _g-space-btn mb-1"><span>สร้าง</span>
+    </button>
+    <button type="button" class="btn btn-secondary mb-1" (click)="goBack()"><span>กลับ</span>
+    </button>
+  </div>
+
+</form>
+
+<lib-modal #riskModal modalSize="lg" [showHeader]="false">
+  <!-- <lib-modal-title>แก้ไขทะเบียนรถลูกบ้าน</lib-modal-title> -->
+  <fe-open-account-form-risk-assessment #formRiskAssessment *ngIf="riskModal.isOpen" [userId]="userId"
+    (cancel)="riskModal.close()" (save)="onSaveRisk($event)">
+  </fe-open-account-form-risk-assessment>
+
+</lib-modal>
+
+<lib-modal #rejectDetailModal modalSize="lg" [showHeader]="false">
+  <fe-reject-detail *ngIf="rejectDetailModal.isOpen" [accountId]="openAccountId" (cancel)="rejectDetailModal.close()">
+  </fe-reject-detail>
+
+</lib-modal>

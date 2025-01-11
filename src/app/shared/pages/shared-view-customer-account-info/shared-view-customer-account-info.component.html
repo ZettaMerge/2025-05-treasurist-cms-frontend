@@ -1,0 +1,72 @@
+<!-- <div class="_g-detail"> -->
+  <div class="row">
+    <div class="col-12 d-flex px-0 py-1">
+      <div class="col-5">
+        <div class="row">
+          <div class="col-6 _g-text-title">
+            <span>Account ID</span>
+            <p>{{data.fcnAccountId || '-'}}</p>
+          </div>
+          <div class="col-6 _g-text-title">
+            <span>Agent Code</span>
+            <p>{{data.agentCode || '-'}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-7">
+        <div class="row">
+          <div class="col-4 _g-text-title">
+            <span>เลขบัตรประชาชน / Passport</span>
+            <p>{{data.cardNumber || '-'}}</p>
+          </div>
+          <div class="col-4 _g-text-title">
+            <span>วันหมดอายุบัตร (ค.ศ.)</span>
+            <p>{{data?.cardExpiredDate | dateYear}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 d-flex px-0 py-1">
+      <div class="col-5">
+        <div class="row">
+          <div class="col-6 _g-text-title">
+            <span>คำนำหน้าชื่อ</span>
+            <p>{{data.title === 'MRS' ? 'นาง' : data.title === 'MR' ? 'นาย': data.title === 'MISS' ? 'นางสาว'
+              : data.title === 'MS' ? 'นางสาว' : ''}}</p>
+          </div>
+          <div class="col-6 _g-text-title">
+            <span>ชื่อ-นามสกุลจริง (ไทย)</span>
+            <p>{{data.thFirstname}}  {{data.thLastname}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-7">
+        <div class="row">
+          <div class="col-4 _g-text-title">
+            <span>ชื่อ-นามสกุลจริง (อังกฤษ)</span>
+            <p>{{data.enFirstname}}  {{data.enLastname}}</p>
+          </div>
+          <div class="col-4 _g-text-title">
+            <span>วัน/เดือน/ปีเกิด</span>
+            <p>{{data?.birthdate | dateYear}}</p>
+
+          </div>
+          <div class="col-4 _g-text-title">
+            <span>สัญชาติ</span>
+            <p>{{data.nationality === 'Thai' ? 'ไทย' : ''}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 d-flex px-0 py-1">
+      <div class="col-5">
+        <div class="row">
+          <div class="col-6 _g-text-title">
+            <span>สถานภาพ</span>
+            <p>{{data?.maritalStatus === 'Single' ? 'โสด': '-'}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- </div> -->

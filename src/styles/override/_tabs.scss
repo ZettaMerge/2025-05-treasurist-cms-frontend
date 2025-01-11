@@ -1,0 +1,23 @@
+ul.nav.tabs {
+  border-bottom: 4px solid $border-light;
+  padding: 0 1.5rem;
+  //height: 48px;
+  li.nav-item {
+    margin-bottom: -4px;
+    transition: border-color 0.25s ease-in-out, color 0.25s ease-in-out;
+    border-bottom: 4px solid $border-light;
+    a.nav-link {
+      span {
+        color: $text-primary;
+      }
+    }
+    &.active {
+      border-bottom-color: $primary;
+      a.nav-link {
+        span {
+          color: $primary;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+@import "variables-custom";
+
+._left-wrapper {
+  border-radius: 5px;
+  background: #fdf8ed;
+  margin-right: 1.5rem;
+
+  ._left-header {
+   height: 65px;
+  }
+
+  ._left-detail {
+    height: 65px;
+  }
+}
+
+._right-wrapper {
+  border-radius: 5px;
+  background: #fafafa;
+
+  ._right-header {
+    height: 65px;
+  }
+
+  ._right-detail {
+    height: 65px;
+  }
+}
+

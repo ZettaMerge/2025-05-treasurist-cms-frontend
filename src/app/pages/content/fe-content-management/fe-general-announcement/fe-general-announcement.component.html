@@ -1,0 +1,127 @@
+<div id="announcement-list">
+  <div class="_g-header">
+    <h1 class="_g-title-header">Announcement</h1>
+    <div class="_g-header justify-content-end">
+      <button *ngIf="canCreate"
+        type="button"
+        class="btn btn-primary _g-space-btn"
+        (click)="goToCreateNewList()"
+      ><span>สร้างรายการใหม่</span>
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary  "
+        (click)="goBack()"
+      ><span>กลับ</span>
+      </button>
+
+    </div>
+  </div>
+  <!-- <div class="card">
+    <div class="card-body">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <label class="col-form-label">ค้นหา</label>
+              <div class="form-input">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="ชื่อหัวข้อ"
+                  [(ngModel)]="filter.search"
+                  (ngModelChange)="searchDebounce()"
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="col-4">
+            <div class="form-group">
+              <label class="col-form-label">ช่วงวันที่ทำรายการ</label>
+              <div class="form-input">
+                <pn-date-range-picker
+                  placeholder="dd/mm/yyyy - dd/mm/yyyy"
+                  [(ngModel)]="filter.dateRange"
+                >
+                </pn-date-range-picker>
+              </div>
+            </div>
+          </div>
+          <div class="col-2 align-items-end d-flex">
+            <div class="form-group">
+              <div class="form-input">
+                <button
+                  type="button"
+                  class="btn btn-clear btn-lg"
+                >ล้าง
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+
+  <!--  LIST-->
+  <div class="card">
+    <div class="card-body">
+      <div
+        class="col-12"
+        *ngIf="rows && rows?.length === 0"
+      >
+        <pn-data-not-found
+          [addButton]="'เพิ่ม'"
+          (add)="add()"
+          (clearFilter)="clearFilter()"
+        >
+        </pn-data-not-found>
+      </div>
+      <div [hidden]="rows && rows?.length === 0">
+        <div class="align-items-center d-flex justify-content-between">
+          <pn-grid-per-page
+            [page]="page"
+            (setPerPage)="grid.setPerPage($event)"
+          ></pn-grid-per-page>
+        </div>
+        <div class="_g-table-container">
+          <pn-lib-grid
+            #grid
+            [sort]="{ prop: 'title', asc: true }"
+            [bodyHeight]="'auto'"
+            [dataSub]="dataSub"
+            [rows]="rows"
+            [columns]="columns"
+            [rowHeight]="65"
+            [externalPaging]="true"
+            [(page)]="page"
+            (pageChange)="pageChange()"
+            (sortChange)="sortChange()"
+            (edit)="edit($event)"
+            (detailInfo)="detail($event)"
+          ></pn-lib-grid>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template
+  #startDateTpl
+  let-value="value"
+  let-row="row"
+>
+  <span>{{row.startDate}}</span>
+  <p class="m-0">{{row.startTime}}</p>
+</ng-template>
+
+<ng-template
+  #endDateTpl
+  let-value="value"
+  let-row="row"
+>
+  <span>{{row.endDate}}</span>
+  <p class="m-0">{{row.endTime}}</p>
+</ng-template>

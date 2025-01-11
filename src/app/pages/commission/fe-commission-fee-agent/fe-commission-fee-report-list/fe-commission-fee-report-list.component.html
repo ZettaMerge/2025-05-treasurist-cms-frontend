@@ -1,0 +1,194 @@
+<div class="_g-header justify-content-between">
+  <h1 class="_g-title-header">Agent Fee Report</h1>
+  <div class="_g-header justify-content-end">
+    <button
+      type="button"
+      class="btn btn-secondary  mb-1"
+      (click)="goBack()"
+    ><span>กลับ</span>
+    </button>
+  </div>
+</div>
+
+<div class="card _g-card-content-tab">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12 d-flex px-0 py-1">
+        <div class="col-5">
+          <div class="row">
+            <div class="col-6 _g-text-title">
+              <span>ชื่อ-นามสกุล</span>
+              <p>{{agentPortData.agentName}}</p>
+            </div>
+            <div class="col-6 _g-text-title">
+              <span>Team</span>
+              <p>{{agentPortData.teamName}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-7">
+          <div class="row">
+            <div class="col-4 _g-text-title">
+              <span>IC License</span>
+              <p>{{agentPortData.icLicense}}</p>
+            </div>
+            <div class="col-4 _g-text-title">
+              <span>อีเมล</span>
+              <p>{{agentPortData.email}}</p>
+            </div>
+            <div class="col-4 _g-text-title">
+              <span>เบอร์โทรศัพท์</span>
+              <p>{{agentPortData.phoneNumber}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div>
+      <div class="d-flex pt-4">
+        <div class="col-6 px-0 align-items-center ">
+          <div class="d-flex">
+            <h3 class="pr-2 mb-0">Grand Total :</h3>
+            <h3 class="text-primary pr-2 mb-0">{{ agentPortData.total | aDecimal}}</h3>
+            <h3 class="mb-0">บาท</h3>
+          </div>
+        </div>
+        <div class="col-6 px-0 align-items-center">
+          <div class="d-flex align-items-center justify-content-end">
+            <p class="pr-2 mb-0">วันที่ทำรายการ</p>
+            <div class="col-8 px-0">
+              <div class="form-input">
+                <pn-date-range-picker
+                  placeholder="dd/mm/yyyy - dd/mm/yyyy"
+                  id="license-expire-2"
+                  name="license-expire-2"
+                  [(ngModel)]="filter.dateRange"
+                  (ngModelChange)="onDateChange()"
+                >
+                </pn-date-range-picker>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="text-muted">*เป็นยอดรวมจากรายการที่ Publish แล้วเท่านั้น</p>
+      </div>
+      <div class="d-flex px-0">
+        <div class="pl-0 col-xl-4 col-lg-4 col-12">
+          <div class="card card-inverse _bg-grey">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media">
+                  <div class="media-body text-left">
+                    <span>Front-End Fee</span>
+                    <h4 class="card-text text-black">{{agentPortData.feFee |aDecimal}} บาท</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-12">
+          <div class="card card-inverse _bg-grey">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media">
+                  <div class="media-body text-left">
+                    <span>Trailing Fee</span>
+                    <h4 class="card-text text-black">{{agentPortData.trFee |aDecimal}} บาท</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pr-0 col-xl-4 col-lg-4 col-12">
+          <div class="card card-inverse _bg-grey">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media">
+                  <div class="media-body text-left">
+                    <span>Promotion Fee</span>
+                    <h4 class="card-text text-black">{{ agentPortData.proFee | aDecimal}} บาท</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-12 pt-2"
+      *ngIf="rows && rows?.length === 0"
+    >
+      <pn-data-not-found
+        [isShowAddButton]="false"
+        (clearFilter)="clearFilter()"
+      >
+      </pn-data-not-found>
+    </div>
+    <div
+      class="pt-2"
+      [hidden]="rows && rows?.length === 0"
+    >
+      <div class="d-flex justify-content-between">
+        <div class="col-6 px-0">
+          <pn-grid-per-page
+            [page]="page"
+            (setPerPage)="grid.setPerPage($event)"
+          ></pn-grid-per-page>
+        </div>
+      </div>
+      <div class="_g-table-container">
+        <pn-lib-grid
+          #grid
+          [sort]="{ prop: 'paymentDate', asc: false }"
+          [bodyHeight]="'auto'"
+          [dataSub]="dataSub"
+          [rows]="rows"
+          [columns]="columns"
+          [rowHeight]="85"
+          [externalPaging]="true"
+          [(page)]="page"
+          (pageChange)="pageChange()"
+          (sortChange)="onSortChange($event)"
+          (detailInfo)="detailInfo($event)"
+        ></pn-lib-grid>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="_g-header justify-content-end">
+  <button
+    type="button"
+    class="btn btn-secondary  mb-1"
+    (click)="goBack()"
+  ><span>กลับ</span>
+  </button>
+</div>
+
+
+<!--TPL-->
+<ng-template
+  #descriptionTpl
+  let-value="value"
+  let-row="row"
+>
+  <span>{{row.description}} วันที่ {{row.date}}</span>
+</ng-template>
+
+<ng-template
+  #statusTpl
+  let-value="value"
+  let-row="row"
+>
+  <span
+    class="badge"
+    [class.badge-success]="value === 'published'"
+    [class.badge-dark]="value === 'draft'"
+  >{{value === 'published' ? 'PUBLISHED' : value === 'draft' ? 'DRAFT': ''}}</span>
+</ng-template>

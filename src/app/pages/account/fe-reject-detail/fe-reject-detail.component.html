@@ -1,0 +1,41 @@
+<div class="card-body _g-card-content-tab">
+  <div class="d-flex justify-content-between">
+    <span class="text-primary font-size-medium">Note / Comment</span>
+  </div>
+
+  <div
+    class="col-12"
+    *ngIf="rejectAccountReasonData && rejectAccountReasonData.length === 0"
+  >
+    <pn-data-not-found
+      [isShowActionTemplate]="false"
+      [isShowAddButton]="false"
+      [message]="'ระบบไม่สามารถแสดงรายการได้ เนื่องจากไม่พบรายการข้อมูล'"
+    >
+    </pn-data-not-found>
+
+  </div>
+
+  <!--  // Content-->
+  <div class="py-2 _scroll" *ngIf="rejectAccountReasonData && rejectAccountReasonData.length > 0">
+    <div *ngFor="let rejectData of rejectAccountReasonData">
+      <div class="d-flex justify-content-between _g-text-title">
+        <span>{{rejectData.createdBy}}</span>
+        <span>{{rejectData.createdDate | aDateTime}} น.</span>
+      </div>
+      <span>{{rejectData.reason}}</span>
+      <hr class="my-2">
+    </div>
+  </div>
+</div>
+
+<!--  // Footer-->
+<div class="_modal-footer justify-content-end">
+  <button
+    type="button"
+    class="btn btn-clear  mr-2 mb-1"
+    (click)="onCancel()"
+  ><span>ปิด</span>
+  </button>
+</div>
+

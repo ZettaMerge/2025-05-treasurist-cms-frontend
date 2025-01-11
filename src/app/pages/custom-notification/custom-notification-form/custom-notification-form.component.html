@@ -1,0 +1,415 @@
+<div
+  *ngIf="customNotificationId && !customNotiPublishId || !customNotificationId && !customNotiPublishId">
+  <form
+    #form="ngForm"
+    [class.submitted]="form.submitted"
+    (ngSubmit)="onSave(form)"
+  >
+    <div class="_g-header">
+      <h1 class="_g-title-header">{{customNotificationId ? 'แก้ไข' : 'สร้าง'}} Custom Notification</h1>
+      <div class="_g-header d-flex justify-content-end">
+        <button
+          *ngIf="canCreate"
+          type="button"
+          class="btn btn-clear mb-1 _g-space-btn"
+          (click)="onSaveDraft()"
+        ><span>บันทึกแบบร่าง</span>
+        </button>
+        <button
+          *ngIf="canCreate"
+          type="submit"
+          class="btn btn-primary mb-1 _g-space-btn"
+        ><span>สร้าง</span>
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary mb-1"
+          (click)="goBack()"
+        ><span>กลับ</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <div class="_g-header">
+          <span class="_g-text-header-title">รายละเอียด</span>
+        </div>
+
+        <div class="row">
+          <div class="col-12 px-0 d-flex">
+            <div class="col-8">
+              <div class="form-group">
+                <label class="col-form-label">ชื่อหัวข้อ</label>
+                <div class="form-input">
+                  <input
+                    type="text"
+                    name="title"
+                    class="form-control"
+                    placeholder="โปรดระบุ"
+                    [class._valid-form]="isInvalidTitle"
+                    [(ngModel)]="customNotificationsData.title"
+                    required
+                    [disabled]="canView && !canCreate"
+                  >
+                </div>
+              </div>
+              <error-message-control
+                class="text-bold-500"
+                *ngIf="isInvalidTitle"
+                [text]="'โปรดระบุข้อมูลให้ครบถ้วน'">
+              </error-message-control>
+            </div>
+            <div class="col-4">
+              <div class="form-group">
+                <label class="col-form-label">ประกาศ</label>
+                <div class="form-input">
+                  <pn-dynamic-dropdown
+                    placeholder="เลือกประกาศ"
+                    [list]="listType"
+                    [(ngModel)]="customType"
+                    (ngModelChange)="onChangeType($event)"
+                    [ngModelOptions]="{standalone: true}"
+                    required
+                    [disabled]="canView && !canCreate"
+                  >
+                  </pn-dynamic-dropdown>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-group">
+              <label class="col-form-label">รายละเอียด</label>
+              <div class="form-input">
+                <shared-editor
+                  placeholder="รายละเอียด"
+                  id="description"
+                  name="description"
+                  [(ngModel)]="customNotificationsData.detail"
+                  required
+                  [class._g-disable]="canView && !canCreate"
+                ></shared-editor>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="row col-12 pt-2 pb-2 d-flex">
+              <div class="d-flex flex-wrap">
+                <div *ngFor="let file of fileList; let i = index">
+                  <div class="_file-label-wrapper"
+                       [class._g-disable]="canView && !canCreate"
+                  >
+                    <span class="ml-2 mr-2">{{file.name}}</span>
+                    <i class="ic ic-close text-primary mr-2 _add-btn"
+                       (click)="onDeleteFile(file, i)">
+                    </i>
+                  </div>
+                </div>
+                <div class="_btn-wrapper"
+                     [class._g-disable]="canView && !canCreate"
+                >
+                  <div class="d-flex align-items-center _add-btn" (click)="onOpenSelectFile(fileList)">
+                    <i class="ic ic-plus-circle text-primary mr-1 font-size-large"></i>
+                    <span>แนบไฟล์</span>
+                    <error-message-control
+                      class="ml-2 mt-0"
+                      *ngIf="isInvalidFile"
+                      [text]="'โปรดแนบไฟล์'">
+                    </error-message-control>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="col-12 pt-2 pb-2 pl-0">
+              <span>กลุ่มเป้าหมาย</span>
+            </div>
+            <div class="col-12 d-flex flex-column px-0 py-1 pl-0">
+              <div class="col-12 d-flex pl-0"  [class._g-disable]="canView && !canCreate">
+                <div class="d-flex col-3 px-0">
+                  <div [class._cursor-none]="isAllCustomer">
+                    <button
+                      type="button"
+                      id="allCustomer"
+                      name="allCustomer"
+                      class="btn no-border-bottom-right-radius no-border-top-right-radius"
+                      [class.btn-primary]="isAllCustomer"
+                      [class.btn-secondary]="!isAllCustomer"
+                      (click)="onClickCustomer($event, 'allCustomer')"
+                    ><span>ลูกค้าทั้งหมด</span>
+                    </button>
+                  </div>
+                  <div [class._cursor-none]="isCustomCustomer">
+                    <button
+                      type="button"
+                      id="customCustomer"
+                      name="customCustomer"
+                      class="btn no-border-bottom-left-radius no-border-top-left-radius"
+                      [class.btn-primary]="isCustomCustomer"
+                      [class.btn-secondary]="!isCustomCustomer"
+                      (click)="onClickCustomer($event, 'customCustomer')"
+                    ><span>ระบุลูกค้า</span>
+                    </button>
+                  </div>
+
+                </div>
+                <div class="d-flex col-3 px-0">
+                  <div [class._cursor-none]="isAllAgent">
+                    <button
+                      type="button"
+                      class="btn no-border-bottom-right-radius no-border-top-right-radius"
+                      [class.btn-primary]="isAllAgent"
+                      [class.btn-secondary]="!isAllAgent"
+                      (click)="onClickAgent($event, 'allAgent')"
+                    ><span>Agent ทั้งหมด</span>
+                    </button>
+                  </div>
+                  <div [class._cursor-none]="isCustomAgent">
+                    <button
+                      type="button"
+                      class="btn no-border-bottom-left-radius no-border-top-left-radius"
+                      [class.btn-primary]="isCustomAgent"
+                      [class.btn-secondary]="!isCustomAgent"
+                      (click)="onClickAgent($event, 'customAgent')"
+                    ><span>ระบุ Agent</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 d-flex px-0">
+                <div class="col-3 pl-0">
+                  <error-message-control
+                    class="mt-0"
+                    *ngIf="isInvalidCustomer"
+                    [text]="'โปรดเลือกลูกค้า'">
+                  </error-message-control>
+                </div>
+                <div class="col-3 pl-0">
+                  <error-message-control
+                    class="mt-0"
+                    *ngIf="isInvalidAgent"
+                    [text]="'โปรดเลือก Agent'">
+                  </error-message-control>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+          <div class="col-12 d-flex mt-2">
+            <div class="col-3 px-0"
+                 [class._g-disable]="canView && !canCreate"
+            >
+              <div class="d-flex col-12 px-0" *ngIf="!isAllCustomer">
+                <span class="text-muted" *ngIf="isCustomer">ระบุลูกค้าแล้ว ({{balanceSelectList?.length }} คน) </span>
+                <a *ngIf="isCustomer" class="text-link ml-2" (click)="editCustomer()">แก้ไข</a>
+              </div>
+            </div>
+            <div class="col-3 px-0"
+                 [class._g-disable]="canView && !canCreate">
+              <div class="d-flex col-12 px-0" *ngIf="!isAllAgent">
+                <span class="text-muted" *ngIf="isAgent">ระบุ Agent แล้ว ({{agentSelectList?.length}} คน) </span>
+                <a *ngIf="isAgent" class="text-link ml-2" (click)="editAgent()">แก้ไข</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="_g-header d-flex justify-content-end">
+      <button
+        *ngIf="canCreate"
+        type="button"
+        class="btn btn-clear mb-1 _g-space-btn"
+        (click)="onSaveDraft()"
+      ><span>บันทึกแบบร่าง</span>
+      </button>
+      <button
+        *ngIf="canCreate"
+        type="submit"
+        class="btn btn-primary  _g-space-btn mb-1"
+      ><span>สร้าง</span>
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary mb-1"
+        (click)="goBack()"
+      ><span>กลับ</span>
+      </button>
+    </div>
+  </form>
+</div>
+
+<div *ngIf="customNotiPublishId">
+  <form
+    #form="ngForm"
+    [class.submitted]="form.submitted"
+    (ngSubmit)="onSaveWhenPublish(form)"
+  >
+    <div class="card-body">
+      <div class="_g-header">
+        <span class="_g-text-header-title">รายละเอียด</span>
+      </div>
+
+      <div class="row">
+        <div class="col-12 px-0 d-flex">
+          <div class="col-8">
+            <div class="form-group">
+              <label class="col-form-label">ชื่อหัวข้อ</label>
+              <div class="form-input">
+                <input
+                  type="text"
+                  name="title"
+                  class="form-control"
+                  placeholder="โปรดระบุ"
+                  [class._valid-form]="isInvalidTitle"
+                  [(ngModel)]="customNotificationsPublishData.title"
+                  required
+                >
+              </div>
+            </div>
+            <error-message-control
+              class="text-bold-500"
+              *ngIf="isInvalidTitle"
+              [text]="'โปรดระบุข้อมูลให้ครบถ้วน'">
+            </error-message-control>
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+              <label class="col-form-label">ประเภท</label>
+              <div class="form-input">
+                <pn-dynamic-dropdown
+                  placeholder="เลือกประเภท"
+                  [list]="listType"
+                  [(ngModel)]="customType"
+                  (ngModelChange)="onChangeType($event)"
+                  [ngModelOptions]="{standalone: true}"
+                  required
+                >
+                </pn-dynamic-dropdown>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label class="col-form-label">รายละเอียด</label>
+            <div class="form-input">
+              <shared-editor
+                placeholder="รายละเอียด"
+                id="description-2"
+                name="description-2"
+                [(ngModel)]="customNotificationsPublishData.detail"
+                required
+              ></shared-editor>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="row col-12 pt-2 pb-2 d-flex">
+            <div class="d-flex flex-wrap">
+              <div *ngFor="let file of fileList; let i = index">
+                <div class="_file-label-wrapper">
+                  <span class="ml-2 mr-2">{{file.name}}</span>
+                  <i class="ic ic-close text-primary mr-2 _add-btn"
+                     (click)="onDeleteFile(file, i)">
+                  </i>
+                </div>
+              </div>
+              <div class="_btn-wrapper">
+                <div class="d-flex align-items-center _add-btn" (click)="onOpenSelectFile(fileList)">
+                  <i class="ic ic-plus-circle text-primary mr-1 font-size-large"></i>
+                  <span>แนบไฟล์</span>
+                  <!--                  <error-message-control-->
+                  <!--                    class="ml-2 mt-0"-->
+                  <!--                    *ngIf="isInvalidFile"-->
+                  <!--                    [text]="'โปรดแนบไฟล์'">-->
+                  <!--                  </error-message-control>-->
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="d-flex justify-content-end _g-header">
+      <div class="col-6 d-flex pr-0">
+        <div class="col-6 pl-0 _display-btn">
+          <button
+            type="button"
+            class="btn btn-clear flex-1 mb-1"
+            (click)="onCancel()"
+          ><span>ยกเลิก</span>
+          </button>
+        </div>
+        <div class="col-6 pr-0 _display-btn">
+          <button
+            *ngIf="canCreate"
+            type="submit"
+            class="btn btn-primary flex-1 mb-1 _g-space-btn"
+          ><span>สร้าง</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<lib-modal
+  #modal
+  modalSize="lg"
+  [showHeader]="false"
+>
+  <custom-notification-form-file
+    *ngIf="modal.isOpen"
+    (cancel)="modal.close()"
+    (save)="onSaveSelectFile($event)"
+    [fileListData]="fileList"
+  >
+  </custom-notification-form-file>
+</lib-modal>
+
+<lib-modal
+  #customerModal
+  modalSize="xl"
+  [showHeader]="false"
+>
+  <custom-notification-customer-form
+    *ngIf="customerModal.isOpen"
+    (cancel)="onSaveSelectCustomer($event)"
+    (save)="onSaveSelectCustomer($event)"
+    (saveUser)="onSaveSelectUser($event)"
+    (cancelUser)="onSaveSelectUser($event)"
+    [balanceSelectList]="balanceSelectList"
+    [userIdSelectList]="userIdSelectList"
+    [customerActionType]="customerActionType"
+
+  >
+  </custom-notification-customer-form>
+</lib-modal>
+
+<lib-modal
+  #agentModal
+  modalSize="xl"
+  [showHeader]="false"
+>
+  <custom-notification-agent-form
+    *ngIf="agentModal.isOpen"
+    (cancel)="onSaveSelectAgent($event)"
+    (save)="onSaveSelectAgent($event)"
+    [agentSelectList]="agentSelectList"
+    [agentActionType]="agentActionType"
+  >
+  </custom-notification-agent-form>
+</lib-modal>

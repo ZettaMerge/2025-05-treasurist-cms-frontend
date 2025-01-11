@@ -1,0 +1,39 @@
+<div class="card">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-center">
+      <span class="_g-text-header-title">ไฟล์ยืนยันการแก้ไข</span>
+    </div>
+
+    <div class="_g-table-container _file-content">
+      <div class="col-12 d-flex _g-list-file-header-title border-bottom justify-content-between align-items-center">
+        <div class="col-10 px-0 d-flex">
+          <div class="col-3"><span>หัวข้อ</span></div>
+          <div class="col-3"><span>Remark</span></div>
+          <div class="col-3"><span>วันที่ทำรายการ</span></div>
+          <div class="col-3"><span>Update by</span></div>
+        </div>
+        <div class="col-2">
+          <div class="col-12"><span></span></div>
+        </div>
+
+      </div>
+
+      <div class="col-12 d-flex _g-list-file-data border-bottom"
+           *ngFor="let file of fileData">
+        <div class="col-10 px-0 d-flex">
+          <div class="col-3"><span>{{file.fileName}}</span></div>
+          <div class="col-3"><span>{{file.remark}}</span></div>
+          <div class="col-3"><span>{{file.date | aDateTime}} น.</span></div>
+          <div class="col-3"><span>{{file.updateBy}}</span></div>
+        </div>
+        <div class="col-2">
+          <div class="col-12 px-0">
+            <a class="text-primary pr-1"><i class="ft ft-download text-primary font-medium-4"></i> &nbsp; <span
+              class="text-primary">ดาวน์โหลด</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

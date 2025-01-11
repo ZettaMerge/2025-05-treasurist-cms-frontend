@@ -1,0 +1,19 @@
+@import "variables-custom";
+
+._name-staff-wrapper {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.list-group-item {
+  position: relative;
+  display: block;
+  padding: 1.5rem 1.25rem;
+  background-color: #fff;
+
+  ._img-size {
+    width: 12px;
+    height: 12px;
+  }
+}

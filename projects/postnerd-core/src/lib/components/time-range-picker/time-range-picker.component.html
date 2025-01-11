@@ -1,0 +1,23 @@
+<div class="d-flex align-items-center flex-grow-1">
+  <pn-time-picker
+    class="flex-grow-1 no-text-error {{classInput}}"
+    [(ngModel)]="start"
+    [min]="min"
+    [max]="max"
+    [required]="required"
+    [placeholder]="placeholderStart"
+    (ngModelChange)="onValueChange($event)"
+    [disabled]="disabled"
+  ></pn-time-picker>
+  <span class="ml-1 mr-1">-</span>
+  <pn-time-picker
+    class="flex-grow-1 no-text-error {{ classInput }}"
+    [(ngModel)]="end"
+    [min]="min"
+    [max]="max"
+    [required]="required"
+    [placeholder]="placeholderEnd"
+    (ngModelChange)="onValueChange($event)"
+    [disabled]="disabled"
+  ></pn-time-picker>
+</div>

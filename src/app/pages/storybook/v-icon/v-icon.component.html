@@ -1,0 +1,33 @@
+<p>add class <code>.ic</code></p>
+<p>example <code>&lt;i class="ic ic-user"&gt;&lt;/i&gt;</code></p>
+<p>gradient icon add class <code>.icon-gradient</code></p>
+<div class="row">
+  <div
+    class="_icon col-md-2 col-3"
+    *ngFor="let icon of icons; let index = index;"
+  >
+
+    <p class="text-center mb-0">
+      <span
+        class="ic-group-2"
+        *ngIf="index === 0"
+      ><span class="path1"></span><span class="path2"></span></span>
+      <span
+        class="ic-group"
+        *ngIf="index === 1"
+      ><span class="path1"></span><span class="path2"></span></span>
+      <i
+        *ngIf="index > 1"
+        class="ic ic-{{icon?.properties.name}}"
+      ></i>
+    </p>
+    <span *ngIf="index > 1"><code>ic-{{icon?.properties.name}}</code></span>
+    <span *ngIf="index === 0">
+      example in file v-icon
+    </span>
+    <span *ngIf="index === 1">
+      example in file v-icon
+    </span>
+  </div>
+</div>
+

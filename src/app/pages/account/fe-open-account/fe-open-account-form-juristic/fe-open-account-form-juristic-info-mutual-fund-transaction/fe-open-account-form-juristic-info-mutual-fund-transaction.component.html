@@ -1,0 +1,236 @@
+<div id="mutualFundTransaction">
+  <div class="card-header pl-0">
+    <span class="_g-text-header-title">ข้อมูลสำหรับทำธุรกรรมกองทุน</span>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <label class="col-form-label">เงื่อนไขการลงนามการทำธุรกรรม</label>
+        <div class="form-input">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="โปรดระบุ"
+            id="transactions"
+            name="transactions"
+            required
+            [(ngModel)]="dataMutualFundTransaction.termsOfSigningTransaction"
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="_g-card-sub-header pl-2">
+      <span class="_g-text-header-sub-title">ผู้รับมอบอำนาจทอดสุดท้ายในการทำธุรกรรม</span>
+    </div>
+    <div class="col-12 _g-card-form px-0">
+      <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
+        <div class="row">
+          <div class="col-xl-6 col-lg-6  col-md-6 col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label ">ชื่อ</label>
+              <div class="form-input">
+                <input
+                  id="firstName"
+                  name="firstName"
+                  type="text"
+                  class="form-control"
+                  placeholder="โปรดระบุ"
+                  required
+                  [(ngModel)]="dataMutualFundTransaction.name"
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6  col-md-6 col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label ">นามสกุล</label>
+              <div class="form-input">
+                <input
+                  id="lastName"
+                  name="lastName"
+                  type="text"
+                  class="form-control"
+                  placeholder="โปรดระบุ"
+                  required
+                  [(ngModel)]="dataMutualFundTransaction.name"
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+        <div class="row">
+          <div class="col-xl-6  col-lg-6  col-md-6  col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label">วัน/เดือน/ปีเกิด</label>
+              <div class="form-input">
+                <pn-date-picker
+                  placeholder="dd/mm/yyyy"
+                  id="dateRegister"
+                  name="dateRegister"
+                  required
+                  [(ngModel)]="dataMutualFundTransaction.dateBirthday"
+                >
+                </pn-date-picker>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label">ประเภทหลักฐาน</label>
+              <div class="form-input">
+                <pn-dynamic-dropdown
+                  [list]="lists"
+                  placeholder="เลือก"
+                  id="proofType"
+                  name="proofType"
+                  required
+                  [(ngModel)]="dataMutualFundTransaction.proofType"
+                >
+                </pn-dynamic-dropdown>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 _g-card-form px-0">
+      <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12  _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label">เลขบัตรประชาชน/ Passport</label>
+              <div class="form-input">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="โปรดระบุ"
+                  id="idCard"
+                  name="idCard"
+                  required
+                  [(ngModel)]="dataMutualFundTransaction.idCardNumber"
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6  col-md-6 col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label ">วันหมดอายุบัตร(ค.ศ)</label>
+              <div class="form-input">
+                <pn-date-picker
+                  placeholder="dd/mm/yyyy"
+                  id="expDate"
+                  name="expDate"
+                  required
+                  [(ngModel)]="dataMutualFundTransaction.cardExpirationDate"
+                >
+                </pn-date-picker>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
+        <div class="row">
+          <div class="col-xl-6  col-lg-6  col-md-6  col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label">ประเทศที่ออก</label>
+              <div class="form-input">
+                <shared-country-dropdown
+                  id="country"
+                  name="country"
+                  placeholder="โปรดระบุ"
+                  required
+                  [(ngModel)]="dataMutualFundTransaction.country"
+                >
+                </shared-country-dropdown>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--ที่อยู่ตามหลักฐาน-->
+    <div class="_g-card-sub-header pl-2">
+      <span class="_g-text-header-sub-title">ที่อยู่ตามหลักฐาน</span>
+    </div>
+    <fe-open-account-form-juristic-address></fe-open-account-form-juristic-address>
+    <!--ที่อยู่ตามหลักฐาน end-->
+
+    <div class="_g-card-sub-header pl-2">
+      <span class="_g-text-header-sub-title">ที่อยู่ปัจจุบัน</span>
+    </div>
+    <div class="col-12 d-flex">
+      <div class="col-sm-12 col-xl-5">
+        <div class="row">
+          <div
+            class="mr-2 mb-2 pl-0"
+            *ngFor="let address of addressLists; let index = index"
+          >
+            <div class="checkbox">
+              <input
+                type="checkbox"
+                id="address-{{index}}"
+                name="address-{{index}}"
+                [(ngModel)]="address.checked"
+                (ngModelChange)="onChangCheckBoxAddress($event, address, index)"
+              >
+              <label for="address-{{index}}"><span>{{address.name}}</span></label>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngFor="let address of addressLists; let index = index">
+      <fe-open-account-form-juristic-address *ngIf="address.name === 'อื่น ๆ' && address.checked === true  "></fe-open-account-form-juristic-address>
+    </div>
+    <div class="_g-card-sub-header pl-2">
+      <span class="_g-text-header-sub-title">เป็นผู้มีสถานะภาพทางการเมืองหรือเป็นสมาชิกในครอบครัวหรือเป็นผุ้ใกล้ชิดกับบุคคลผู้มีสถานะภาพทางการเมืองหรือไม่?</span>
+    </div>
+    <div class="col-12 d-flex">
+      <div class="col-xl-6 col-md-9">
+        <div class="row">
+          <div class="col-xl-2 col-md-2 pl-0">
+            <div class="checkbox">
+              <input
+                type="checkbox"
+                id="no-1"
+              >
+              <label for="no-1"><span>ไม่ใช่</span></label>
+            </div>
+
+          </div>
+          <div class="col-xl-2  col-md-2 pl-0">
+            <div class="checkbox">
+              <input
+                type="checkbox"
+                id="yes-1"
+              >
+              <label for="yes-1"><span>ใช่</span></label>
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-form-label px-2">Position</label>
+            <div class="form-group m-0">
+              <div class="form-input">
+                <input
+                  type="text"
+                  class="form-control is-small"
+                  placeholder="โปรดระบุ"
+                  disabled
+                >
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

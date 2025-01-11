@@ -1,0 +1,37 @@
+@import "variables-custom";
+
+._display-risk {
+  display: flex;
+  > span:not(:last-child) {
+    margin-right: 0.5rem;
+  }
+}
+
+.badge-small-in-badge:not(.badge-pill):not(.badge-round){
+  border-radius: 0.25rem;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 6px;
+  padding-right: 6px;
+  line-height: 23px;
+  font-size: 14px;
+}
+
+._click-create {
+    cursor: pointer;
+}
+
+._text-width {
+  width: 80px;
+}
+
+._disable-note {
+  color: $muted;
+  pointer-events: none;
+}
+._disable-note-wrapper {
+  cursor: not-allowed;
+}
+
+
+

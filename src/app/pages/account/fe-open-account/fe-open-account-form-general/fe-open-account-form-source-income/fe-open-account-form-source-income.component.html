@@ -1,0 +1,218 @@
+<section id="form-source-income-general">
+  <div class="card-header pl-0">
+    <span class="_g-text-header-title">แหล่งที่มาของรายได้</span>
+  </div>
+
+  <div class="card-body pt-0 px-0">
+    <div class="row">
+      <div class="col-12 d-flex px-0">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-xl-3 col-sm-12 pb-2">
+              <div class="_card-header">
+                <span class="_g-text-header-sub-title">ประเทศของแหล่งที่มารายได้</span>
+              </div>
+              <li class="d-inline-block mr-2 mb-2">
+                <div class="checkbox"
+                     [class._check-box-valid-form]="isValidIncomeSourceCountry"
+                >
+                  <input
+                    type="checkbox"
+                    id="thaiCountry"
+                    name="thaiCountry"
+                    [ngModelOptions]="{standalone: true}"
+                    [(ngModel)]="isCountry"
+                    (ngModelChange)="onChangeCountry($event, 'thaiCountry')"
+                  >
+                  <label for="thaiCountry"><span>ไทย</span></label>
+                </div>
+              </li>
+              <li class="d-inline-block mr-2 mb-2">
+                <div class="checkbox"
+                     [class._check-box-valid-form]="isValidIncomeSourceCountry"
+                >
+                  <input
+                    type="checkbox"
+                    id="otherCountry"
+                    name="otherCountry"
+                    [ngModelOptions]="{standalone: true}"
+                    [(ngModel)]="isOtherCountry"
+                    (ngModelChange)="onChangeCountry($event, 'otherCountry')"
+                  >
+                  <label for="otherCountry"><span>อื่นๆ</span></label>
+                </div>
+              </li>
+              <error-message-control
+                class="text-bold-500"
+                *ngIf="isValidIncomeSourceCountry"
+                [text]="'โปรดระบุข้อมูลให้ครบถ้วน'">
+              </error-message-control>
+            </div>
+
+            <div class="col-xl-4 col-sm-12 pb-2" *ngIf="isOtherCountry">
+              <div class="_card-header">
+                <span class="_g-text-header-sub-title">ประเทศของแหล่งที่มารายได้อื่นๆ</span>
+              </div>
+              <div class="col-12 pl-0">
+                <div class="form-group">
+                  <div class="form-input">
+                    <shared-country-dropdown
+                      placeholder="เลือก"
+                      id="incomeOtherCountry"
+                      name="incomeOtherCountry"
+                      [(ngModel)]="otherCountry"
+                      (ngModelChange)="onChangeOtherCountry($event)"
+                      required
+                    >
+                    </shared-country-dropdown>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-12 d-flex px-0">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-xl-12 col-sm-12 pb-2">
+              <div class="_card-header">
+                <span class="_g-text-header-sub-title">ที่มาของรายได้ (เลือกได้มากกว่า 1 ข้อ)</span>
+              </div>
+              <div class="col-12 pl-0">
+                <div class="d-flex">
+                  <li class="d-inline-block mr-2 mb-2" *ngFor="let incomeData of sourceIncomeData; let i = index">
+                    <div class="checkbox"
+                         [class._check-box-valid-form]="isValidIncomeSource"
+                    >
+                      <input
+                        type="checkbox"
+                        id="income-{{i}}"
+                        name="income-{{i}}"
+                        [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="incomeData.isAllow"
+                        (ngModelChange)="onChangeIncomeSource($event, i)"
+                      >
+                      <label for="income-{{i}}"><span>{{incomeData.name}}</span></label>
+                    </div>
+                  </li>
+                  <div class="form-group flex-1" *ngIf="sourceIncomeData[6].isAllow">
+                    <div class="form-input">
+                      <input
+                        type="text"
+                        class="form-control is-small"
+                        placeholder="โปรดระบุ"
+                        id="incomeSourceOther"
+                        name="incomeSourceOther"
+                        [(ngModel)]="data.incomeSourceOther"
+                        required
+                      >
+                    </div>
+                  </div>
+                </div>
+                <error-message-control
+                  class="text-bold-500"
+                  *ngIf="isValidIncomeSource"
+                  [text]="'โปรดระบุข้อมูลให้ครบถ้วน'">
+                </error-message-control>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-12 _g-card-form px-0">
+        <div class="col-xl-6 col-sm-12">
+          <div class="row">
+            <div class="col-xl-6 col-sm-12 _g-text-title">
+              <div class="form-group">
+                <label class="col-form-label">รายได้ต่อเดือน</label>
+                <div class="form-input">
+                  <shared-month-income-dropdown
+                    placeholder="เลือก"
+                    id="incomePerMonth"
+                    name="incomePerMonth"
+                    [(ngModel)]="monthlyIncomeLevel"
+                    (ngModelChange)="onChangeMonthlyIncome($event)"
+                    required
+                  >
+                  </shared-month-income-dropdown>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-xl-6 col-sm-12 _g-text-title">
+              <div class="form-group">
+                <label class="col-form-label ">มูลค่าทรัพย์สิน</label>
+                <div class="form-input">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="โปรดระบุ"
+                    id="propertyValue"
+                    name="propertyValue"
+                    [(ngModel)]="data.assetValue"
+                    required
+                    vDigit
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="_card-header pt-1">
+      <span class="_g-text-header-sub-title">วัตถุประสงค์ในการลงทุน (เลือกได้มากกว่า 1 ข้อ)</span>
+    </div>
+    <div class="col-12 d-flex px-0">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-12 pl-0">
+            <div class="d-flex">
+              <li class="d-inline-block mr-2 mb-2" *ngFor="let objInvest of objInvestData; let i = index">
+                <div class="checkbox"
+                     [class._check-box-valid-form]="isValidInvestMent"
+                >
+                  <input
+                    type="checkbox"
+                    id="invest-{{i}}"
+                    name="invest-{{i}}"
+                    [ngModelOptions]="{standalone: true}"
+                    [(ngModel)]="objInvest.isAllow"
+                    (ngModelChange)="onChangeObjInvest($event, i)"
+                  >
+                  <label for="invest-{{i}}"><span>{{objInvest.name}}</span></label>
+                </div>
+              </li>
+              <div class="form-group flex-1" *ngIf="objInvestData[3].isAllow">
+                <div class="form-input">
+                  <input
+                    type="text"
+                    class="form-control is-small"
+                    placeholder="โปรดระบุ"
+                    id="objInvest"
+                    name="objInvest"
+                    [(ngModel)]="data.investmentObjectiveOther"
+                    required
+                  >
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <error-message-control
+            class="text-bold-500"
+            *ngIf="isValidInvestMent"
+            [text]="'โปรดระบุข้อมูลให้ครบถ้วน'">
+          </error-message-control>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

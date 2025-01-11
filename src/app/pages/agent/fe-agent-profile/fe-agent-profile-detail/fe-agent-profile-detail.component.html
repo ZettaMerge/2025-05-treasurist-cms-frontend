@@ -1,0 +1,158 @@
+<form
+  #form="ngForm"
+  [class.submitted]="form.submitted"
+  (ngSubmit)="onSave(form)"
+>
+  <!--  HEADER-->
+  <div class="_g-header">
+    <h1 class="_g-title-header">รายละเอียด Agent</h1>
+    <div class="_g-header justify-content-end">
+      <button
+        *ngIf="canCreate"
+        type="submit"
+        class="btn btn-primary  _g-space-btn mb-1"
+      ><span>บันทึก</span>
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary  mr-1 mb-1"
+        (click)="goBack()"
+      ><span>กลับ</span>
+      </button>
+    </div>
+  </div>
+
+  <!--  FORM-->
+  <div class="card _g-card-content-tab">
+    <div class="card-body">
+      <div>
+        <div class="d-flex pt-2 px-0">
+          <div class="pl-0 col-xl-4 col-lg-4 col-12">
+            <div class="card card-inverse _bg-grey">
+              <div class="card-content">
+                <div class="card-body">
+                  <div class="media">
+                    <div class="media-body text-left">
+                      <span>มูลค่าพอร์ตรวม</span>
+                      <h3 class="card-text">{{agentData?.agentPortfolio?.totalPortValue |aDecimal}} บาท</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4 col-lg-4 col-12">
+            <div class="card card-inverse _bg-grey">
+              <div class="card-content">
+                <div class="card-body">
+                  <div class="media">
+                    <div class="media-body text-left">
+                      <span>ต้นทุนรวม</span>
+                      <h3 class="card-text">{{agentData?.agentPortfolio?.totalCost |aDecimal}} บาท</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="pr-0 col-xl-4 col-lg-4 col-12">
+            <div class="card card-inverse _bg-grey">
+              <div class="card-content">
+                <div class="card-body">
+                  <div class="media">
+                    <div class="media-body text-left">
+                      <span>กำไร ขาดทุนรวม</span>
+                      <h3 class="card-text"
+                          [class.text-danger]="agentData?.agentPortfolio?.totalProfit  < 0"
+                          [class.text-success]="agentData?.agentPortfolio?.totalProfit > 0"
+                      >{{agentData?.agentPortfolio?.totalProfit > 0 ? '+' : ''}}{{agentData?.agentPortfolio?.totalProfit | aDecimal}} บาท
+                        ({{agentData?.agentPortfolio?.totalProfitPercent > 0 ? '+' : ''}}{{agentData?.agentPortfolio?.totalProfitPercent | aDecimal}}%)</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end">
+        <div class="col-xl-6 col-md-4 col-sm-12 px-0 d-flex align-items-center">
+          <p>ส่วนแบ่ง</p>
+          <div class="col-3 ml-1">
+            <div class="form-group position-relative has-icon-right">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="ระบุ"
+                [(ngModel)]="agentData.commissionPercentage"
+                [ngModelOptions]="{standalone: true}"
+                [disabled]="canView && !canCreate"
+              >
+              <div class="form-control-position">
+                %
+              </div>
+            </div>
+          </div>
+          <p class="text-muted">Last Update {{agentData?.updatedDate | aDate}}</p>
+        </div>
+        <div class="col-xl-6 col-md-4 col-sm-12 px-0 d-flex justify-content-end align-items-center pb-2">
+          <span class="text-muted mr-2">จำนวนลูกค้าที่ดูแล</span>
+          <span class="mr-2">{{agentData?.agentPortfolio?.noOfCustomer}}</span>
+          <a class="text-link" (click)="goToCustomerList()">ดูข้อมูลลูกค้า</a>
+        </div>
+      </div>
+
+      <hr/>
+
+      <!--      SECTION PROFILE-->
+      <div class="card-header pl-0">
+        <div class="d-flex">
+          <span class="_g-text-header-title">ข้อมูลโปรไฟล์</span>
+        </div>
+      </div>
+
+      <profile-form
+        [isAgentDetail]="isAgentDetail"
+        [agentData]="agentData"
+        [agentUserData]="agentUserData"
+        [bankData]="bankData"
+        [agentTeamData]="teamData"
+        [canView]="canView"
+        [canCreate]="canCreate"
+      >
+      </profile-form>
+      <hr>
+
+      <div class="card-header pl-0">
+        <div class="d-flex">
+          <span class="_g-text-header-title">ที่อยู่ปัจจุบัน</span>
+        </div>
+      </div>
+
+      <current-address-form
+        [agentAddressData]="agentAddressData"
+        [canView]="canView"
+        [canCreate]="canCreate"
+      >
+      </current-address-form>
+
+    </div>
+  </div>
+
+
+  <!--  FOOTER-->
+  <div class="_g-header justify-content-end">
+    <button
+      *ngIf="canCreate"
+      type="submit"
+      class="btn btn-primary  _g-space-btn mb-1"
+    ><span>บันทึก</span>
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary  mr-1 mb-1"
+      (click)="goBack()"
+    ><span>กลับ</span>
+    </button>
+  </div>
+</form>

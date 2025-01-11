@@ -1,0 +1,188 @@
+<div id="benneficiary">
+  <div class="card-header pl-0">
+    <span class="_g-text-header-title">ข้อมูลผู้รับผลประโยนช์ที่แท้จริง</span>
+  </div>
+  <div class="row">
+    <div class="col-12 _g-card-form px-0">
+      <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
+        <div class="row">
+          <div class="col-xl-6 col-lg-6  col-md-6 col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label ">ชื่อ</label>
+              <div class="form-input">
+                <input
+                  id="firstNameContact"
+                  name="firstNameContact"
+                  type="text"
+                  class="form-control"
+                  placeholder="โปรดระบุ"
+                  required
+                  [(ngModel)]="dataBeneficiary.name"
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6  col-md-6 col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label ">นามสกุล</label>
+              <div class="form-input">
+                <input
+                  id="lastNameContact"
+                  name="lastNameContact"
+                  type="text"
+                  class="form-control"
+                  placeholder="โปรดระบุ"
+                  required
+                  [(ngModel)]="dataBeneficiary.name"
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+        <div class="row">
+          <div class="col-xl-6  col-lg-6  col-md-6  col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label">วัน/เดือน/ปีเกิด</label>
+              <div class="form-input">
+                <pn-date-picker
+                  placeholder="dd/mm/yyyy"
+                  id="dateBirthday"
+                  name="dateBirthday"
+                  required
+                  [(ngModel)]="dataBeneficiary.dateBirthday"
+                >
+                </pn-date-picker>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label">ประเภทหลักฐาน</label>
+              <div class="form-input">
+                <pn-dynamic-dropdown
+                  [list]="lists"
+                  placeholder="เลือก"
+                  id="proofType"
+                  name="proofType"
+                  required
+                  [(ngModel)]="dataBeneficiary.proofType"
+                >
+                </pn-dynamic-dropdown>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 _g-card-form px-0">
+      <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12  _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label">เลขบัตรประชาชน/ Passport</label>
+              <div class="form-input">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="โปรดระบุ"
+                  id="idCard"
+                  name="idCard"
+                  required
+                  [(ngModel)]="dataBeneficiary.idCardNumber"
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6  col-md-6 col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label ">วันหมดอายุบัตร(ค.ศ)</label>
+              <div class="form-input">
+                <pn-date-picker
+                  placeholder="dd/mm/yyyy"
+                  id="expDate"
+                  name="expDate"
+                  required
+                  [(ngModel)]="dataBeneficiary.cardExpirationDate"
+                >
+                </pn-date-picker>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
+        <div class="row">
+          <div class="col-xl-6  col-lg-6  col-md-6  col-sm-12 _g-text-title">
+            <div class="form-group">
+              <label class="col-form-label">ประเทศที่ออก</label>
+              <div class="form-input">
+                <shared-country-dropdown
+                  id="country"
+                  name="country"
+                  placeholder="โปรดระบุ"
+                  required
+                  [(ngModel)]="dataBeneficiary.country"
+                >
+                </shared-country-dropdown>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--ที่อยู่ตามหลักฐาน-->
+    <div class="_g-card-sub-header pl-2">
+      <span class="_g-text-header-sub-title">ที่อยู่ตามประเภทหลักฐาน</span>
+    </div>
+    <fe-open-account-form-juristic-address></fe-open-account-form-juristic-address>
+    <!--ที่อยู่ตามหลักฐาน end-->
+
+    <div class="_g-card-sub-header pl-2">
+      <span class="_g-text-header-sub-title">เป็นผู้มีสถานะภาพทางการเมืองหรือเป็นสมาชิกในครอบครัวหรือเป็นผุ้ใกล้ชิดกับบุคคลผู้มีสถานะภาพทางการเมืองหรือไม่?</span>
+    </div>
+    <div class="col-12 d-flex">
+      <div class="col-xl-6 col-md-9">
+        <div class="row">
+          <div class="col-xl-2 col-md-2 pl-0">
+            <div class="checkbox">
+              <input
+                type="checkbox"
+                id="no2"
+              >
+              <label for="no2"><span>ไม่ใช่</span></label>
+            </div>
+
+          </div>
+          <div class="col-xl-2  col-md-2 pl-0">
+            <div class="checkbox">
+              <input
+                type="checkbox"
+                id="yes2"
+              >
+              <label for="yes2"><span>ใช่</span></label>
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-form-label px-2">Position</label>
+            <div class="form-group m-0">
+              <div class="form-input">
+                <input
+                  type="text"
+                  class="form-control is-small"
+                  placeholder="โปรดระบุ"
+                  disabled
+                >
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,37 @@
+@import "variables-custom";
+
+.card-header {
+  background-color: rgba(0, 0, 0, 0);
+}
+._checkbox {
+  position: relative;
+  left: 14px;
+  top: -6px;
+  label {
+    border: 0;
+    // padding-left: 1.25rem;
+    font-size: 1rem;
+    margin-left: 0;
+    font-size: 1rem;
+    // height: 50px;
+    display: flex;
+    align-items: center;
+    border-radius: 0.25rem;
+    // padding: 0rem 0.7rem;
+    transition: background-color 0.25s ease-in-out, border-color 0.25s ease-in-out;
+  }
+}
+
+._checkbox input[type="checkbox"]:checked ~ label {
+  background: #db980000;
+  border-color: #db980000;
+}
+
+._modal-footer {
+  min-height: 65px;
+  // border-top: 1px solid #f0f0f0;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}

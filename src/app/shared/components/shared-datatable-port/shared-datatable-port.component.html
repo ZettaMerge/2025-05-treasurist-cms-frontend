@@ -1,0 +1,9 @@
+<div class="d-flex align-items-center">
+  <div>
+    <span  *ngIf="portValue">{{portValue | aDecimal}} บาท</span>
+    <p class="m-0 text-muted" *ngIf="upDateAt">Update : {{upDateAt | date: 'dd/MM/yyyy' }}</p>
+    <p class="m-0 text-muted" *ngIf="portCost">{{portCost | aDecimal}} บาท</p>
+    <span *ngIf="!portValue && !portCost">-</span>
+  </div>
+</div>
+

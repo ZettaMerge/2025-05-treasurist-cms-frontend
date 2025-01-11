@@ -1,0 +1,163 @@
+<div id="Monitoring">
+  <div class="_g-header justify-content-between">
+    <h1 class="_g-title-header">Regulatory Monitoring</h1>
+  </div>
+
+  <!--  FILTER-->
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12 d-flex" *ngIf="activeTabId === Tab.cdd">
+          <div class="col-5">
+            <div class="form-group">
+              <label class="col-form-label">ค้นหา</label>
+              <div class="form-input">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="ชื่อลูกค้า หรือ เลขบัตรประชาชน "
+                  [(ngModel)]="filterSearch"
+                  (ngModelChange)="searchTextChange($event)"
+
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-7 d-flex px-0">
+            <div class="col-6">
+              <div class="form-group">
+                <label class="col-form-label">Code</label>
+                <div class="form-group _form">
+                  <pn-dynamic-dropdown
+                    placeholder="code"
+                    [list]="codeList"
+                    [(ngModel)]="filterCode"
+                    (ngModelChange)="onChange($event)"
+                  >
+                  </pn-dynamic-dropdown>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label class="col-form-label">สถานะ</label>
+                <div class="d-flex">
+                  <div class="flex-1">
+                    <div class="form-input">
+                      <pn-segmented-control
+                        id="status1"
+                        name="status1"
+                        [list]="statusList"
+                        [(ngModel)]="filterStatus"
+                        (ngModelChange)="onStatusChange($event)"
+                      >
+                      </pn-segmented-control>
+                    </div>
+                  </div>
+                  <div class="_btn-clear">
+                    <button
+                      type="button"
+                      class="btn btn-clear btn-lg mr-1 mb-1"
+                      (click)="clearFilter()"
+                    >ล้าง
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 d-flex" *ngIf="activeTabId !== Tab.cdd">
+          <div class="col-8">
+            <div class="form-group">
+              <label class="col-form-label">ค้นหา</label>
+              <div class="form-input">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="ชื่อลูกค้า หรือ เลขบัตรประชาชน "
+                  [(ngModel)]="filterSearch"
+                  (ngModelChange)="searchTextChange($event)"
+
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="form-group">
+              <label class="col-form-label">สถานะ</label>
+              <div class="d-flex">
+                <div class="flex-1">
+                  <pn-segmented-control
+                    name="status"
+                    id="status"
+                    [list]="statusList"
+                    [(ngModel)]="filterStatus"
+                    (ngModelChange)="onStatusChange($event)"
+
+                  >
+                  </pn-segmented-control>
+                </div>
+                <div class="_btn-clear">
+                  <button
+                    type="button"
+                    class="btn btn-clear btn-lg mr-1 mb-1"
+                    (click)="clearFilter()"
+                  >ล้าง
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--  FILTER-->
+
+  <div class="card _g-card-content-tab">
+    <div class="card-body">
+      <pn-tabs
+        [tabs]="tabs"
+        [(activeTabId)]="activeTabId"
+      >
+      </pn-tabs>
+
+      <ng-container *ngIf="activeTabId === Tab.cdd">
+        <fe-regulatory-cdd-checklist
+          [filterSearch]="search"
+          [filterCode]="filterCode"
+          [filterStatus]="filterStatus"
+          [canView]="canView"
+          [canCreate]="canCreate"
+          (clearFilter)="clearFilter()"
+        ></fe-regulatory-cdd-checklist>
+      </ng-container>
+
+      <ng-container *ngIf="activeTabId === Tab.pep">
+        <fe-regulatory-pep-list
+          [filterSearch]="search"
+          [filterStatus]="filterStatus"
+          [canView]="canView"
+          [canCreate]="canCreate"
+          (clearFilter)="clearFilter()"
+        ></fe-regulatory-pep-list>
+      </ng-container>
+
+      <ng-container *ngIf="activeTabId === Tab.amlo">
+        <fe-regulatory-amlo-list
+          [filterSearch]="search"
+          [filterStatus]="filterStatus"
+          [canView]="canView"
+          [canCreate]="canCreate"
+          (clearFilter)="clearFilter()"
+        >
+
+        </fe-regulatory-amlo-list>
+      </ng-container>
+    </div>
+  </div>
+
+</div>
+

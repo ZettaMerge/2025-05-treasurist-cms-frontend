@@ -1,0 +1,69 @@
+@import "variables-custom";
+
+._feature-news {
+  width: 35px;
+  margin-top: -3.5rem;
+
+  ._bookmark-img {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+img {
+  &._img {
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    object-fit: cover;
+    margin-right: 0.75rem;
+  }
+
+  &._img-square {
+    border-radius: $border-radius-sm;
+    width: 60px;
+    min-width: 60px;
+    max-width: 60px;
+    height: 32px;
+    object-fit: cover;
+  }
+}
+
+h6 {
+  padding-top: 0.1rem;
+}
+
+._detail {
+  position: relative;
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+  justify-content: center;
+
+  a._name {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 300px;
+    color: $primary;
+  }
+
+  ._badge {
+    // position: absolute;
+    //margin-left: 0.5rem;
+    height: 1.75rem;
+    width: 1.85rem;
+    min-height: 1.75rem;
+    min-width: 1.85rem;
+    border-radius: 1.75rem;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    background-color: map-get($primary-color, lighten-4);
+  }
+
+  i {
+    color: $primary;
+  }
+}

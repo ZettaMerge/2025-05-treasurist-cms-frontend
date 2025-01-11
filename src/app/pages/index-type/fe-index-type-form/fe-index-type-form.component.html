@@ -1,0 +1,59 @@
+<form #form="ngForm" [class.submitted]="form.submitted" (ngSubmit)="onSave(form)">
+    <div class="card-body">
+        <div class="d-flex justify-content-between">
+            <div>
+                <span class="text-primary font-size-medium">{{isNew ? 'สร้างรายการ' : 'แก้ไข'}} Index Type</span>
+            </div>
+            <!--      <a *ngIf="!isNew" class="font-size-medium"><i class="ic ic-delete text-primary"></i> ลบรายการ</a>-->
+        </div>
+
+
+        <div class="col-12">
+            <div class="form-group">
+                <label class="col-form-label is-required">Index Type</label>
+                <div class="form-input">
+                    <input name="name" id="name" type="text" class="form-control" placeholder="Index Type"
+                        [(ngModel)]="item.name" required>
+                    <!-- <pn-dynamic-dropdown placeholder="Index Type" [list]="indexTypeList" [(ngModel)]="item.indexType"
+                        (ngModelChange)="onChange($event)" required="">
+                    </pn-dynamic-dropdown> -->
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label class="col-form-label is-required">สถานะ</label>
+                <div class="form-input">
+                    <pn-toggle class="mb-2" name="status" id="status" [(ngModel)]="item.isActive"
+                        (ngModelChange)="onStatusChange($event)" [ngModelOptions]="{standalone: true}">
+                        <pn-toggle-right>
+                            <div class="align-items-center">
+                                <label class="mb-0 font-size-normal">{{item.isActive ? 'Active' : 'Inactive'}}</label>
+                                <!--                <span class="m-0">{{status ? 'Active' : 'Inactive'}}</span>-->
+                            </div>
+                        </pn-toggle-right>
+                    </pn-toggle>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="d-flex justify-content-end pt-3">
+            <div class="col-6 d-flex pr-0">
+                <div class="col-6 pl-0 _display-btn">
+                    <button type="button" class="btn btn-clear flex-1" (click)="onCancel()">
+                        <span><i class="ic-cross"></i>ยกเลิก</span>
+                    </button>
+                </div>
+                <div class="col-6 pr-0 _display-btn">
+                    <button type="submit" class="btn btn-primary flex-1">
+                        <span><i class="ic-cross"></i>{{isNew ? 'สร้าง': 'บันทึก'}}</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

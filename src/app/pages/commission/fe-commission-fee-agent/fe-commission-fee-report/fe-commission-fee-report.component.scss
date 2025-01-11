@@ -1,0 +1,23 @@
+@import "variables-custom";
+
+._bg-grey {
+  background-color: #fafafa !important;
+  span {
+    color: black;
+  }
+  h3 {
+    color: black;
+    font-weight: $weight-medium;
+  }
+}
+
+
+._report-list-header {
+  height: 50px;
+  align-items: center;
+}
+
+._report-list {
+  height: 75px;
+  align-items: center;
+}

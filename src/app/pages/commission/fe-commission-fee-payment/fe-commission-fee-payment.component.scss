@@ -1,0 +1,25 @@
+@import "variables-custom";
+
+._btn-clear {
+  margin-left: $grid-gutter-width;
+}
+
+._action-btn {
+  opacity: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.75rem;
+
+  &._detail-btn {
+    font-size: large;
+
+    .ic {
+      color: $primary;
+    }
+  }
+
+  &:hover {
+    opacity: 0.5;
+  }
+}

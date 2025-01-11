@@ -1,0 +1,122 @@
+<div>
+  <div class="_g-pager-with-tab d-flex justify-content-between">
+    <div class="col-6 px-0">
+      <pn-grid-per-page
+        [page]="page"
+        (setPerPage)="grid.setPerPage($event)"
+      ></pn-grid-per-page>
+    </div>
+    <div class="mr-2" *ngIf="canCreate">
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="add()"
+      >สร้างรายการใหม่
+      </button>
+    </div>
+  </div>
+  <div
+    class="col-12"
+    *ngIf="rows && rows?.length === 0"
+  >
+    <pn-data-not-found
+      [addButton]="'เพิ่ม'"
+      (add)="add()"
+      (clearFilter)="onClearFilter()"
+    >
+    </pn-data-not-found>
+  </div>
+  <div
+    class="_g-table-container"
+    [hidden]="rows && rows?.length === 0"
+  >
+    <pn-lib-grid
+      #grid
+      [bodyHeight]="'auto'"
+      [dataSub]="dataSub"
+      [rows]="rows"
+      [columns]="columns"
+      [rowHeight]="65"
+      [externalPaging]="true"
+      [(page)]="page"
+      (pageChange)="pageChange()"
+      (sortChange)="sortChange()"
+      (edit)="edit($event)"
+      (delete)="delete($event)"
+      (detailInfo)="detail($event)"
+    ></pn-lib-grid>
+  </div>
+</div>
+
+<ng-template
+  #cidTpl
+  let-value="value"
+  let-row="row"
+>
+  <shared-datatable-with-name
+    [id]="row.identifyNo"
+    [firstName]="row.firstName"
+    [lastName]="row.lastName"
+  >
+  </shared-datatable-with-name>
+</ng-template>
+
+<ng-template
+  #dateTpl
+  let-value="value"
+  let-row="row"
+>
+  <span *ngIf="value">{{value | aDate}}</span>
+  <span *ngIf="!value">-</span>
+</ng-template>
+
+<ng-template
+  #statusTpl
+  let-value="value"
+  let-row="row"
+>
+  <shared-datatable-status [status]="value">
+  </shared-datatable-status>
+</ng-template>
+
+<ng-template
+  #transactionDateTpl
+  let-value="value"
+  let-row="row"
+>
+  <shared-datatable-transaction-date
+    [createDate]="row?.createdDate"
+    [updateDate]="row?.updatedDate"
+  >
+  </shared-datatable-transaction-date>
+</ng-template>
+
+<ng-template
+  #checkListTypeTpl
+  let-value="value"
+  let-row="row"
+>
+  <span *ngIf="row.checkListType">
+    {{row.checkListType.typeName}}
+  </span>
+  <span *ngIf="!row.checkListType">-</span>
+</ng-template>
+
+
+<!--Modal-->
+
+<lib-modal
+  #modal
+  modalSize="lg"
+  [showHeader]="false"
+>
+  <fe-regulatory-form
+    *ngIf="modal.isOpen"
+    (cancel)="modal.close()"
+    (save)="save()"
+    [isNew]="isNew"
+    [regulatoryData]="item"
+    [regulatoryType]="regulatoryType"
+  >
+  </fe-regulatory-form>
+</lib-modal>

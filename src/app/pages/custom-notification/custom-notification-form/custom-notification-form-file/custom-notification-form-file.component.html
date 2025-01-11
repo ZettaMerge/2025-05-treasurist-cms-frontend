@@ -1,0 +1,135 @@
+<div class="card-body">
+  <div class="d-flex justify-content-between">
+    <div>
+      <span class="text-primary font-size-medium">กรุณาเลือกไฟล์ที่ต้องการแนบ</span>
+    </div>
+  </div>
+
+  <div class="col-12 px-0 pt-2 d-flex">
+    <div class="col-6 pl-0">
+      <div class="form-group">
+        <label class="col-form-label">ชื่อไฟล์</label>
+        <div class="form-input">
+          <input
+            type="text"
+            name="title"
+            class="form-control"
+            placeholder="ค้นหา ชื่อไฟล์"
+            [(ngModel)]="filter.search"
+            (ngModelChange)="searchTextChange($event)"
+          >
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="form-group">
+        <label class="col-form-label">หมวดหมู่เอกสาร</label>
+        <shared-file-categories-dropdown
+          name="categories"
+          id="categories"
+          placeholder="หมวดหมู่เอกสาร"
+          [(ngModel)]="filter.docFileCategory"
+          (ngModelChange)="onChangCategory($event)"
+        >
+
+        </shared-file-categories-dropdown>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 px-0 pt-2 d-flex">
+    <div class="col-6 pl-0">
+      <div class="form-group">
+        <label class="col-form-label">ประเภทเอกสาร</label>
+        <shared-file-type-dropdown
+          name="type"
+          id="type"
+          placeholder="ประเภทเอกสาร"
+          [(ngModel)]="filter.docFileType"
+          [disabled]="!filter.docFileCategory || fileOther === 'อื่น ๆ '"
+          [categoryCode]="categoryCode"
+          (ngModelChange)="onChangType($event)"
+        ></shared-file-type-dropdown>
+      </div>
+    </div>
+    <div class="_btn-clear pt-4 col-6">
+      <button
+        type="button"
+        class="btn btn-clear btn-lg mr-1 mb-1"
+        (click)="clearFilter()"
+      >ล้าง
+      </button>
+    </div>
+  </div>
+
+  <div class="_g-table-container">
+    <pn-lib-grid
+      #grid
+      [bodyHeight]="'auto'"
+      [sort]="{prop: 'title', asc: true}"
+      [dataSub]="dataSub"
+      [rows]="rows"
+      [columns]="columns"
+      [rowHeight]="65"
+      [externalPaging]="true"
+      [(page)]="page"
+      (pageChange)="pageChange()"
+    ></pn-lib-grid>
+  </div>
+
+  <div class="d-flex justify-content-end pt-3">
+    <div class="col-6 d-flex pr-0">
+      <div class="col-6 pl-0 _display-btn">
+        <button
+          type="button"
+          class="btn btn-clear flex-1"
+          (click)="onCancel()"
+        >
+          <span><i class="ic-cross"></i>ยกเลิก</span>
+        </button>
+      </div>
+      <div class="col-6 pr-0 _display-btn">
+        <button
+          type="submit"
+          class="btn btn-primary flex-1"
+          (click)="onSave()"
+        >
+          <span><i class="ic-cross"></i>ยืนยัน</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--TEMP PLATE-->
+<!--<ng-template-->
+<!--  #noTpl-->
+<!--  let-value="value"-->
+<!--  let-row="row"-->
+<!--  let-index="index"-->
+<!--&gt;-->
+<!--  <span class="text-wrap">{{findNoInIndex(row, row.id)}}</span>-->
+<!--</ng-template>-->
+
+<ng-template
+  #selectTpl
+  let-value="value"
+  let-row="row"
+>
+  <li class="d-inline-block mr-2 mb-2">
+    <div class="checkbox">
+      <input
+        type="checkbox"
+        name="select-file-{{row.id}}"
+        id="select-file-{{row.id}}"
+        [(ngModel)]="row.isAllow"
+        (ngModelChange)="onSelectChange($event, row, row.id)"
+        [ngModelOptions]="{standalone: true}"
+      >
+      <label class="border-0 bg-transparent" for="select-file-{{row.id}}"><span></span></label>
+    </div>
+  </li>
+</ng-template>
+
+
+

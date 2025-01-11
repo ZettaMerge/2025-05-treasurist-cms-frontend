@@ -1,0 +1,61 @@
+<form
+  #form="ngForm"
+  (ngSubmit)="onSubmit(form)"
+  [class.submitted]="form.submitted"
+>
+
+  <div class="card-body _g-card-content-tab">
+    <div class="d-flex justify-content-between">
+      <span class="text-primary font-size-medium">Note / Comment</span>
+    </div>
+
+
+
+    <!--// Form-->
+    <div class="col-12 _g-text-title px-0 pt-2">
+      <div class="form-group">
+        <!-- <label class="col-form-label">อีเมล</label> -->
+        <div class="form-input">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Note หรือ Comment เพิ่มเติมได้ที่นี่"
+            id="note"
+            name="note"
+            [(ngModel)]="rejectReasonData.reason"
+            required
+          >
+        </div>
+      </div>
+    </div>
+    <!--  // Content-->
+    <div class="py-2 _scroll">
+      <div *ngFor="let rejectData of rejectAccountReasonData">
+        <div class="d-flex justify-content-between _g-text-title">
+          <span>{{rejectData.createdBy}}</span>
+          <span>{{rejectData.createdDate | aDateTime}} น.</span>
+        </div>
+        <span>{{rejectData.reason}}</span>
+        <hr class="my-2">
+      </div>
+    </div>
+
+    <!--  // Footer-->
+  </div>
+
+
+
+  <div class="_modal-footer justify-content-end">
+    <button
+      type="button"
+      class="btn btn-clear  mr-2 mb-1"
+      (click)="onCancel($event)"
+    ><span>ข้าม</span>
+    </button>
+    <button
+      type="submit"
+      class="btn btn-primary mb-1"
+    ><span>ยืนยัน</span>
+    </button>
+  </div>
+</form>

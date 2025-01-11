@@ -1,0 +1,116 @@
+<div class="col-12 px-0">
+  <div class="row">
+    <div class="col-12 px-0">
+      <div class="col-12 pt-2 pb-2">
+        <span>เป็นบุคคลที่มีข้อกำหนดในการสื่อสารตัดสินใจ อาทิ ผู้ที่มีความบกพร่องทางการได้ยินหรือการมองเห็น หรือภาวะบกพร่องทางสุขภาพหรือไม่?</span>
+      </div>
+      <div class="col-12 d-flex px-0 py-1">
+        <div class="col-12">
+          <li class="d-inline-block mr-2 mb-2">
+            <div class="checkbox _g-checkbox-display-none">
+              <input
+                type="checkbox"
+                id="status-health"
+                [checked]="data?.fatca === false"
+              >
+              <label for="status-health"><span>{{data?.fatca === false ? 'ไม่ใช่' : 'ใช่'}}</span></label>
+            </div>
+          </li>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 px-0">
+      <div class="col-12 pt-2 pb-2">
+        <span>เป็นผู้มีสถานภาพทางการเมืองหรือเป็นสมาชิกในครอบครัวหรือเป็นผู้ใกล้ชิดกับบุคคลผู้มีสถานภาพทางการเมืองหรือไม่?</span>
+      </div>
+      <div class="col-12 d-flex px-0">
+        <div class="col-12">
+          <li class="d-inline-block mr-2 mb-2">
+            <div class="checkbox _g-checkbox-display-none">
+              <input
+                type="checkbox"
+                id="status-politic"
+                [checked]="data?.fatca === false"
+              >
+              <label for="status-politic"><span>{{data?.fatca === false ? 'ไม่ใช่' : 'ใช่'}}</span></label>
+            </div>
+          </li>
+          <span>Position: xxxxxx</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 px-0">
+      <div class="col-12 pt-2 pb-2 d-flex">
+        <span>(ประวัติอาชญากรรม) มีคุณสมบัติตรงกับข้อใดต่อไปนี้ 1 ข้อหรือมากกว่าหรือไม่?</span><a
+          class="pl-2 text-link"
+          (click)="onOpenDetailCriminalModal()"
+        >ดูรายละเอียด</a>
+      </div>
+      <div class="col-12 d-flex px-0 py-1">
+        <div class="col-12">
+          <li class="d-inline-block mr-2 mb-2">
+            <div class="checkbox _g-checkbox-display-none">
+              <input
+                type="checkbox"
+                id="status-criminal"
+                [checked]="data?.fatca === false"
+              >
+              <label for="status-criminal"><span>{{data?.fatca === false ? 'ไม่ใช่' : 'ใช่'}}</span></label>
+            </div>
+          </li>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 px-0">
+      <div class="col-12 pt-2 pb-2 d-flex">
+        <span>(พลเมืองอเมริกัน) มีคุณสมบัติตรงกับข้อใดต่อไปนี้ 1 ข้อหรือมากกว่าหรือไม่?</span><a
+          class="pl-2 text-link"
+          (click)="onOpenDetailAmericanCitizenModal()"
+        >ดูรายละเอียด</a>
+      </div>
+      <div class="col-12 d-flex px-0 py-1">
+        <div class="col-12">
+          <li class="d-inline-block mr-2 mb-2">
+            <div class="checkbox _g-checkbox-display-none">
+              <input
+                type="checkbox"
+                id="status-citizen"
+                [checked]="data?.fatca === false"
+              >
+              <label for="status-citizen"><span>{{data?.fatca === false ? 'ไม่ใช่' : 'ใช่'}}</span></label>
+            </div>
+          </li>
+          <span>Date: 30/08/2021</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<lib-modal
+  #detailCriminalModal
+  modalSize="lg"
+  [showHeader]="false"
+>
+  <shared-view-popup-detail-criminal-record
+    #formUpload
+    *ngIf="detailCriminalModal.isOpen"
+    (cancel)="detailCriminalModal.close()"
+  >
+  </shared-view-popup-detail-criminal-record>
+
+</lib-modal>
+
+<lib-modal
+  #detailAmericanCitizenModal
+  modalSize="lg"
+  [showHeader]="false"
+>
+  <shared-view-popup-detail-american-citizen
+    #formUpload
+    *ngIf="detailAmericanCitizenModal.isOpen"
+    (cancel)="detailAmericanCitizenModal.close()"
+  >
+  </shared-view-popup-detail-american-citizen>
+
+</lib-modal>

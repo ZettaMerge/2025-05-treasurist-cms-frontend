@@ -1,0 +1,32 @@
+<div id="ndid">
+  <div class="_g-header">
+    <h1 class="_g-title-header">NDID</h1>
+    <div class="_g-header justify-content-end">
+      <button
+        type="button"
+        class="btn btn-secondary  mr-1 mb-1"
+        (click)="goBack()"
+      ><span>กลับ</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="card _g-card-content-tab">
+    <div class="card-body">
+      <pn-tabs
+        [tabs]="tabs"
+        [(activeTabId)]="activeTabId"
+      >
+      </pn-tabs>
+      <ng-container *ngIf="activeTabId === Tab.listVersion">
+        <fe-ndid-list></fe-ndid-list>
+      </ng-container>
+      <ng-container *ngIf="activeTabId === Tab.lisCustomer">
+        <fe-customer-ndid-list></fe-customer-ndid-list>
+      </ng-container>
+
+
+
+    </div>
+  </div>
+</div>

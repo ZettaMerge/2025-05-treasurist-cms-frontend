@@ -1,0 +1,39 @@
+@import "variables-custom";
+
+$required-color: $accent !default;
+$validation-error-border: 1px solid $accent !default;
+$error-message-tooltip-color: #fff !default;
+$error-message-tooltip-background-color: $accent !default;
+$text-input-height: 48px;
+$text-placeholder: #959595;
+
+._card-header {
+  padding-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  // justify-content: space-between;
+  padding-top: 1.5rem;
+}
+
+._form-control-position {
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    border: 2px solid #f0f0f0;
+    height: 34px;
+    color: #333;
+    padding-left: 10.5px;
+}
+
+._check-box-valid-form {
+  border: $validation-error-border;
+  padding-right: calc(1.5em + 0.75rem);
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23d15845' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23d15845' stroke='none'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right calc(0.375em + 0.1875rem) center;
+  background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+  border-radius: 4px;
+
+  & ~ .form-control-position {
+    display: none;
+  }
+}

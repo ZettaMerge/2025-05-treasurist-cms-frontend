@@ -1,0 +1,386 @@
+<div id="account-detail">
+  <div class="_g-header">
+    <h1 class="_g-title-header">Bank Account Detail</h1>
+    <div class="_g-header justify-content-end">
+      <button
+        type="button"
+        class="btn btn-clear  mr-1 mb-1"
+      ><span>Cancel</span>
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary  mr-1 mb-1"
+      ><span>Approve</span>
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary  mr-1 mb-1"
+        (click)="goBack()"
+      ><span>กลับ</span>
+      </button>
+    </div>
+  </div>
+  <div class="card _g-card-content-tab">
+    <div class="card-header">
+      <span class="_g-text-header-title">ข้อมูลส่วนตัว</span>
+      <div class="_display-risk">
+        <span class="badge badge-white">Risk Level &nbsp;
+          <span class="m-0 badge-small-in-badge text-center badge-danger">4</span>
+        </span>
+        <span class="badge badge-white">Fx &nbsp;
+
+          <span
+            class="m-0 badge-small-in-overlap-badge text-center"
+            [class.badge-dark-blue]="statusFx === true"
+            [class.badge-dark-grey]="statusFx === false"
+          >{{statusFx === true ? 'YES' : 'NO'}}
+            <span
+              class="m-0  badge-small-in-badge text-center"
+              [class.badge-dark-blue]="statusFx === false"
+              [class.badge-dark-grey]="statusFx === true"
+            >{{statusFx === false ? 'YES' : 'NO'}}</span>
+          </span>
+
+        </span>
+
+
+        <span class="badge badge-white">Commo &nbsp;
+          <span
+            class="m-0 badge-small-in-overlap-badge text-center"
+            [class.badge-dark-blue]="statusCommo === true"
+            [class.badge-dark-grey]="statusCommo === false"
+          >{{statusCommo === true ? 'YES' : 'NO'}}
+            <span
+              class="m-0 badge-small-in-badge text-center"
+              [class.badge-dark-blue]="statusCommo === false"
+              [class.badge-dark-grey]="statusCommo === true"
+            >{{statusCommo === false ? 'YES' : 'NO'}}</span>
+          </span>
+
+        </span>
+        <span class="badge badge-light">General</span>
+      </div>
+    </div>
+
+    <div class="card-body py-0">
+      <div class="row">
+        <div class="col-12 _g-card-form  px-0">
+          <div class="col-xl-5 col-lg-6 col-md-6 col-sm-12">
+            <div class="row">
+              <div class="col-xl-6 col-sm-12 _g-text-title">
+                <label>Account No.</label>
+                <p>ACC0001</p>
+
+              </div>
+              <div class="col-xl-6  col-sm-12  _g-text-title">
+                <label>IC License</label>
+                <p>ICOOOO1 ธนพล แก้วใจสิงห์</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-7 col-lg-6 col-md-6 col-sm-12">
+            <div class="row">
+              <div class="col-xl-4  col-sm-12  _g-text-title">
+                <label>วันที่เปิดบัญชี</label>
+                <p>28/06/2021</p>
+              </div>
+              <div class="col-xl-4  col-sm-12 col-md-6 _g-text-title">
+                <label>Omnibus Form</label>
+                <p>-</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="_g-card-sub-header pl-2">
+          <span class="_g-text-header-sub-title">ที่อยู่ในการจัดส่งเอกสาร</span>
+        </div>
+        <div class="col-12 d-flex">
+          <div class="col-12 pl-0">
+            <li class="d-inline-block mr-2 mb-2">
+              <div class="checkbox">
+                <input
+                  type="checkbox"
+                  id="deliveryAddressIdCard"
+                  checked
+                >
+                <label for="deliveryAddressIdCard"><span>ที่อยู่ตามประเภทหลักฐาน</span></label>
+              </div>
+            </li>
+          </div>
+        </div>
+
+
+        <div class="col-12 _g-card-form  px-0 pt-2">
+          <div class="col-xl-6 col-sm-12 _g-text-title">
+            <label>วิธีการจัดส่งเอกสาร</label>
+            <p>Email</p>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="_g-card-sub-header">
+        <span class="_g-text-header-sub-title">วัตถุประสงค์ในการลงทุน</span>
+      </div>
+      <div class="col-12 d-flex px-0">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-12 pl-0">
+              <li class="d-inline-block mr-2 mb-2">
+                <div class="checkbox">
+                  <input
+                    type="checkbox"
+                    id="invest"
+                    checked
+                  >
+                  <label for="invest"><span>เพื่อการลงทุน</span></label>
+                </div>
+              </li>
+              <li class="d-inline-block mr-2 mb-2">
+                <div class="checkbox">
+                  <input
+                    type="checkbox"
+                    id="retire"
+                    checked
+                  >
+                  <label for="retire"><span>เพื่อการเกษีรณ</span></label>
+                </div>
+              </li>
+              <li class="d-inline-block mr-2 mb-2">
+                <div class="checkbox">
+                  <input
+                    type="checkbox"
+                    id="taxDeduction"
+                    checked
+                  >
+                  <label for="taxDeduction"><span>ลดหย่อนภาษี</span></label>
+                </div>
+              </li>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 _g-card-form  px-0 pt-2">
+        <div class="col-xl-6 col-sm-12 _g-text-title px-0">
+          <label>ผู้รับผลประโยชน์ทอดสุดท้าย</label>
+          <p>ตนเอง</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="_g-card-sub-header pl-3">
+      <h5>บัญชีธนาคารสำหรับหักเงินเพื่อซื้อหลักทรัพย์</h5>
+    </div>
+    <div class="col-12 d-flex pb-2 _text-Account">
+      <div class="col-4">
+        <div class="row">
+          <div class="col-3">
+            <span>บัญชีหลัก</span>
+          </div>
+          <div class="col-9">
+            <span>ธนาคาร</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-8">
+        <div class="row">
+          <div class="col-4">
+            <span>สาขา</span>
+          </div>
+          <div class="col-4">
+            <span>เลขบัญชี/ชื่อบัญชี</span>
+          </div>
+          <div class="col-4">
+            <span>FimNet Customer No.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 d-flex _list-account border-bottom  border-top">
+      <div class="col-4">
+        <div class="row">
+          <div class="col-3">
+            <div class="checkbox _checkbox">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="isAccount"
+                name="isAccount"
+                checked
+              />
+              <label
+                class="form-check-label"
+                for="isAccount"
+              ></label>
+            </div>
+          </div>
+
+          <div class="col-9">
+            <span>SCB ธนาคารไทยพาณิชย์ จำกัด (มหาชน)</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-8">
+        <div class="row">
+          <div class="col-4">
+            <span>00001 เซ็นทรัลพลาซ่า แกรนด์ พระราม 9</span>
+          </div>
+          <div class="col-4">
+            <span>1113990962</span>
+            <p class="text-muted">Firstname Lastname</p>
+          </div>
+          <div class="col-4">
+            <span>-</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body px-0 pb-0">
+      <div class="_g-card-sub-header pl-3">
+        <h5>บัญชีธนาคารสำหรับรับเงินค่าขายหลักทรัพย์ ดอกเบี้ย เงินปันผล</h5>
+      </div>
+    </div>
+    <div class="col-12 d-flex pb-2 _text-Account">
+      <div class="col-4">
+        <div class="row">
+          <div class="col-3">
+            <span>บัญชีหลัก</span>
+          </div>
+          <div class="col-9">
+            <span>ธนาคาร</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-8">
+        <div class="row">
+          <div class="col-4">
+            <span>สาขา</span>
+          </div>
+          <div class="col-4">
+            <span>เลขบัญชี/ชื่อบัญชี</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 d-flex _list-account border-bottom  border-top">
+      <div class="col-4">
+        <div class="row">
+          <div class="col-3">
+            <div class="checkbox _checkbox">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="isAccount"
+                name="isAccount"
+                checked
+              />
+              <label
+                class="form-check-label"
+                for="isAccount"
+              ></label>
+            </div>
+          </div>
+
+          <div class="col-9">
+            <span>SCB ธนาคารไทยพาณิชย์ จำกัด (มหาชน)</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-8">
+        <div class="row">
+          <div class="col-4">
+            <span>00001 เซ็นทรัลพลาซ่า แกรนด์ พระราม 9</span>
+          </div>
+          <div class="col-4">
+            <span>1113990962</span>
+            <p class="text-muted">Firstname Lastname</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body px-0 pb-0">
+      <div class="_g-card-sub-header pl-3">
+        <h5>Unitholder</h5>
+      </div>
+    </div>
+    <div class="col-12">
+      <dl class="row pl-3 border-bottom pb-2 mb-0">
+        <span class="flex-1">AMC</span>
+        <span class="flex-1">Unitholder ID</span>
+        <span class="flex-1">Type</span>
+        <span class="flex-1">Status</span>
+        <span class="flex-1">Acc.for</span>
+        <span class="flex-1">ชื่อธนาคาร</span>
+        <span class="flex-1">สาขา</span>
+        <span class="flex-1">Acc No.</span>
+      </dl>
+      <dl
+        class="row border-bottom  pl-3 _list-unitholder"
+        *ngFor="let unitholder of unitholderData"
+      >
+        <dd class="flex-1 m-0">{{unitholder.amc}}</dd>
+        <dd class="flex-1 m-0">{{unitholder.unitholderID}}</dd>
+        <dd class="flex-1 m-0">{{unitholder.type}}</dd>
+        <dd class="flex-1 m-0"><span class="badge badge-success">{{unitholder.status}}</span></dd>
+        <dd class="flex-1 m-0"><span class="px-2">{{unitholder.acc}}</span></dd>
+        <dd class="flex-1 m-0"><span class="px-3">{{unitholder.nameBank}}</span></dd>
+        <dd class="flex-1 m-0">
+          <span class="">{{unitholder.branchBank}}</span>
+          <p class="text-muted m-0">{{unitholder.numberBank}}</p>
+        </dd>
+        <dd class="flex-1 m-0">{{unitholder.accNo}}</dd>
+      </dl>
+    </div>
+
+
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center">
+        <span class="_g-text-header-title">ไฟล์ยืนยันการเปิดบัญชี</span>
+        <span class="_g-text-muted">Accepted by : Ireans Bay</span>
+      </div>
+      <div class="_g-table-container _file-content pt-2">
+
+        <div class="col-12 _g-list-file-data border-bottom">
+          <div class="col-10">
+            <span>Bank Account</span>
+          </div>
+          <div class="col-2">
+            <a class="text-link">ดูรายละเอียด</a>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="_g-header justify-content-end">
+  <div class="d-flex">
+    <button
+      type="button"
+      class="btn btn-clear  mr-1 mb-1"
+    ><span>ลบ</span>
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary  mr-1 mb-1"
+    ><span>Approve</span>
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary  mr-1 mb-1"
+      (click)="goBack()"
+    ><span>กลับ</span>
+    </button>
+  </div>
+</div>
