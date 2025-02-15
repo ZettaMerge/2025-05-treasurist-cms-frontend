@@ -20,6 +20,7 @@ interface FilterType {
   riskLevel: any;
   cdd: any;
   searchTeam: any;
+  planType: any;
 }
 
 @Component({
@@ -74,6 +75,12 @@ export class FeCustomerListComponent extends BaseFeatureGridComponent<CustomerLi
     { id: 1, name: 'Vulnerable' },
     { id: 2, name: 'General' },
   ];
+
+  listPlanType = [
+    { id: 1, name: 'Treasurist Plan', value: 'RISK_BASED_PLAN' },
+    { id: 2, name: 'Agent Plan', value: 'AGENT_PLAN' },
+    { id: 3, name: 'Investor Plan', value: 'CUSTOMER_PLAN' }
+  ]
 
 
   riskList = [
@@ -308,6 +315,7 @@ export class FeCustomerListComponent extends BaseFeatureGridComponent<CustomerLi
     }
 
     console.log('hello', this.typeDCAStatus);
+    console.log('DATA', this.filter.planType);
     this.dataSub = this.customerService.customerListGet$(
       this.filter?.fx === 1 ? 1 : this.filter?.fx === 0 ? 0 : undefined,
       this.filter?.accountType?.value || undefined,
@@ -327,6 +335,7 @@ export class FeCustomerListComponent extends BaseFeatureGridComponent<CustomerLi
       this.filter?.searchTeam?.id || undefined,
       this.direction,
       this.sortData,
+      this.filter?.planType?.value || undefined
     ).subscribe((data) => {
       this.rows = data.customers;
       this.page.totalCount = data.pagination.allRecord;
@@ -348,6 +357,7 @@ export class FeCustomerListComponent extends BaseFeatureGridComponent<CustomerLi
       riskLevel: undefined,
       cdd: undefined,
       searchTeam: undefined,
+      planType: undefined,
     } as FilterType;
 
     this.commo = undefined;

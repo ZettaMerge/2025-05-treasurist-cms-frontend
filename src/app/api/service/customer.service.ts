@@ -21,8 +21,8 @@ export class CustomerService {
 
   constructor(protected api: PnApiClientService) { }
 
-  public customerListGet$(FXFlag?: number, accountType?: string, comMoFlag?: number, amcCode?: string, cddScore?: number, blackListFlag?: string, cddNo3?: string, dcaFlag?: string, fundCode?: string, page?: number, search?: string, size?: number, vulnerableFlag?: string, riskLevel?: number, icLicense?: string, teamId?: number, direction?: string, columnName?: string): Observable<ListResponseCustomerDTO<CustomerListDTO>> {
-    return this.api.get(`${apiBaseUrl()}/manage/customer`, { FXFlag, accountType, comMoFlag, amcCode, cddScore, blackListFlag, cddNo3, dcaFlag, fundCode, page, search, size, vulnerableFlag, riskLevel, icLicense, teamId, direction, columnName });
+  public customerListGet$(FXFlag?: number, accountType?: string, comMoFlag?: number, amcCode?: string, cddScore?: number, blackListFlag?: string, cddNo3?: string, dcaFlag?: string, fundCode?: string, page?: number, search?: string, size?: number, vulnerableFlag?: string, riskLevel?: number, icLicense?: string, teamId?: number, direction?: string, columnName?: string, planType?: string): Observable<ListResponseCustomerDTO<CustomerListDTO>> {
+    return this.api.get(`${apiBaseUrl()}/manage/customer`, { FXFlag, accountType, comMoFlag, amcCode, cddScore, blackListFlag, cddNo3, dcaFlag, fundCode, page, search, size, vulnerableFlag, riskLevel, icLicense, teamId, direction, columnName, planType });
   }
 
   public customerIdGet$(id: number): Observable<CustomerProfileDTO> {
