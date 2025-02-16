@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {ControlContainer, NgForm} from '@angular/forms';
-import {MasterBankService, TeamService} from '@api';
+import {MasterBankService, TeamService, MeService} from '@api';
 import {AddressDTO, TeamDTO} from "@model";
 
 @Component({
@@ -32,12 +32,14 @@ export class ProfileFormComponent implements OnInit, OnChanges {
   plainList = [
     {id: 1, name: 'Plain', value: 'PLAIN'},
     {id: 2, name: 'Complex', value: 'COMPLEX'},
+    {id: 3, name: 'Planner', value: 'PLANNER'},
   ];
 
 
   constructor(
     private teamService: TeamService,
     protected dropdownBankService: MasterBankService,
+    private meService: MeService,
   ) {
   }
 
@@ -65,10 +67,15 @@ export class ProfileFormComponent implements OnInit, OnChanges {
         // });
       }
 
+      console.log('LICENSE', this.agentData.plainComplexFlag);
       if (this.agentData.plainComplexFlag && this.agentData.plainComplexFlag === 'PLAIN') {
         this.plainComplexFlag = {id: 1, name: 'Plain', value: 'PLAIN'};
-      } else if (this.agentData.plainComplexFlag && this.agentData.plainComplexFlag === 'COMPLEX') {
+      } 
+      if (this.agentData.plainComplexFlag && this.agentData.plainComplexFlag === 'COMPLEX') {
         this.plainComplexFlag = {id: 2, name: 'Complex', value: 'COMPLEX'};
+      }
+      if (this.agentData.plainComplexFlag && this.agentData.plainComplexFlag === 'PLANNER') {
+        this.plainComplexFlag = {id: 3, name: 'Planner', value: 'PLANNER'};
       }
     }
   }
@@ -129,8 +136,8 @@ export class ProfileFormComponent implements OnInit, OnChanges {
     } else {
       this.agentData.plainComplexFlag = null;
     }
-    console.log('plainComplexFlag', event);
-    console.log('plainComplexFlag', this.agentData.plainComplexFlag);
+    console.log('plainComplexFlag_2', event);
+    console.log('plainComplexFlag_3', this.agentData.plainComplexFlag);
   }
 
   bankOnchange(event) {
@@ -144,7 +151,7 @@ export class ProfileFormComponent implements OnInit, OnChanges {
 
     if (type === 'email') {
       this.isEmailError = false;
-    } else if ('') {
+    } else if (type === '') {
       this.isIcLicenseError = false;
     }
   }
