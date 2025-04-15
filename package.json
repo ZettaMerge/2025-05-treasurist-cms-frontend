@@ -16,6 +16,7 @@
     "build:qas": "ng build --configuration=qas",
     "docker:production": "docker build -f dockerfiles/Dockerfile.prod -t treasuristtrade.azurecr.io/treasurist-cms-web-prod:$npm_package_version .",
     "pushDocker:production": "docker push treasuristtrade.azurecr.io/treasurist-cms-web-prod:$npm_package_version",
+    "pushDocker:qas": "docker push treasuristtrade.azurecr.io/treasurist-cms-frontend:$npm_package_version",
     "docker:macos-uat": "docker build --platform linux/amd64 -f dockerfiles/Dockerfile.uat -t treasuristtrade.azurecr.io/treasurist-cms-frontend:$npm_package_version . && docker push treasuristtrade.azurecr.io/treasurist-cms-frontend:$npm_package_version"
   },
   "private": true,
