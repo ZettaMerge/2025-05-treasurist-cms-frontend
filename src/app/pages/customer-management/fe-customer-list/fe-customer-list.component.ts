@@ -79,7 +79,7 @@ export class FeCustomerListComponent extends BaseFeatureGridComponent<CustomerLi
   listPlanType = [
     { id: 1, name: 'Treasurist Plan', value: 'RISK_BASED_PLAN' },
     { id: 2, name: 'Agent Plan', value: 'AGENT_PLAN' },
-    { id: 3, name: 'Investor Plan', value: 'CUSTOMER_PLAN' }
+    { id: 3, name: 'Investor Plan', value: 'CUSTOMIZED_PLAN' }
   ]
 
 
